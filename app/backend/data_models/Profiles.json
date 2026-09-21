@@ -1,0 +1,59 @@
+{
+    "properties": {
+        "id": {
+            "type": "integer"
+        },
+        "user_id": {
+            "type": "string"
+        },
+        "username": {
+            "type": "string"
+        },
+        "display_name": {
+            "type": "string"
+        },
+        "gender": {
+            "type": "string"
+        },
+        "birth_date": {
+            "type": "string"
+        },
+        "country": {
+            "type": "string"
+        },
+        "city": {
+            "type": "string"
+        },
+        "bio": {
+            "type": "string"
+        },
+        "primary_language": {
+            "type": "string"
+        },
+        "marital_status": {
+            "type": "string"
+        },
+        "avatar_object_key": {
+            "type": "string"
+        },
+        "onboarding_completed": {
+            "type": "boolean"
+        },
+        "is_visible": {
+            "type": "boolean"
+        },
+        "is_verified": {
+            "type": "boolean"
+        },
+        "premium_until": {
+            "type": "string"
+        }
+    },
+    "required": [
+        "user_id",
+        "display_name",
+        "gender"
+    ],
+    "title": "Profiles",
+    "type": "object"
+}

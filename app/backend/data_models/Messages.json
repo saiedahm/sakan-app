@@ -1,0 +1,30 @@
+{
+    "properties": {
+        "id": {
+            "type": "integer"
+        },
+        "user_id": {
+            "type": "string"
+        },
+        "conversation_id": {
+            "type": "integer"
+        },
+        "sender_user_id": {
+            "type": "string"
+        },
+        "content": {
+            "type": "string"
+        },
+        "is_read": {
+            "type": "boolean"
+        }
+    },
+    "required": [
+        "user_id",
+        "conversation_id",
+        "sender_user_id",
+        "content"
+    ],
+    "title": "Messages",
+    "type": "object"
+}

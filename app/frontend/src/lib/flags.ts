@@ -1,0 +1,51 @@
+/** Static country-name → flag emoji map (no external assets, no API). */
+
+const FLAGS: Record<string, string> = {
+  morocco: '🇲🇦',
+  'المغرب': '🇲🇦',
+  jordan: '🇯🇴',
+  'الأردن': '🇯🇴',
+  kuwait: '🇰🇼',
+  'الكويت': '🇰🇼',
+  turkey: '🇹🇷',
+  'تركيا': '🇹🇷',
+  canada: '🇨🇦',
+  'كندا': '🇨🇦',
+  'united kingdom': '🇬🇧',
+  'المملكة المتحدة': '🇬🇧',
+  egypt: '🇪🇬',
+  'مصر': '🇪🇬',
+  germany: '🇩🇪',
+  'ألمانيا': '🇩🇪',
+  lebanon: '🇱🇧',
+  'لبنان': '🇱🇧',
+  'united arab emirates': '🇦🇪',
+  'الإمارات': '🇦🇪',
+  tunisia: '🇹🇳',
+  'تونس': '🇹🇳',
+  'saudi arabia': '🇸🇦',
+  'السعودية': '🇸🇦',
+  algeria: '🇩🇿',
+  iraq: '🇮🇶',
+  syria: '🇸🇾',
+  qatar: '🇶🇦',
+  bahrain: '🇧🇭',
+  oman: '🇴🇲',
+  yemen: '🇾🇪',
+  libya: '🇱🇾',
+  sudan: '🇸🇩',
+  palestine: '🇵🇸',
+  mauritania: '🇲🇷',
+  somalia: '🇸🇴',
+  djibouti: '🇩🇯',
+  comoros: '🇰🇲',
+  france: '🇫🇷',
+  'united states': '🇺🇸',
+  netherlands: '🇳🇱',
+  sweden: '🇸🇪',
+};
+
+export function flagFor(country?: string | null): string {
+  if (!country) return '🌍';
+  return FLAGS[country.trim().toLowerCase()] ?? '🌍';
+}

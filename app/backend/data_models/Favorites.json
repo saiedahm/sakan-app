@@ -1,0 +1,19 @@
+{
+    "properties": {
+        "id": {
+            "type": "integer"
+        },
+        "user_id": {
+            "type": "string"
+        },
+        "favorite_user_id": {
+            "type": "string"
+        }
+    },
+    "required": [
+        "user_id",
+        "favorite_user_id"
+    ],
+    "title": "Favorites",
+    "type": "object"
+}

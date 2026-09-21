@@ -1,0 +1,27 @@
+{
+    "properties": {
+        "id": {
+            "type": "integer"
+        },
+        "user_id": {
+            "type": "string"
+        },
+        "preferred_gender": {
+            "type": "string"
+        },
+        "min_age": {
+            "type": "integer"
+        },
+        "max_age": {
+            "type": "integer"
+        },
+        "preferred_country": {
+            "type": "string"
+        }
+    },
+    "required": [
+        "user_id"
+    ],
+    "title": "Preferences",
+    "type": "object"
+}

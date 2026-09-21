@@ -1,0 +1,35 @@
+[
+    {
+        "code": "gold",
+        "currency": "usd",
+        "duration_days": 30,
+        "features": "[\"Unlimited messaging with all members\",\"See who visited your profile\",\"Advanced search filters\",\"Gold badge on your profile\",\"Priority in discovery\", \"Ad-free browsing\"]",
+        "is_active": true,
+        "name": "Gold",
+        "price_cents": 1999,
+        "sort_order": 2,
+        "tagline": "Stand out and unlock unlimited messaging"
+    },
+    {
+        "code": "platinum",
+        "currency": "usd",
+        "duration_days": 90,
+        "features": "[\"Everything in Gold\",\"Featured member placement\",\"Profile translation tools\",\"Exclusive badge and border\",\"Early access to new features\", \"VIP support\"]",
+        "is_active": true,
+        "name": "Platinum",
+        "price_cents": 4999,
+        "sort_order": 3,
+        "tagline": "The complete Sakan experience"
+    },
+    {
+        "code": "free",
+        "currency": "usd",
+        "duration_days": 0,
+        "features": "[\"Create your profile\",\"Upload photos\",\"Browse and search members\",\"Send a limited number of messages\",\"Favorites and visitors lists\"]",
+        "is_active": true,
+        "name": "Free",
+        "price_cents": 0,
+        "sort_order": 1,
+        "tagline": "Get started on Sakan"
+    }
+]

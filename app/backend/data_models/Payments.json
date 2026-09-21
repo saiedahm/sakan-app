@@ -1,0 +1,37 @@
+{
+    "properties": {
+        "id": {
+            "type": "integer"
+        },
+        "user_id": {
+            "type": "string"
+        },
+        "plan_code": {
+            "type": "string"
+        },
+        "amount_cents": {
+            "type": "integer"
+        },
+        "currency": {
+            "type": "string"
+        },
+        "status": {
+            "type": "string"
+        },
+        "stripe_session_id": {
+            "type": "string"
+        },
+        "premium_until": {
+            "type": "string"
+        }
+    },
+    "required": [
+        "user_id",
+        "plan_code",
+        "amount_cents",
+        "currency",
+        "status"
+    ],
+    "title": "Payments",
+    "type": "object"
+}

@@ -1,0 +1,25 @@
+{
+    "properties": {
+        "id": {
+            "type": "integer"
+        },
+        "user_id": {
+            "type": "string"
+        },
+        "object_key": {
+            "type": "string"
+        },
+        "is_primary": {
+            "type": "boolean"
+        },
+        "status": {
+            "type": "string"
+        }
+    },
+    "required": [
+        "user_id",
+        "object_key"
+    ],
+    "title": "ProfilePhotos",
+    "type": "object"
+}

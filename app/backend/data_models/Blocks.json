@@ -1,0 +1,19 @@
+{
+    "properties": {
+        "id": {
+            "type": "integer"
+        },
+        "user_id": {
+            "type": "string"
+        },
+        "blocked_user_id": {
+            "type": "string"
+        }
+    },
+    "required": [
+        "user_id",
+        "blocked_user_id"
+    ],
+    "title": "Blocks",
+    "type": "object"
+}

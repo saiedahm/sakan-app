@@ -1,0 +1,35 @@
+{
+    "properties": {
+        "id": {
+            "type": "integer"
+        },
+        "user_id": {
+            "type": "string"
+        },
+        "title": {
+            "type": "string"
+        },
+        "subtitle": {
+            "type": "string"
+        },
+        "image_object_key": {
+            "type": "string"
+        },
+        "link_url": {
+            "type": "string"
+        },
+        "position": {
+            "type": "integer"
+        },
+        "is_active": {
+            "type": "boolean"
+        }
+    },
+    "required": [
+        "user_id",
+        "title",
+        "is_active"
+    ],
+    "title": "Adslots",
+    "type": "object"
+}
