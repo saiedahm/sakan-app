@@ -37,6 +37,8 @@ last_updated: 2026-09-21T06:09:25Z
 - [x] Discovery modes latest/nearby/online with home-tab and sidebar deep links
 - [x] Ad-slot API authorization: auth required on /all, owner-scoped listing
 - [x] Sync repository to GitHub (saiedahm/sakan-app)
+- [x] 20-language i18n with German default and RTL/LTR-aware dropdown selector
+- [ ] Sync 20-language update to GitHub (saiedahm/sakan-app)
 
 ## Progress Log
 

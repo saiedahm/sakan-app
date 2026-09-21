@@ -19,6 +19,7 @@ SAKAN (سكن) — a premium Arabic-community matchmaking web app MVP. Members r
 | 2026-09-21 | Free message quota enforced server-side; premium unlimited | Alex | Real business rule from spec |
 | 2026-09-21 | Seeded 3 plans + 12 demo profiles for discovery demo | Alex | MVP needs populated discovery |
 | 2026-09-21 | Ad-slot management APIs require auth; `/all` owner-scoped; public ads only via public/home | Alex | Prevent anonymous enumeration and cross-advertiser leakage |
+| 2026-09-21 | 20-language i18n, German (de) default, dropdown selector, RTL for ar/ur/fa/ku | Alex | Round-3 requirement: DE-first platform with 20 languages and dynamic RTL/LTR |
 
 ## Constraints
 

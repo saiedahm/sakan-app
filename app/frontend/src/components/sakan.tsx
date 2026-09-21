@@ -14,7 +14,7 @@ import {
 } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
 import { client } from '@/lib/api';
-import { LanguageToggle } from '@/lib/i18n';
+import { LanguageSelector } from '@/lib/i18n';
 import { errDetail, getMediaUrl, sakanApi, useAuthState } from '@/lib/sakan';
 import type { MeState, ProfileBrief } from '@/lib/sakan';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
@@ -199,7 +199,7 @@ export function AppShell({ me, children }: { me: MeState; children: ReactNode })
             ))}
           </nav>
           <div className="flex items-center gap-2">
-            <LanguageToggle />
+            <LanguageSelector />
             {me.is_premium ? (
               <Badge className="gold-surface border-0 font-semibold text-black">
                 <Crown className="mr-1 h-3.5 w-3.5" /> Premium

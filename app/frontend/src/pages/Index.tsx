@@ -26,7 +26,7 @@ import { Input } from '@/components/ui/input';
 import { SakanLogo, MemberAvatar, useMeData } from '@/components/sakan';
 import { client } from '@/lib/api';
 import { flagFor } from '@/lib/flags';
-import { LanguageToggle, useLang } from '@/lib/i18n';
+import { LanguageSelector, useLang } from '@/lib/i18n';
 import { errDetail, sakanApi } from '@/lib/sakan';
 import type { AdSlot, HomePayload, MeState, ProfileBrief } from '@/lib/sakan';
 import { cn } from '@/lib/utils';
@@ -47,7 +47,7 @@ function HomeHeader({ me }: { me: MeState | null }) {
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between gap-3 px-4 sm:px-6">
         <SakanLogo />
         <div className="flex items-center gap-2">
-          <LanguageToggle />
+          <LanguageSelector />
           {authed ? (
             <Button asChild size="sm" className="gold-surface font-semibold text-black hover:opacity-90">
               <Link to="/discover">
@@ -132,7 +132,7 @@ function PromoBanner({ me, isFeatured }: { me: MeState | null; isFeatured: boole
             <Zap className="h-6 w-6" />
           </div>
           <div>
-            <p className="text-base font-bold leading-snug sm:text-lg" dir="rtl">
+            <p className="text-base font-bold leading-snug sm:text-lg">
               {t('promo_title')} <span className={GOLD}>— {t('promo_sub')}</span>
             </p>
             <p className="mt-1 text-xs text-muted-foreground sm:text-sm">{t('featured_sub')}</p>
@@ -169,7 +169,7 @@ function FeaturedRibbon({ members }: { members: ProfileBrief[] }) {
         <h2 className="text-sm font-semibold">{t('featured_title')}</h2>
       </div>
       {members.length === 0 ? (
-        <p className="rounded-xl border hairline bg-card p-4 text-sm text-muted-foreground" dir="rtl">
+        <p className="rounded-xl border hairline bg-card p-4 text-sm text-muted-foreground">
           {t('featured_empty')}
         </p>
       ) : (
@@ -539,7 +539,7 @@ export default function Index() {
       <footer className="border-t hairline py-8">
         <div className="mx-auto flex max-w-7xl flex-col items-center gap-2 px-4 text-sm text-muted-foreground sm:px-6">
           <SakanLogo />
-          <p dir="rtl">{t('footer_note')}</p>
+          <p>{t('footer_note')}</p>
           <p className="text-xs">{t('copyright')}</p>
         </div>
       </footer>
