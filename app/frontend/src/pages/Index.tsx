@@ -24,6 +24,7 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
 import { SakanLogo, MemberAvatar, useMeData } from '@/components/sakan';
+import { SakanFooter } from '@/components/SakanFooter';
 import { client } from '@/lib/api';
 import { flagFor } from '@/lib/flags';
 import { LanguageSelector, useLang } from '@/lib/i18n';
@@ -536,13 +537,7 @@ export default function Index() {
         )}
       </main>
 
-      <footer className="border-t hairline py-8">
-        <div className="mx-auto flex max-w-7xl flex-col items-center gap-2 px-4 text-sm text-muted-foreground sm:px-6">
-          <SakanLogo />
-          <p>{t('footer_note')}</p>
-          <p className="text-xs">{t('copyright')}</p>
-        </div>
-      </footer>
+      <SakanFooter />
     </div>
   );
 }

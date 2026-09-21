@@ -95,6 +95,12 @@ const ar = {
   cta_enter: 'ادخل سكن',
   verified: 'موثوق',
   footer_note: 'مجتمع خاص للأعضاء الجادين في الزواج',
+  legal: 'قانوني',
+  legal_privacy: 'سياسة الخصوصية (GDPR)',
+  legal_terms: 'شروط الاستخدام',
+  legal_imprint: 'بيانات الناشر',
+  legal_notices: 'إرشادات التعارف الإلكتروني',
+  legal_owner: 'مالك المنصة',
   copyright: '© 2026 سكن — بثقة وخصوصية ونية صادقة',
 } as const;
 
@@ -150,6 +156,12 @@ const en: Dict = {
   cta_enter: 'Enter Sakan',
   verified: 'Verified',
   footer_note: 'A private community for marriage-minded members.',
+  legal: 'Legal',
+  legal_privacy: 'Privacy Policy (GDPR)',
+  legal_terms: 'Terms of Service',
+  legal_imprint: 'Impressum (Legal Notice)',
+  legal_notices: 'Online Dating Notices',
+  legal_owner: 'Platform Owner',
   copyright: '© 2026 Sakan — built with trust, privacy, and intention.',
 };
 
@@ -198,6 +210,12 @@ const de: Dict = {
   cta_enter: 'Sakan betreten',
   verified: 'Verifiziert',
   footer_note: 'Eine private Community für eheorientierte Mitglieder.',
+  legal: 'Rechtliches',
+  legal_privacy: 'Datenschutz (DSGVO)',
+  legal_terms: 'Nutzungsbedingungen (AGB)',
+  legal_imprint: 'Impressum',
+  legal_notices: 'Online-Dating Hinweise',
+  legal_owner: 'Plattform-Inhaber',
   copyright: '© 2026 Sakan — gebaut mit Vertrauen, Privatsphäre und ehrlicher Absicht.',
 };
 
@@ -246,6 +264,12 @@ const fr: Dict = {
   cta_enter: 'Entrer dans Sakan',
   verified: 'Vérifié',
   footer_note: 'Une communauté privée pour membres souhaitant se marier.',
+  legal: 'Mentions légales',
+  legal_privacy: 'Politique de confidentialité (RGPD)',
+  legal_terms: 'Conditions d\'utilisation',
+  legal_imprint: 'Mentions légales (Impressum)',
+  legal_notices: 'Conseils rencontre en ligne',
+  legal_owner: 'Propriétaire de la plateforme',
   copyright: '© 2026 Sakan — construit avec confiance, confidentialité et sincérité.',
 };
 
@@ -294,6 +318,12 @@ const tr: Dict = {
   cta_enter: "Sakan'a gir",
   verified: 'Doğrulanmış',
   footer_note: 'Evlilik düşünen üyeler için özel bir topluluk.',
+  legal: 'Yasal',
+  legal_privacy: 'Gizlilik Politikası (GDPR)',
+  legal_terms: 'Kullanım Koşulları',
+  legal_imprint: 'Künye',
+  legal_notices: 'Çevrimiçi Flört Uyarıları',
+  legal_owner: 'Platform Sahibi',
   copyright: '© 2026 Sakan — güven, gizlilik ve samimi niyetle yapıldı.',
 };
 
@@ -342,6 +372,12 @@ const es: Dict = {
   cta_enter: 'Entrar a Sakan',
   verified: 'Verificado',
   footer_note: 'Una comunidad privada para miembros con intención de matrimonio.',
+  legal: 'Legal',
+  legal_privacy: 'Política de Privacidad (RGPD)',
+  legal_terms: 'Términos del Servicio',
+  legal_imprint: 'Aviso Legal',
+  legal_notices: 'Avisos de citas en línea',
+  legal_owner: 'Propietario de la plataforma',
   copyright: '© 2026 Sakan — construido con confianza, privacidad e intención sincera.',
 };
 
@@ -390,6 +426,12 @@ const it: Dict = {
   cta_enter: 'Entra in Sakan',
   verified: 'Verificato',
   footer_note: 'Una community privata per membri orientati al matrimonio.',
+  legal: 'Legale',
+  legal_privacy: 'Informativa sulla privacy (GDPR)',
+  legal_terms: 'Termini di servizio',
+  legal_imprint: 'Note legali (Impressum)',
+  legal_notices: 'Avvisi incontri online',
+  legal_owner: 'Titolare della piattaforma',
   copyright: '© 2026 Sakan — costruito con fiducia, privacy e sincere intenzioni.',
 };
 
@@ -438,6 +480,12 @@ const pt: Dict = {
   cta_enter: 'Entrar no Sakan',
   verified: 'Verificado',
   footer_note: 'Uma comunidade privada para membros com intenção de casamento.',
+  legal: 'Legal',
+  legal_privacy: 'Política de Privacidade (RGPD)',
+  legal_terms: 'Termos de Serviço',
+  legal_imprint: 'Aviso Legal',
+  legal_notices: 'Avisos de namoro online',
+  legal_owner: 'Proprietário da plataforma',
   copyright: '© 2026 Sakan — construído com confiança, privacidade e intenção sincera.',
 };
 
@@ -486,6 +534,12 @@ const nl: Dict = {
   cta_enter: 'Ga naar Sakan',
   verified: 'Geverifieerd',
   footer_note: 'Een privécommunity voor leden die een huwelijkspartner zoeken.',
+  legal: 'Juridisch',
+  legal_privacy: 'Privacybeleid (AVG)',
+  legal_terms: 'Gebruiksvoorwaarden',
+  legal_imprint: 'Colofon',
+  legal_notices: 'Aanwijzingen online dating',
+  legal_owner: 'Platformeigenaar',
   copyright: '© 2026 Sakan — gebouwd met vertrouwen, privacy en oprechte bedoelingen.',
 };
 
@@ -534,6 +588,12 @@ const pl: Dict = {
   cta_enter: 'Wejdź do Sakan',
   verified: 'Zweryfikowany',
   footer_note: 'Prywatna społeczność osób myślących o małżeństwie.',
+  legal: 'Informacje prawne',
+  legal_privacy: 'Polityka prywatności (RODO)',
+  legal_terms: 'Regulamin',
+  legal_imprint: 'Stopka prawna',
+  legal_notices: 'Zasady randkowania online',
+  legal_owner: 'Właściciel platformy',
   copyright: '© 2026 Sakan — stworzone z zaufaniem, prywatnością i szczerym zamiarem.',
 };
 
@@ -582,6 +642,12 @@ const ru: Dict = {
   cta_enter: 'Войти в Sakan',
   verified: 'Проверен',
   footer_note: 'Закрытое сообщество для тех, кто настроен на брак.',
+  legal: 'Правовая информация',
+  legal_privacy: 'Политика конфиденциальности (GDPR)',
+  legal_terms: 'Условия использования',
+  legal_imprint: 'Импрессум',
+  legal_notices: 'Правила онлайн-знакомств',
+  legal_owner: 'Владелец платформы',
   copyright: '© 2026 Sakan — построено на доверии, приватности и искренних намерениях.',
 };
 
@@ -630,6 +696,12 @@ const uk: Dict = {
   cta_enter: 'Увійти в Sakan',
   verified: 'Перевірений',
   footer_note: 'Приватна спільнота для тих, хто налаштований на шлюб.',
+  legal: 'Правова інформація',
+  legal_privacy: 'Політика конфіденційності (GDPR)',
+  legal_terms: 'Умови використання',
+  legal_imprint: 'Імпресум',
+  legal_notices: 'Правила онлайн-знайомств',
+  legal_owner: 'Власник платформи',
   copyright: '© 2026 Sakan — створено з довірою, приватністю та щирими намірами.',
 };
 
@@ -678,6 +750,12 @@ const ur: Dict = {
   cta_enter: 'سکن میں داخل ہوں',
   verified: 'تصدیق شدہ',
   footer_note: 'شادی کے ارادے رکھنے والے ممبران کے لیے ایک نجی برادری۔',
+  legal: 'قانونی',
+  legal_privacy: 'پرائویسی پالیسی (GDPR)',
+  legal_terms: 'استعمال کی شرائط',
+  legal_imprint: 'قانونی اعلان',
+  legal_notices: 'آن لائن ڈیٹنگ رہنمائی',
+  legal_owner: 'پلیٹ فارم کا مالک',
   copyright: '© 2026 سکن — اعتماد، رازداری اور مخلص نیت کے ساتھ۔',
 };
 
@@ -726,6 +804,12 @@ const fa: Dict = {
   cta_enter: 'ورود به سکن',
   verified: 'تأییدشده',
   footer_note: 'جامعه‌ای خصوصی برای اعضایی که قصد ازدواج دارند.',
+  legal: 'حقوقی',
+  legal_privacy: 'سیاست حفظ حریم خصوصی (GDPR)',
+  legal_terms: 'شرایط استفاده',
+  legal_imprint: 'اطلاعات ناشر',
+  legal_notices: 'راهنمای آشنایی آنلاین',
+  legal_owner: 'مالک پلتفرم',
   copyright: '© ۲۰۲۶ سکن — ساخته‌شده با اعتماد، حریم خصوصی و نیت صادقانه.',
 };
 
@@ -774,6 +858,12 @@ const ku: Dict = {
   cta_enter: 'Têkeve Sakan',
   verified: 'Piştrastkirî',
   footer_note: 'Civakeke taybet ji bo endamên ku armanca zewacê hene.',
+  legal: 'Yasalî',
+  legal_privacy: 'Polîtîkaya nepenî (GDPR)',
+  legal_terms: 'Mercên bikaranînê',
+  legal_imprint: 'Agahdariya qanûnî',
+  legal_notices: 'Rêwîtî ji bo hevdîtina serhêl',
+  legal_owner: 'Xwediyê platformê',
   copyright: '© 2026 Sakan — bi pêbawerî, nepenî û niyeta rast hatiye çêkirin.',
 };
 
@@ -822,6 +912,12 @@ const el: Dict = {
   cta_enter: 'Μπες στο Sakan',
   verified: 'Επαληθευμένο',
   footer_note: 'Μια ιδιωτική κοινότητα για μέλη με στόχο τον γάμο.',
+  legal: 'Νομικά',
+  legal_privacy: 'Πολιτική Απορρήτου (GDPR)',
+  legal_terms: 'Όροι Χρήσης',
+  legal_imprint: 'Νομικές Πληροφορίες',
+  legal_notices: 'Οδηγίες διαδικτυακών γνωριμιών',
+  legal_owner: 'Ιδιοκτήτης πλατφόρμας',
   copyright: '© 2026 Sakan — χτισμένο με εμπιστοσύνη, ιδιωτικότητα και ειλικρινή πρόθεση.',
 };
 
@@ -870,6 +966,12 @@ const sv: Dict = {
   cta_enter: 'Gå in i Sakan',
   verified: 'Verifierad',
   footer_note: 'En privat community för medlemmar som söker äktenskap.',
+  legal: 'Juridiskt',
+  legal_privacy: 'Integritetspolicy (GDPR)',
+  legal_terms: 'Användarvillkor',
+  legal_imprint: 'Impressum',
+  legal_notices: 'Tips för nätdejting',
+  legal_owner: 'Plattformägare',
   copyright: '© 2026 Sakan — byggt med förtroende, integritet och uppriktig avsikt.',
 };
 
@@ -918,6 +1020,12 @@ const id: Dict = {
   cta_enter: 'Masuk ke Sakan',
   verified: 'Terverifikasi',
   footer_note: 'Komunitas privat untuk anggota yang berniat menikah.',
+  legal: 'Legal',
+  legal_privacy: 'Kebijakan Privasi (GDPR)',
+  legal_terms: 'Syarat Layanan',
+  legal_imprint: 'Informasi Hukum',
+  legal_notices: 'Panduan Kencan Online',
+  legal_owner: 'Pemilik Platform',
   copyright: '© 2026 Sakan — dibangun dengan kepercayaan, privasi, dan niat tulus.',
 };
 
@@ -966,6 +1074,12 @@ const ms: Dict = {
   cta_enter: 'Masuk ke Sakan',
   verified: 'Disahkan',
   footer_note: 'Komuniti peribadi untuk ahli yang berhasrat berkahwin.',
+  legal: 'Undang-undang',
+  legal_privacy: 'Dasar Privasi (GDPR)',
+  legal_terms: 'Terma Perkhidmatan',
+  legal_imprint: 'Maklumat Undang-undang',
+  legal_notices: 'Panduan Dating Dalam Talian',
+  legal_owner: 'Pemilik Platform',
   copyright: '© 2026 Sakan — dibina dengan kepercayaan, privasi dan niat tulus.',
 };
 
@@ -1014,6 +1128,12 @@ const bn: Dict = {
   cta_enter: 'সাকানে প্রবেশ করুন',
   verified: 'যাচাইকৃত',
   footer_note: 'বিয়ের উদ্দেশ্যে সদস্যদের জন্য একটি প্রাইভেট কমিউনিটি।',
+  legal: 'আইনি',
+  legal_privacy: 'প্রাইভেসি পলিসি (GDPR)',
+  legal_terms: 'ব্যবহারের শর্তাবলী',
+  legal_imprint: 'আইনি তথ্য',
+  legal_notices: 'অনলাইন ডেটিং নির্দেশনা',
+  legal_owner: 'প্ল্যাটফর্মের মালিক',
   copyright: '© ২০২৬ সাকান — বিশ্বাস, গোপনীয়তা ও আন্তরিক উদ্দেশ্য নিয়ে নির্মিত।',
 };
 

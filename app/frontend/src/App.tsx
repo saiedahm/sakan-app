@@ -14,6 +14,7 @@ import Connections from './pages/Connections';
 import MessagesPage from './pages/Messages';
 import MyProfile from './pages/MyProfile';
 import Subscription from './pages/Subscription';
+import LegalPage from './pages/LegalPage';
 // MODULE_IMPORTS_START
 // MODULE_IMPORTS_END
 
@@ -32,6 +33,10 @@ const AppRoutes = () => (
     <Route path="/messages" element={<MessagesPage />} />
     <Route path="/me" element={<MyProfile />} />
     <Route path="/subscription" element={<Subscription />} />
+    <Route path="/legal/datenschutz" element={<LegalPage />} />
+    <Route path="/legal/agb" element={<LegalPage />} />
+    <Route path="/legal/impressum" element={<LegalPage />} />
+    <Route path="/legal/hinweise" element={<LegalPage />} />
     {/* MODULE_ROUTES_START */}
     {/* MODULE_ROUTES_END */}
   </Routes>
