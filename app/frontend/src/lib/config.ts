@@ -1,4 +1,4 @@
-// Runtime configuration
+ // Runtime configuration
 let runtimeConfig: {
   API_BASE_URL: string;
 } | null = null;
