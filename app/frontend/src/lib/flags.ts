@@ -1,4 +1,4 @@
-/** Static country-name → flag emoji map (no external assets, no API). */
+ /** Static country-name → flag emoji map (no external assets, no API). */
 
 const FLAGS: Record<string, string> = {
   morocco: '🇲🇦',
