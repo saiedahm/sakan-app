@@ -1,4 +1,4 @@
-import { getAPIBaseURL } from '../lib/config';
+ import { getAPIBaseURL } from '../lib/config';
 
 // Don't cache the getAPIBase() URL, get it dynamically
 const getAPIBase = () => `${getAPIBaseURL()}/api/v1`;
