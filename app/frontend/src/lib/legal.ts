@@ -1,3 +1,4 @@
+
 /**
  * Sakan legal content (German/EU compliance).
  *
@@ -41,52 +42,47 @@ export const CONTACT = OWNER;
 
 const impressumDe: LegalDoc = {
   title: 'Impressum',
-  subtitle: 'Angaben gemäß § 5 DDG (Digitale-Dienste-Gesetz)',
+  subtitle: 'Angaben gemäß § 5 DDG',
   updated: 'Stand: September 2026',
   sections: [
     {
-      heading: 'Diensteanbieter',
-      bullets: [
-        `${OWNER.platform} (${OWNER.website})`,
-        `Inhaber: ${OWNER.owner}`,
+      heading: 'Anbieter',
+      body: [
+        OWNER.owner,
         OWNER.addressLine1,
         OWNER.addressLine2,
+        `E-Mail: ${OWNER.emailPrimary}`,
       ],
     },
     {
       heading: 'Kontakt',
-      bullets: [
+      body: [
         `Allgemeine Anfragen: ${OWNER.emailPrimary}`,
-        `Kundenservice: ${OWNER.emailService}`,
-        `Website: ${OWNER.website}`,
+        `Service und Support: ${OWNER.emailService}`,
       ],
     },
     {
-      heading: 'Verantwortlich für den Inhalt nach § 18 Abs. 2 MStV',
-      bullets: [`${OWNER.owner}, ${OWNER.addressLine1}, ${OWNER.addressLine2}`],
-    },
-    {
-      heading: 'EU-Streitschlichtung',
+      heading: 'Verantwortlich für den Inhalt',
       body: [
-        'Die Europäische Kommission stellt eine Plattform zur Online-Streitbeilegung (OS) bereit. Wir sind nicht bereit oder verpflichtet, an Streitbeilegungsverfahren vor einer Verbraucherschlichtungsstelle teilzunehmen.',
+        `${OWNER.owner}, ${OWNER.addressLine1}, ${OWNER.addressLine2}`,
       ],
     },
     {
       heading: 'Haftung für Inhalte',
       body: [
-        'Als Diensteanbieter sind wir für eigene Inhalte auf diesen Seiten nach den allgemeinen Gesetzen verantwortlich. Wir sind jedoch nicht verpflichtet, übermittelte oder gespeicherte fremde Informationen zu überwachen oder nach Umständen zu forschen, die auf eine rechtswidrige Tätigkeit hinweisen. Verpflichtungen zur Entfernung oder Sperrung der Nutzung von Informationen nach den allgemeinen Gesetzen bleiben hiervon unberührt.',
+        'Als Diensteanbieter sind wir gemäß den allgemeinen Gesetzen für eigene Inhalte auf diesen Seiten verantwortlich. Wir sind jedoch nicht verpflichtet, übermittelte oder gespeicherte fremde Informationen zu überwachen oder nach Umständen zu forschen, die auf eine rechtswidrige Tätigkeit hinweisen. Verpflichtungen zur Entfernung oder Sperrung der Nutzung von Informationen nach den allgemeinen Gesetzen bleiben hiervon unberührt.',
       ],
     },
     {
       heading: 'Haftung für Links',
       body: [
-        'Unser Angebot enthält Links zu externen Websites Dritter, auf deren Inhalte wir keinen Einfluss haben. Für die Inhalte der verlinkten Seiten ist stets der jeweilige Anbieter oder Betreiber der Seiten verantwortlich. Rechtswidrige Inhalte waren zum Zeitpunkt der Verlinkung nicht erkennbar.',
+        'Unser Angebot enthält Links zu externen Websites Dritter, auf deren Inhalte wir keinen Einfluss haben. Für die Inhalte der verlinkten Seiten ist stets der jeweilige Anbieter oder Betreiber verantwortlich. Rechtswidrige Inhalte waren zum Zeitpunkt der Verlinkung nicht erkennbar.',
       ],
     },
     {
       heading: 'Urheberrecht',
       body: [
-        'Die durch den Seitenbetreiber erstellten Inhalte und Werke auf diesen Seiten unterliegen dem deutschen Urheberrecht. Die Vervielfältigung, Bearbeitung, Verbreitung und jede Art der Verwertung außerhalb der Grenzen des Urheberrechtes bedürfen der schriftlichen Zustimmung des jeweiligen Autors bzw. Erstellers.',
+        'Die durch den Seitenbetreiber erstellten Inhalte und Werke auf diesen Seiten unterliegen dem deutschen Urheberrecht. Vervielfältigung, Bearbeitung, Verbreitung und jede Art der Verwertung außerhalb der Grenzen des Urheberrechts bedürfen der schriftlichen Zustimmung des jeweiligen Autors bzw. Erstellers.',
       ],
     },
   ],
@@ -94,34 +90,29 @@ const impressumDe: LegalDoc = {
 
 const impressumEn: LegalDoc = {
   title: 'Legal Notice (Impressum)',
-  subtitle: 'Information pursuant to § 5 DDG (German Digital Services Act)',
+  subtitle: 'Information according to § 5 DDG',
   updated: 'Last updated: September 2026',
   sections: [
     {
-      heading: 'Service provider',
-      bullets: [
-        `${OWNER.platform} (${OWNER.website})`,
-        `Owner: ${OWNER.owner}`,
+      heading: 'Provider',
+      body: [
+        OWNER.owner,
         OWNER.addressLine1,
         OWNER.addressLine2,
+        `E-mail: ${OWNER.emailPrimary}`,
       ],
     },
     {
       heading: 'Contact',
-      bullets: [
-        `General inquiries: ${OWNER.emailPrimary}`,
-        `Customer service: ${OWNER.emailService}`,
-        `Website: ${OWNER.website}`,
+      body: [
+        `General enquiries: ${OWNER.emailPrimary}`,
+        `Service and support: ${OWNER.emailService}`,
       ],
     },
     {
-      heading: 'Responsible for content under § 18 (2) MStV',
-      bullets: [`${OWNER.owner}, ${OWNER.addressLine1}, ${OWNER.addressLine2}`],
-    },
-    {
-      heading: 'EU dispute resolution',
+      heading: 'Responsible for content',
       body: [
-        'The European Commission provides a platform for online dispute resolution (ODR). We are not willing or obliged to participate in dispute resolution proceedings before a consumer arbitration board.',
+        `${OWNER.owner}, ${OWNER.addressLine1}, ${OWNER.addressLine2}`,
       ],
     },
     {
