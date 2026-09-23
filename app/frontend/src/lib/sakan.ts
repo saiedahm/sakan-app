@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+ import { useEffect, useState } from 'react';
 import { client } from './api';
 
 /** Sakan API layer — every backend call goes through @metagptx/web-sdk. */
