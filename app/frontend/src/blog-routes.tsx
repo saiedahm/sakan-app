@@ -1,4 +1,4 @@
-import { Navigate, Route, Routes } from 'react-router-dom';
+ import { Navigate, Route, Routes } from 'react-router-dom';
 // MODULE_BLOG_IMPORTS_START
 // MODULE_BLOG_IMPORTS_END
 import BlogIndexPage from './pages/blog/BlogIndexPage';
