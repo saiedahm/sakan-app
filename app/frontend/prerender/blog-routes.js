@@ -1,13 +1,9 @@
-import path from 'node:path';
-import { seoContentDir, normalizeRouteFromMarkdown, collectMarkdownFiles } from './utils.js';
+ const fs = require("fs");
+const path = require("path");
 
-export function getBlogRoutes() {
-  const routes = new Set(['/blog/']);
+const root = path.resolve(__dirname, "..");
+const blogRoutes = require(path.join(root, "src", "blog-routes.tsx"));
 
-  for (const filePath of collectMarkdownFiles(seoContentDir)) {
-    const relativePath = path.relative(seoContentDir, filePath);
-    routes.add(normalizeRouteFromMarkdown(relativePath));
-  }
-
-  return Array.from(routes).sort();
-}
+module.exports = {
+  blogRoutes,
+};
