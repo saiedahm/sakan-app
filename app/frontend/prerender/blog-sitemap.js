@@ -1,35 +1,17 @@
-import fs from 'node:fs';
-import path from 'node:path';
-import { seoContentDir, normalizeRouteFromMarkdown, collectMarkdownFiles } from './utils.js';
+const fs = require("fs");
+const path = require("path");
 
-function collectMarkdownLastmod(dir) {
-  const bucket = {};
+const root = path.resolve(__dirname, "..");
+const blog = require(path.join(root, "src", "lib", "blog.ts"));
 
-  for (const fullPath of collectMarkdownFiles(dir)) {
-    const relativePath = path.relative(seoContentDir, fullPath);
-    const route = normalizeRouteFromMarkdown(relativePath);
-    bucket[route] = fs.statSync(fullPath).mtime;
-  }
+function buildSitemap() {
+  const posts = blog.getAllPosts();
 
-  return bucket;
+  return posts
+    .map((post) => `/blog/${post.slug}`)
+    .join("\n");
 }
 
-function getLatestContentMtime(lastmodMap) {
-  const dates = Object.values(lastmodMap).filter((value) => value instanceof Date);
-
-  if (dates.length === 0) {
-    return undefined;
-  }
-
-  return new Date(Math.max(...dates.map((date) => date.getTime())));
-}
-
-export function getSitemapLastmod() {
-  const contentLastmod = collectMarkdownLastmod(seoContentDir);
-  const latestContentMtime = getLatestContentMtime(contentLastmod);
-
-  return {
-    ...(latestContentMtime ? { '/blog/': latestContentMtime } : {}),
-    ...contentLastmod,
-  };
-}
+module.exports = {
+  buildSitemap,
+};
