@@ -20,43 +20,32 @@ import LegalPage from './pages/LegalPage';
 
 const queryClient = new QueryClient();
 
-const AppRoutes = () => (
-  <Routes>
-    <Route path="/" element={<Index />} />
-    {/* <Route path="/blog/*" element={<BlogRoutes />} /> */}
-    <Route path="/auth/callback" element={<AuthCallback />} />
-    <Route path="/auth/error" element={<AuthError />} />
-    <Route path="/onboarding" element={<Onboarding />} />
-    <Route path="/discover" element={<Discover />} />
-    <Route path="/profile/:userId" element={<ProfileView />} />
-    <Route path="/connections" element={<Connections />} />
-    <Route path="/messages" element={<MessagesPage />} />
-    <Route path="/me" element={<MyProfile />} />
-    <Route path="/subscription" element={<Subscription />} />
-    <Route path="/legal/datenschutz" element={<LegalPage />} />
-    <Route path="/legal/agb" element={<LegalPage />} />
-    <Route path="/legal/impressum" element={<LegalPage />} />
-    <Route path="/legal/hinweise" element={<LegalPage />} />
-    {/* MODULE_ROUTES_START */}
-    {/* MODULE_ROUTES_END */}
-  </Routes>
+const AppRoutes = () => ( <Routes>
+<Route path="/" element={<Index />} />
+{/* <Route path="/blog/*" element={<BlogRoutes />} /> */}
+<Route path="/auth/callback" element={<AuthCallback />} />
+<Route path="/auth/error" element={<AuthError />} />
+<Route path="/onboarding" element={<Onboarding />} />
+<Route path="/discover" element={<Discover />} />
+<Route path="/profile/:userId" element={<ProfileView />} />
+<Route path="/connections" element={<Connections />} />
+<Route path="/messages" element={<MessagesPage />} />
+<Route path="/me" element={<MyProfile />} />
+<Route path="/subscription" element={<Subscription />} />
+<Route path="/legal/datenschutz" element={<LegalPage />} />
+<Route path="/legal/agb" element={<LegalPage />} />
+<Route path="/legal/impressum" element={<LegalPage />} />
+<Route path="/legal/hinweise" element={<LegalPage />} />
+{/* MODULE_ROUTES_START */}
+{/* MODULE_ROUTES_END */} </Routes>
 );
 
-const App = () => (
-  <QueryClientProvider client={queryClient}>
-    {/* MODULE_PROVIDERS_START */}
-    {/* MODULE_PROVIDERS_END */}
-    <TooltipProvider>
-      <Toaster />
-      <LanguageProvider>
-        <BrowserRouter>
-          <AppRoutes />
-        </BrowserRouter>
-      </LanguageProvider>
-    </TooltipProvider>
-    {/* MODULE_PROVIDERS_CLOSE */}
-  </QueryClientProvider>
+const App = () => ( <QueryClientProvider client={queryClient}>
+{/* MODULE_PROVIDERS_START */}
+{/* MODULE_PROVIDERS_END */} <TooltipProvider> <Toaster /> <LanguageProvider> <BrowserRouter> <AppRoutes /> </BrowserRouter> </LanguageProvider> </TooltipProvider>
+{/* MODULE_PROVIDERS_CLOSE */} </QueryClientProvider>
 );
 
 export default App;
 export { AppRoutes };
+
