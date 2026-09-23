@@ -1,4 +1,5 @@
- import { defineConfig } from 'vite';
+
+import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react-swc';
 import fs from 'node:fs';
 import path from 'path';
@@ -18,18 +19,21 @@ return str
 .replace(/'/g, ''');
 }
 
-process.env.VITE_APP_TITLE ??= process.env.OVERVIEW_TITLE ?? 'SAKAN';
+process.env.VITE_APP_TITLE ??= process.env.OVERVIEW_TITLE ?? 'shadcnui';
 process.env.VITE_APP_DESCRIPTION ??=
-process.env.OVERVIEW_DESCRIPTION ??
-'SAKAN — منصة خاصة للتعارف والزواج وبناء أسرة مستقرة.';
+process.env.OVERVIEW_DESCRIPTION ?? 'Atoms Generated Project';
 
-process.env.VITE_APP_TITLE = escapeHtmlAttr(process.env.VITE_APP_TITLE);
+process.env.VITE_APP_TITLE = escapeHtmlAttr(
+process.env.VITE_APP_TITLE
+);
+
 process.env.VITE_APP_DESCRIPTION = escapeHtmlAttr(
 process.env.VITE_APP_DESCRIPTION
 );
 
 process.env.VITE_APP_LOGO_URL ??=
-process.env.OVERVIEW_LOGO_URL ?? '/assets/sakan-brand.png';
+process.env.OVERVIEW_LOGO_URL ??
+'https://public-frontend-cos.metadl.com/mgx/img/favicon_atoms.ico';
 
 function ensureBuildOutDir() {
 let outDir = path.resolve(__dirname, 'dist');
@@ -38,7 +42,7 @@ return {
 name: 'ensure-build-out-dir',
 
 ```
-configResolved(config: any) {
+configResolved(config) {
   outDir = path.resolve(config.root, config.build.outDir);
 },
 
@@ -50,6 +54,7 @@ writeBundle() {
 };
 }
 
+// https://vitejs.dev/config/
 export default defineConfig(({ command }) => {
 const blogPrerenderRoutes =
 command === 'build' ? getBlogRoutes() : [];
@@ -68,24 +73,22 @@ prefix: 'mgx',
   ensureBuildOutDir(),
 
   Sitemap({
-    hostname: 'https://sakan-app.vercel.app',
+    hostname: 'https://atoms.template.com',
     lastmod: getSitemapLastmod(),
     readable: true,
     generateRobotsTxt: true,
   }),
 
   ...(blogPrerenderRoutes.length > 0
-    ? [
-        vitePrerenderPlugin({
-          renderTarget: '#root',
-          prerenderScript: path.resolve(
-            __dirname,
-            'prerender/blog.js'
-          ),
-          additionalPrerenderRoutes:
-            blogPrerenderRoutes,
-        }),
-      ]
+    ? vitePrerenderPlugin({
+        renderTarget: '#root',
+        prerenderScript: path.resolve(
+          __dirname,
+          'prerender/blog.js'
+        ),
+        additionalPrerenderRoutes:
+          blogPrerenderRoutes,
+      })
     : []),
 ],
 
@@ -99,8 +102,7 @@ server: {
   host: '0.0.0.0',
 
   port: parseInt(
-    process.env.VITE_PORT || '3000',
-    10
+    process.env.VITE_PORT || '3000'
   ),
 
   proxy: {
@@ -119,9 +121,6 @@ server: {
 },
 
 build: {
-  outDir: 'dist',
-  emptyOutDir: true,
-
   rollupOptions: {
     output: {
       manualChunks: {
