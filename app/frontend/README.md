@@ -1,4 +1,4 @@
-# Shadcn-UI Template Usage Instructions
+ # Shadcn-UI Template Usage Instructions
 
 ## technology stack
 
@@ -50,16 +50,3 @@ All shadcn/ui components have been downloaded under `@/components/ui`.
 
 ```shell
 pnpm i
-```
-
-**Start Preview**
-
-```shell
-pnpm run dev
-```
-
-**To build**
-
-```shell
-pnpm run build
-```
