@@ -21,15 +21,53 @@
   </header>
 
   <!-- 1️⃣ شريط الصور الدوارة الفوري (إعلان الـ 99 سنت - يدور باستمرار) -->
-  <section class="banner-carousel-wrapper">
-    <div class="carousel-track" id="rotating-banner-track">
-      <div class="carousel-item-ad"><img src="https://i.pravatar.cc/300?img=1" alt="إعلان مميز"><span class="ad-badge">VIP</span></div>
-      <div class="carousel-item-ad"><img src="https://i.pravatar.cc/300?img=2" alt="إعلان مميز"><span class="ad-badge">VIP</span></div>
-      <div class="carousel-item-ad"><img src="https://i.pravatar.cc/300?img=3" alt="إعلان مميز"><span class="ad-badge">VIP</span></div>
+  <section class="banner-carousel-wrapper" aria-label="الإعلانات المميزة">
+  <div class="carousel-track" id="rotating-banner-track">
+
+    <div class="carousel-set">
+      <div class="carousel-item-ad">
+        <img src="https://i.pravatar.cc/300?img=1" alt="إعلان مميز">
+        <span class="ad-badge">VIP</span>
+      </div>
+
+      <div class="carousel-item-ad">
+        <img src="https://i.pravatar.cc/300?img=2" alt="إعلان مميز">
+        <span class="ad-badge">VIP</span>
+      </div>
+
+      <div class="carousel-item-ad">
+        <img src="https://i.pravatar.cc/300?img=3" alt="إعلان مميز">
+        <span class="ad-badge">VIP</span>
+      </div>
+
       <div class="carousel-item-ad placeholder-ad" onclick="pay99CentsForAd()">
-        <i class="fa-solid fa-plus-circle"></i> أضف صورتك هنا بـ 0.99$ لمدة 5 دقائق
+        <i class="fa-solid fa-plus-circle"></i>
+        أضف صورتك هنا بـ 0.99$ لمدة 5 دقائق
       </div>
     </div>
+
+    <!-- نسخة ثانية حتى يستمر الدوران بدون فراغ -->
+    <div class="carousel-set" aria-hidden="true">
+      <div class="carousel-item-ad">
+        <img src="https://i.pravatar.cc/300?img=1" alt="">
+      </div>
+
+      <div class="carousel-item-ad">
+        <img src="https://i.pravatar.cc/300?img=2" alt="">
+      </div>
+
+      <div class="carousel-item-ad">
+        <img src="https://i.pravatar.cc/300?img=3" alt="">
+      </div>
+
+      <div class="carousel-item-ad placeholder-ad">
+        <i class="fa-solid fa-plus-circle"></i>
+        أضف صورتك هنا بـ 0.99$ لمدة 5 دقائق
+      </div>
+    </div>
+
+  </div>
+</section>
   </section>
 
   <!-- المنطقة الرئيسية للأعضاء الـ 50 -->
