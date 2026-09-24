@@ -52,12 +52,11 @@ body {
 .banner-carousel-wrapper {
   background: #051326;
   border: 1px solid #d4af37;
-  height: 90px;
+  height: 105px;
   position: relative;
   overflow: hidden;
   margin: 15px 0;
 }
-
 .carousel-track {
   display: flex;
   align-items: center;
