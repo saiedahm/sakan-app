@@ -60,15 +60,37 @@ body {
 
 .carousel-track {
   display: flex;
-  gap: 15px;
   align-items: center;
+  width: max-content;
   position: absolute;
   top: 10px;
+  left: 0;
   white-space: nowrap;
-  animation: marquee-scroll 25s linear infinite;
+  animation: marquee-loop 18s linear infinite;
+  will-change: transform;
 }
 
-@keyframes marquee-scroll {
+.carousel-set {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  flex-shrink: 0;
+  padding-right: 15px;
+}
+
+.banner-carousel-wrapper:hover .carousel-track {
+  animation-play-state: paused;
+}
+
+@keyframes marquee-loop {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(-50%);
+  }
+}
   0% { transform: translateX(100%); }
   100% { transform: translateX(-100%); }
 }
