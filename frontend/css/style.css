@@ -1,4 +1,5 @@
-/* style.css - التنسيق الشامل لمنصة سكن */
+ /* style.css - التنسيق الشامل لمنصة سكن */
+
 * {
   box-sizing: border-box;
   margin: 0;
@@ -13,7 +14,10 @@ body {
   padding-bottom: 20px;
 }
 
-/* الهيدر والعناوين */
+/* =========================
+   الهيدر والعناوين
+========================= */
+
 .main-header {
   background: #071426;
   border-bottom: 2px solid #d4af37;
@@ -48,39 +52,46 @@ body {
   font-size: 13px;
 }
 
-/* شريط الإعلانات الدوارة المستمر (0.99$) */
+/* =========================
+   شريط الإعلانات المتحرك
+========================= */
+
 .banner-carousel-wrapper {
   background: #051326;
   border: 1px solid #d4af37;
-  height: 105px;
+  height: 92px;
   position: relative;
   overflow: hidden;
   margin: 15px 0;
+  width: 100%;
 }
+
 .carousel-track {
   display: flex;
   align-items: center;
   width: max-content;
   position: absolute;
-  top: 10px;
+  top: 17px;
   left: 0;
   white-space: nowrap;
-  animation: marquee-loop 18s linear infinite;
+  animation: marquee-loop 20s linear infinite;
   will-change: transform;
 }
 
 .carousel-set {
   display: flex;
   align-items: center;
-  gap: 15px;
+  gap: 14px;
   flex-shrink: 0;
-  padding-right: 15px;
+  padding-right: 14px;
 }
 
+/* إيقاف الحركة عند مرور الماوس */
 .banner-carousel-wrapper:hover .carousel-track {
   animation-play-state: paused;
 }
 
+/* الحركة الدائرية المستمرة */
 @keyframes marquee-loop {
   from {
     transform: translateX(0);
@@ -90,21 +101,24 @@ body {
     transform: translateX(-50%);
   }
 }
-  0% { transform: translateX(100%); }
-  100% { transform: translateX(-100%); }
-}
+
+/* =========================
+   صور الإعلانات
+========================= */
 
 .carousel-item-ad {
+  flex: 0 0 58px;
   width: 58px;
   height: 58px;
   border-radius: 50%;
   border: 2px solid #d4af37;
   overflow: hidden;
   position: relative;
-  flex-shrink: 0;
+  display: block;
 }
 
 .carousel-item-ad img {
+  display: block;
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -113,6 +127,7 @@ body {
 .ad-badge {
   position: absolute;
   bottom: 0;
+  left: 0;
   width: 100%;
   background: rgba(212, 175, 55, 0.9);
   color: #000;
@@ -121,10 +136,15 @@ body {
   font-weight: bold;
 }
 
+/* =========================
+   إعلان إضافة صورة
+========================= */
+
 .placeholder-ad {
+  flex: 0 0 190px;
   width: 190px;
   height: 58px;
-  border-radius: 12px;
+  border-radius: 10px;
   background: rgba(212, 175, 55, 0.1);
   display: flex;
   align-items: center;
@@ -133,11 +153,16 @@ body {
   font-size: 11px;
   font-weight: bold;
   cursor: pointer;
-  padding: 10px;
+  padding: 8px;
   border: 1px dashed #d4af37;
+  white-space: normal;
+  text-align: center;
 }
 
-/* شبكة الأعضاء */
+/* =========================
+   شبكة الأعضاء
+========================= */
+
 .container {
   max-width: 1200px;
   margin: 0 auto;
@@ -156,7 +181,68 @@ body {
   gap: 15px;
 }
 
-/* تذييل الصفحة القانوني (Footer) */
+/* =========================
+   بطاقات الأعضاء
+========================= */
+
+.member-card {
+  background: #071426;
+  border: 1px solid #1e293b;
+  border-radius: 10px;
+  padding: 12px;
+  text-align: center;
+  transition: 0.25s;
+}
+
+.member-card:hover {
+  border-color: #d4af37;
+  transform: translateY(-3px);
+}
+
+.member-avatar {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 10px;
+}
+
+.member-avatar img {
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 8px;
+  border: 2px solid #d4af37;
+}
+
+.member-info h3 {
+  color: #d4af37;
+  font-size: 17px;
+  margin-bottom: 6px;
+}
+
+.member-info p {
+  font-size: 13px;
+  color: #e2e8f0;
+  line-height: 1.6;
+}
+
+.member-type {
+  color: #d4af37 !important;
+  font-weight: bold;
+  margin-top: 5px;
+}
+
+.online-status {
+  display: inline-block;
+  color: #22c55e;
+  font-size: 12px;
+  margin-top: 5px;
+}
+
+/* =========================
+   تذييل الصفحة
+========================= */
+
 .site-footer {
   background: #020813;
   border-top: 2px solid #d4af37;
@@ -207,10 +293,16 @@ body {
   padding-top: 15px;
 }
 
-/* النوافذ المنبثقة والإكس ✖️ */
+/* =========================
+   النوافذ المنبثقة
+========================= */
+
 .modal-overlay {
   position: fixed;
-  top: 0; left: 0; width: 100%; height: 100%;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
   background: rgba(0, 0, 0, 0.85);
   display: none;
   align-items: center;
@@ -253,7 +345,8 @@ body {
   margin-bottom: 15px;
 }
 
-.modal-body p, .modal-body li {
+.modal-body p,
+.modal-body li {
   font-size: 13px;
   line-height: 1.6;
   color: #e2e8f0;
@@ -270,24 +363,38 @@ body {
   margin-top: 15px;
 }
 
-/* قائمة اللغات */
+/* =========================
+   قائمة اللغات
+========================= */
+
 .lang-list {
   list-style: none;
   margin: 15px 0;
 }
 
-.carousel-track {
-  top: 23px;
+.lang-list li {
+  padding: 10px;
   border-bottom: 1px solid #1e293b;
   display: flex;
   justify-content: space-between;
   font-size: 13px;
 }
 
-.coming-soon { font-size: 11px; color: #eab308; }
-.active-lang { font-size: 11px; color: #22c55e; font-weight: bold; }
+.coming-soon {
+  font-size: 11px;
+  color: #eab308;
+}
 
-/* صفحة الاتصال */
+.active-lang {
+  font-size: 11px;
+  color: #22c55e;
+  font-weight: bold;
+}
+
+/* =========================
+   صفحة الاتصال
+========================= */
+
 .contact-body {
   display: flex;
   justify-content: center;
@@ -315,7 +422,8 @@ body {
   color: #d4af37;
 }
 
-.form-group input, .form-group textarea {
+.form-group input,
+.form-group textarea {
   width: 100%;
   background: #030a16;
   border: 1px solid #334155;
@@ -333,4 +441,67 @@ body {
   font-weight: bold;
   border-radius: 6px;
   cursor: pointer;
+}
+
+/* =========================
+   الهاتف والجوال
+========================= */
+
+@media (max-width: 600px) {
+
+  .main-header {
+    padding: 12px;
+  }
+
+  .logo-container h1 {
+    font-size: 18px;
+  }
+
+  .btn-top-contact {
+    padding: 7px 10px;
+    font-size: 12px;
+  }
+
+  .banner-carousel-wrapper {
+    height: 82px;
+  }
+
+  .carousel-track {
+    top: 12px;
+  }
+
+  .carousel-item-ad {
+    width: 55px;
+    height: 55px;
+    flex-basis: 55px;
+  }
+
+  .placeholder-ad {
+    width: 175px;
+    height: 55px;
+    flex-basis: 175px;
+    font-size: 10px;
+  }
+
+  .members-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+
+  .member-card {
+    padding: 8px;
+  }
+
+  .member-avatar img {
+    width: 120px;
+    height: 120px;
+  }
+
+  .member-info h3 {
+    font-size: 15px;
+  }
+
+  .member-info p {
+    font-size: 12px;
+  }
 }
