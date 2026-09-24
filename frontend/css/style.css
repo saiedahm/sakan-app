@@ -95,8 +95,8 @@ body {
 }
 
 .carousel-item-ad {
-  width: 70px;
-  height: 70px;
+  width: 58px;
+  height: 58px;
   border-radius: 50%;
   border: 2px solid #d4af37;
   overflow: hidden;
@@ -122,8 +122,8 @@ body {
 }
 
 .placeholder-ad {
-  width: 220px;
-  height: 70px;
+  width: 190px;
+  height: 58px;
   border-radius: 12px;
   background: rgba(212, 175, 55, 0.1);
   display: flex;
@@ -276,8 +276,8 @@ body {
   margin: 15px 0;
 }
 
-.lang-list li {
-  padding: 10px;
+.carousel-track {
+  top: 23px;
   border-bottom: 1px solid #1e293b;
   display: flex;
   justify-content: space-between;
