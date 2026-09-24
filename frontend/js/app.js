@@ -165,4 +165,8 @@ function renderMembers() {
   });
 }
 
-document.addEventListener("DOMContentLoaded", renderMembers);
+if (document.readyState === "loading") {
+  document.addEventListener("DOMContentLoaded", renderMembers);
+} else {
+  renderMembers();
+}
