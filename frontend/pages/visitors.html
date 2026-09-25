@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>من زار صفحتي | سكن</title>
+
+    <link rel="stylesheet" href="../css/home.css">
+
+    <style>
+
+        .visitors-container {
+            width: min(1180px, 92%);
+            margin: 40px auto 70px;
+        }
+
+        .visitor-heading {
+            display:flex;
+            justify-content:space-between;
+            align-items:center;
+            gap:20px;
+            margin-bottom:25px;
+        }
+
+        .visitor-heading h2 {
+            margin:6px 0;
+        }
+
+        .visitor-heading p {
+            margin:0;
+            color:#8794a5;
+            font-size:12px;
+        }
+
+        .clear-visitors {
+            padding:10px 16px;
+            border-radius:9px;
+            border:1px solid rgba(190,105,105,.25);
+            background:rgba(190,105,105,.05);
+            color:#c99494;
+            cursor:pointer;
+        }
+
+        .visitors-grid {
+            display:grid;
+            grid-template-columns:repeat(4,1fr);
+            gap:18px;
+        }
+
+        .empty-visitors {
+            padding:70px 20px;
+            text-align:center;
+            border-radius:18px;
+            background:#0b192a;
+            border:1px dashed rgba(216,179,93,.2);
+        }
+
+        .empty-visitors .icon {
+            font-size:45px;
+        }
+
+        .empty-visitors p {
+            color:#8794a5;
+            font-size:12px;
+        }
+
+        .visitor-time {
+            display:block;
+            margin-top:6px;
+            color:#657386;
+            font-size:9px;
+        }
+
+        @media(max-width:1000px) {
+            .visitors-grid {
+                grid-template-columns:repeat(2,1fr);
+            }
+        }
+
+        @media(max-width:600px) {
+            .visitors-grid {
+                grid-template-columns:1fr;
+            }
+
+            .visitor-heading {
+                flex-direction:column;
+                align-items:stretch;
+            }
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<header class="header">
+
+    <div class="logo-area">
+
+        <div class="logo-mark">
+            س
+        </div>
+
+        <div>
+
+            <h1>سكن</h1>
+
+            <p>
+                من زار صفحتي
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <button
+        id="backHomeBtn"
+        class="header-btn">
+
+        ← الرئيسية
+
+    </button>
+
+</header>
+
+
+<main class="visitors-container">
+
+    <div class="visitor-heading">
+
+        <div>
+
+            <span class="small-title">
+                الزيارات
+            </span>
+
+            <h2>
+                من زار صفحتي
+            </h2>
+
+            <p>
+                ستظهر هنا زيارات الأعضاء لملفك.
+            </p>
+
+        </div>
+
+
+        <button
+            id="clearVisitorsBtn"
+            class="clear-visitors">
+
+            مسح الزيارات
+
+        </button>
+
+    </div>
+
+
+    <div
+        id="visitorsGrid"
+        class="visitors-grid">
+
+    </div>
+
+
+    <div
+        id="emptyVisitors"
+        class="empty-visitors"
+        style="display:none;">
+
+        <div class="icon">
+            👁️
+        </div>
+
+        <h3>
+            لا توجد زيارات بعد
+        </h3>
+
+        <p>
+            عندما يزور أحد ملفك سيظهر هنا.
+        </p>
+
+    </div>
+
+</main>
+
+
+<script src="../js/visitors.js"></script>
+
+</body>
+</html> 
