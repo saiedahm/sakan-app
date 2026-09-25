@@ -1,120 +1,216 @@
-
 /* =====================================================
-   SAKAN - MAIN APP
+   SAKAN ENTRY SYSTEM
 ===================================================== */
 
 document.addEventListener("DOMContentLoaded", function () {
 
+
     /* =================================================
-       ELEMENTS
+       SCREENS
     ================================================= */
 
-    const privacyScreen =
-        document.getElementById("privacyScreen");
+    const screens = {
 
-    const welcomeScreen =
-        document.getElementById("welcomeScreen");
+        privacy:
+            document.getElementById(
+                "privacyScreen"
+            ),
 
-    const accountScreen =
-        document.getElementById("accountScreen");
+        welcome:
+            document.getElementById(
+                "welcomeScreen"
+            ),
+
+        account:
+            document.getElementById(
+                "accountScreen"
+            ),
+
+        newMember:
+            document.getElementById(
+                "newMemberScreen"
+            ),
+
+        existingMember:
+            document.getElementById(
+                "existingMemberScreen"
+            )
+
+    };
+
+
+    /* =================================================
+       BUTTONS
+    ================================================= */
 
     const acceptPrivacyBtn =
-        document.getElementById("acceptPrivacyBtn");
+        document.getElementById(
+            "acceptPrivacyBtn"
+        );
 
     const rejectPrivacyBtn =
-        document.getElementById("rejectPrivacyBtn");
+        document.getElementById(
+            "rejectPrivacyBtn"
+        );
 
-    const continueBtn =
-        document.getElementById("continueBtn");
+    const startBtn =
+        document.getElementById(
+            "startBtn"
+        );
 
     const newMemberBtn =
-        document.getElementById("newMemberBtn");
+        document.getElementById(
+            "newMemberBtn"
+        );
 
     const existingMemberBtn =
-        document.getElementById("existingMemberBtn");
+        document.getElementById(
+            "existingMemberBtn"
+        );
 
-    const registerBox =
-        document.getElementById("registerBox");
+    const backToWelcomeBtn =
+        document.getElementById(
+            "backToWelcomeBtn"
+        );
 
-    const loginBox =
-        document.getElementById("loginBox");
+    const backToAccountBtn =
+        document.getElementById(
+            "backToAccountBtn"
+        );
 
-    const accountChoice =
-        document.getElementById("accountChoice");
+    const backFromLoginBtn =
+        document.getElementById(
+            "backFromLoginBtn"
+        );
 
-    const backFromRegister =
-        document.getElementById("backFromRegister");
 
-    const backFromLogin =
-        document.getElementById("backFromLogin");
+    /* =================================================
+       REGISTRATION
+    ================================================= */
 
-    const registerBtn =
-        document.getElementById("registerBtn");
+    const registerForm =
+        document.getElementById(
+            "registerForm"
+        );
 
-    const loginBtn =
-        document.getElementById("loginBtn");
+    const registerEmail =
+        document.getElementById(
+            "registerEmail"
+        );
+
+    const registerPassword =
+        document.getElementById(
+            "registerPassword"
+        );
+
+    const registerPasswordConfirm =
+        document.getElementById(
+            "registerPasswordConfirm"
+        );
+
+    const registerAgreement =
+        document.getElementById(
+            "registerAgreement"
+        );
+
+    const togglePassword =
+        document.getElementById(
+            "togglePassword"
+        );
+
+
+    /* =================================================
+       LOGIN
+    ================================================= */
+
+    const loginForm =
+        document.getElementById(
+            "loginForm"
+        );
 
     const forgotPasswordBtn =
-        document.getElementById("forgotPasswordBtn");
-
-    const googleRegisterBtn =
-        document.getElementById("googleRegisterBtn");
-
-    const facebookRegisterBtn =
-        document.getElementById("facebookRegisterBtn");
+        document.getElementById(
+            "forgotPasswordBtn"
+        );
 
 
     /* =================================================
-       MESSAGE
+       SCREEN FUNCTION
     ================================================= */
 
-    function showMessage(message) {
+    function showScreen(name) {
 
-        const box =
-            document.getElementById("messageBox");
+        Object.keys(screens).forEach(
+            function (key) {
 
-        if (!box) return;
+                if (
+                    screens[key]
+                ) {
 
-        box.textContent = message;
+                    screens[key]
+                        .classList.remove(
+                            "active"
+                        );
 
-        box.classList.add("show");
+                }
 
-        setTimeout(function () {
-            box.classList.remove("show");
-        }, 3500);
-    }
+            }
+        );
 
 
-    /* =================================================
-       SCREEN FUNCTIONS
-    ================================================= */
+        if (
+            screens[name]
+        ) {
 
-    function showScreen(screen) {
+            screens[name]
+                .classList.add(
+                    "active"
+                );
 
-        document
-            .querySelectorAll(".screen")
-            .forEach(function (item) {
-
-                item.classList.remove("active");
-
-            });
-
-        if (screen) {
-            screen.classList.add("active");
         }
+
+
+        window.scrollTo({
+            top: 0,
+            behavior: "smooth"
+        });
+
     }
 
 
     /* =================================================
-       INITIAL SCREEN
+       PRIVACY
     ================================================= */
+
+    function privacyAccepted() {
+
+        return (
+            localStorage.getItem(
+                "sakanPrivacyAccepted"
+            ) === "true"
+        );
+
+    }
+
 
     /*
-       الخصوصية يجب أن تظهر أولاً دائمًا
-       في نسخة المعاينة.
+       مهم:
+       أول زيارة يجب أن تمر بالخصوصية.
     */
 
-    showScreen(privacyScreen);
+    if (
+        !privacyAccepted()
+    ) {
+
+        showScreen("privacy");
+
+    }
+
+    else {
+
+        showScreen("welcome");
+
+    }
 
 
     /* =================================================
@@ -132,7 +228,10 @@ document.addEventListener("DOMContentLoaded", function () {
                     "true"
                 );
 
-                showScreen(welcomeScreen);
+
+                showScreen(
+                    "welcome"
+                );
 
             }
         );
@@ -150,15 +249,23 @@ document.addEventListener("DOMContentLoaded", function () {
             "click",
             function () {
 
-                localStorage.removeItem(
-                    "sakanPrivacyAccepted"
-                );
+                const message =
+                    document.getElementById(
+                        "privacyMessage"
+                    );
 
-                showMessage(
-                    "يجب الموافقة على الخصوصية والأمان للدخول إلى منصة سكن."
-                );
 
-                showScreen(privacyScreen);
+                if (message) {
+
+                    message.textContent =
+                        "يجب الموافقة على الخصوصية والأمان للدخول إلى منصة سكن.";
+
+                }
+
+
+                showScreen(
+                    "privacy"
+                );
 
             }
         );
@@ -167,42 +274,33 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
     /* =================================================
-       CONTINUE
+       WELCOME
     ================================================= */
 
-    if (continueBtn) {
+    if (startBtn) {
 
-        continueBtn.addEventListener(
+        startBtn.addEventListener(
             "click",
             function () {
 
-                showScreen(accountScreen);
+                if (
+                    !privacyAccepted()
+                ) {
 
-                showAccountChoice();
+                    showScreen(
+                        "privacy"
+                    );
+
+                    return;
+                }
+
+
+                showScreen(
+                    "account"
+                );
 
             }
         );
-
-    }
-
-
-    /* =================================================
-       ACCOUNT CHOICE
-    ================================================= */
-
-    function showAccountChoice() {
-
-        if (accountChoice) {
-            accountChoice.classList.remove("hidden");
-        }
-
-        if (registerBox) {
-            registerBox.classList.add("hidden");
-        }
-
-        if (loginBox) {
-            loginBox.classList.add("hidden");
-        }
 
     }
 
@@ -217,17 +315,9 @@ document.addEventListener("DOMContentLoaded", function () {
             "click",
             function () {
 
-                if (accountChoice) {
-                    accountChoice.classList.add("hidden");
-                }
-
-                if (registerBox) {
-                    registerBox.classList.remove("hidden");
-                }
-
-                if (loginBox) {
-                    loginBox.classList.add("hidden");
-                }
+                showScreen(
+                    "newMember"
+                );
 
             }
         );
@@ -245,16 +335,149 @@ document.addEventListener("DOMContentLoaded", function () {
             "click",
             function () {
 
-                if (accountChoice) {
-                    accountChoice.classList.add("hidden");
+                showScreen(
+                    "existingMember"
+                );
+
+            }
+        );
+
+    }
+
+
+    /* =================================================
+       BACK
+    ================================================= */
+
+    if (backToWelcomeBtn) {
+
+        backToWelcomeBtn.addEventListener(
+            "click",
+            function () {
+
+                showScreen(
+                    "welcome"
+                );
+
+            }
+        );
+
+    }
+
+
+    if (backToAccountBtn) {
+
+        backToAccountBtn.addEventListener(
+            "click",
+            function () {
+
+                showScreen(
+                    "account"
+                );
+
+            }
+        );
+
+    }
+
+
+    if (backFromLoginBtn) {
+
+        backFromLoginBtn.addEventListener(
+            "click",
+            function () {
+
+                showScreen(
+                    "account"
+                );
+
+            }
+        );
+
+    }
+
+
+    /* =================================================
+       GOOGLE / FACEBOOK DEMO
+    ================================================= */
+
+    const googleBtn =
+        document.getElementById(
+            "googleBtn"
+        );
+
+
+    const facebookBtn =
+        document.getElementById(
+            "facebookBtn"
+        );
+
+
+    if (googleBtn) {
+
+        googleBtn.addEventListener(
+            "click",
+            function () {
+
+                showRegisterMessage(
+                    "تسجيل Google سيتم ربطه لاحقًا بالحساب الحقيقي. يمكنك حاليًا استخدام البريد الإلكتروني للمتابعة.",
+                    "error"
+                );
+
+            }
+        );
+
+    }
+
+
+    if (facebookBtn) {
+
+        facebookBtn.addEventListener(
+            "click",
+            function () {
+
+                showRegisterMessage(
+                    "تسجيل Facebook سيتم ربطه لاحقًا بالحساب الحقيقي. يمكنك حاليًا استخدام البريد الإلكتروني للمتابعة.",
+                    "error"
+                );
+
+            }
+        );
+
+    }
+
+
+    /* =================================================
+       PASSWORD SHOW / HIDE
+    ================================================= */
+
+    if (togglePassword) {
+
+        togglePassword.addEventListener(
+            "click",
+            function () {
+
+                if (
+                    registerPassword.type ===
+                    "password"
+                ) {
+
+                    registerPassword.type =
+                        "text";
+
+                    togglePassword.innerHTML =
+                        '<i class="fa-solid fa-eye-slash"></i>';
+
                 }
 
-                if (loginBox) {
-                    loginBox.classList.remove("hidden");
-                }
+                else {
 
-                if (registerBox) {
-                    registerBox.classList.add("hidden");
+                    registerPassword.type =
+                        "password";
+
+                    togglePassword.innerHTML =
+                        '<i class="fa-solid fa-eye"></i>';
+
                 }
 
             }
@@ -264,36 +487,75 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
     /* =================================================
-       BACK FROM REGISTER
+       REGISTER MESSAGE
     ================================================= */
 
-    if (backFromRegister) {
+    function showRegisterMessage(
+        message,
+        type
+    ) {
 
-        backFromRegister.addEventListener(
-            "click",
-            function () {
+        const box =
+            document.getElementById(
+                "registerMessage"
+            );
 
-                showAccountChoice();
 
-            }
-        );
+        if (!box) {
+            return;
+        }
+
+
+        box.textContent =
+            message;
+
+
+        box.className =
+            "form-message " +
+            type;
 
     }
 
 
     /* =================================================
-       BACK FROM LOGIN
+       CLEAR ERRORS
     ================================================= */
 
-    if (backFromLogin) {
+    function clearRegisterErrors() {
 
-        backFromLogin.addEventListener(
-            "click",
-            function () {
+        const ids = [
 
-                showAccountChoice();
+            "emailError",
+            "passwordError",
+            "confirmError",
+            "agreementError"
+
+        ];
+
+
+        ids.forEach(
+            function (id) {
+
+                const element =
+                    document.getElementById(
+                        id
+                    );
+
+
+                if (element) {
+
+                    element.textContent =
+                        "";
+
+                }
 
             }
+        );
+
+
+        showRegisterMessage(
+            "",
+            ""
         );
 
     }
@@ -303,61 +565,211 @@ document.addEventListener("DOMContentLoaded", function () {
        REGISTER
     ================================================= */
 
-    if (registerBtn) {
+    if (registerForm) {
 
-        registerBtn.addEventListener(
-            "click",
-            function () {
+        registerForm.addEventListener(
+            "submit",
+            function (event) {
+
+                event.preventDefault();
+
+
+                clearRegisterErrors();
+
 
                 const email =
-                    document.getElementById(
-                        "registerEmail"
-                    ).value.trim();
+                    registerEmail.value
+                        .trim();
+
 
                 const password =
+                    registerPassword.value;
+
+
+                const confirmPassword =
+                    registerPasswordConfirm.value;
+
+
+                const agreement =
+                    registerAgreement.checked;
+
+
+                let valid = true;
+
+
+                /* EMAIL */
+
+                if (
+                    !email
+                ) {
+
                     document.getElementById(
-                        "registerPassword"
-                    ).value.trim();
+                        "emailError"
+                    ).textContent =
+                        "يرجى كتابة البريد الإلكتروني.";
 
+                    valid = false;
 
-                if (!email) {
+                }
 
-                    showMessage(
-                        "من فضلك أدخل البريد الإلكتروني."
-                    );
+                else if (
+                    !isValidEmail(email)
+                ) {
 
-                    return;
+                    document.getElementById(
+                        "emailError"
+                    ).textContent =
+                        "يرجى إدخال بريد إلكتروني صحيح.";
+
+                    valid = false;
+
                 }
 
 
-                if (!password) {
+                /* PASSWORD */
 
-                    showMessage(
-                        "من فضلك أدخل كلمة المرور."
-                    );
+                if (
+                    !password
+                ) {
 
-                    return;
+                    document.getElementById(
+                        "passwordError"
+                    ).textContent =
+                        "يرجى كتابة كلمة المرور.";
+
+                    valid = false;
+
+                }
+
+                else if (
+                    password.length < 6
+                ) {
+
+                    document.getElementById(
+                        "passwordError"
+                    ).textContent =
+                        "كلمة المرور يجب أن تكون 6 أحرف على الأقل.";
+
+                    valid = false;
+
                 }
 
 
-                if (password.length < 6) {
+                /* CONFIRM */
 
-                    showMessage(
-                        "كلمة المرور يجب أن تكون 6 أحرف على الأقل."
+                if (
+                    !confirmPassword
+                ) {
+
+                    document.getElementById(
+                        "confirmError"
+                    ).textContent =
+                        "يرجى تأكيد كلمة المرور.";
+
+                    valid = false;
+
+                }
+
+                else if (
+                    password !==
+                    confirmPassword
+                ) {
+
+                    document.getElementById(
+                        "confirmError"
+                    ).textContent =
+                        "كلمتا المرور غير متطابقتين.";
+
+                    valid = false;
+
+                }
+
+
+                /* AGREEMENT */
+
+                if (
+                    !agreement
+                ) {
+
+                    document.getElementById(
+                        "agreementError"
+                    ).textContent =
+                        "يجب الموافقة على شروط الاستخدام والخصوصية.";
+
+                    valid = false;
+
+                }
+
+
+                if (
+                    !valid
+                ) {
+
+                    showRegisterMessage(
+                        "يرجى تصحيح البيانات المطلوبة.",
+                        "error"
                     );
 
                     return;
+
                 }
 
 
                 /*
-                   هذه نسخة الواجهة فقط.
-                   الربط الحقيقي مع الحسابات سيتم لاحقًا
-                   مع الـ Backend.
+                   ========================================
+                   تسجيل تجريبي
+                   ========================================
                 */
 
-                showMessage(
-                    "تم استلام بيانات التسجيل. سيتم ربط التسجيل الحقيقي بالمنصة في الخطوة التالية."
+                const account = {
+
+                    email: email,
+
+                    createdAt:
+                        new Date()
+                            .toISOString(),
+
+                    provider:
+                        "email",
+
+                    registrationCompleted:
+                        true
+
+                };
+
+
+                localStorage.setItem(
+                    "sakanDemoAccount",
+                    JSON.stringify(
+                        account
+                    )
+                );
+
+
+                localStorage.setItem(
+                    "sakanLoggedIn",
+                    "true"
+                );
+
+
+                showRegisterMessage(
+                    "تم إنشاء الحساب بنجاح. جاري الانتقال إلى بياناتي...",
+                    "success"
+                );
+
+
+                /*
+                   الانتقال إلى صفحة بياناتي
+                */
+
+                setTimeout(
+                    function () {
+
+                        window.location.href =
+                            "pages/profile-data.html";
+
+                    },
+                    900
                 );
 
             }
@@ -367,54 +779,147 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
     /* =================================================
+       EMAIL VALIDATION
+    ================================================= */
+
+    function isValidEmail(email) {
+
+        return /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+            .test(email);
+
+    }
+
+
+    /* =================================================
        LOGIN
     ================================================= */
 
-    if (loginBtn) {
+    if (loginForm) {
 
-        loginBtn.addEventListener(
-            "click",
-            function () {
+        loginForm.addEventListener(
+            "submit",
+            function (event) {
+
+                event.preventDefault();
+
 
                 const email =
                     document.getElementById(
                         "loginEmail"
-                    ).value.trim();
+                    ).value
+                        .trim();
+
 
                 const password =
                     document.getElementById(
                         "loginPassword"
-                    ).value.trim();
+                    ).value;
 
 
-                if (!email) {
-
-                    showMessage(
-                        "من فضلك أدخل البريد الإلكتروني."
+                const message =
+                    document.getElementById(
+                        "loginMessage"
                     );
 
+
+                if (
+                    !email ||
+                    !isValidEmail(email)
+                ) {
+
+                    message.textContent =
+                        "يرجى إدخال بريد إلكتروني صحيح.";
+
+                    message.className =
+                        "form-message error";
+
                     return;
+
                 }
 
 
-                if (!password) {
+                if (
+                    !password
+                ) {
 
-                    showMessage(
-                        "من فضلك أدخل كلمة المرور."
-                    );
+                    message.textContent =
+                        "يرجى إدخال كلمة المرور.";
+
+                    message.className =
+                        "form-message error";
 
                     return;
+
                 }
 
 
                 /*
-                   تسجيل الدخول الحقيقي سيتم ربطه
-                   بالـ Backend لاحقًا.
+                   في نسخة المعاينة:
+                   إذا كان الحساب التجريبي موجودًا
+                   نسمح بالدخول.
                 */
 
-                showMessage(
-                    "تم إدخال البيانات. سيتم ربط تسجيل الدخول الحقيقي بالمنصة في الخطوة التالية."
-                );
+                const savedAccount =
+                    localStorage.getItem(
+                        "sakanDemoAccount"
+                    );
+
+
+                if (
+                    savedAccount
+                ) {
+
+                    const account =
+                        JSON.parse(
+                            savedAccount
+                        );
+
+
+                    if (
+                        account.email ===
+                        email
+                    ) {
+
+                        localStorage.setItem(
+                            "sakanLoggedIn",
+                            "true"
+                        );
+
+
+                        message.textContent =
+                            "تم تسجيل الدخول بنجاح.";
+
+                        message.className =
+                            "form-message success";
+
+
+                        setTimeout(
+                            function () {
+
+                                window.location.href =
+                                    "pages/profile-data.html";
+
+                            },
+                            800
+                        );
+
+
+                        return;
+
+                    }
+
+                }
+
+
+                /*
+                   لا يوجد Backend حقيقي بعد.
+                */
+
+                message.textContent =
+                    "هذا الحساب غير موجود في نسخة المعاينة. يمكنك إنشاء حساب جديد.";
+
+                message.className =
+                    "form-message error";
 
             }
         );
@@ -432,53 +937,44 @@ document.addEventListener("DOMContentLoaded", function () {
             "click",
             function () {
 
-                showMessage(
-                    "استعادة كلمة المرور ستكون عن طريق البريد الإلكتروني بعد ربط نظام الحسابات."
-                );
+                const email =
+                    document.getElementById(
+                        "loginEmail"
+                    ).value
+                        .trim();
+
+
+                const message =
+                    document.getElementById(
+                        "loginMessage"
+                    );
+
+
+                if (
+                    !email ||
+                    !isValidEmail(email)
+                ) {
+
+                    message.textContent =
+                        "اكتب بريدك الإلكتروني أولًا.";
+
+                    message.className =
+                        "form-message error";
+
+                    return;
+
+                }
+
+
+                message.textContent =
+                    "في النظام الحقيقي سيتم إرسال رابط إعادة تعيين كلمة المرور إلى بريدك الإلكتروني.";
+
+                message.className =
+                    "form-message success";
 
             }
         );
 
     }
 
-
-    /* =================================================
-       GOOGLE
-    ================================================= */
-
-    if (googleRegisterBtn) {
-
-        googleRegisterBtn.addEventListener(
-            "click",
-            function () {
-
-                showMessage(
-                    "سيتم تفعيل التسجيل بواسطة Google بعد ربط نظام الحسابات."
-                );
-
-            }
-        );
-
-    }
-
-
-    /* =================================================
-       FACEBOOK
-    ================================================= */
-
-    if (facebookRegisterBtn) {
-
-        facebookRegisterBtn.addEventListener(
-            "click",
-            function () {
-
-                showMessage(
-                    "سيتم تفعيل التسجيل بواسطة Facebook بعد ربط نظام الحسابات."
-                );
-
-            }
-        );
-
-    }
-
-});
+}); 
