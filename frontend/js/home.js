@@ -363,7 +363,224 @@ document.addEventListener("DOMContentLoaded", () => {
       });
     });
 
-    document.querySelectorAll(".view-profile-btn").forEach((button) => {
+    document
+  .querySelectorAll(".view-profile-btn")
+  .forEach((button) => {
+
+    button.addEventListener("click", () => {
+
+      const card =
+        button.closest(".member-card");
+
+      const memberId =
+        card?.dataset.memberId;
+
+      /*
+       * هذه البيانات مؤقتة للنسخة التجريبية.
+       * لاحقًا ستأتي من قاعدة البيانات.
+       */
+
+      const currentProfile =
+        getCurrentProfile();
+
+      const demoProfiles = {
+
+        101: {
+          id: 101,
+          name: "عضوة جديدة",
+          age: 29,
+          country: "ألمانيا",
+          city: "هامبورغ",
+          maritalStatus: "عزباء",
+          language: "العربية",
+          education: "جامعي",
+          profession: "—",
+          online: true,
+          verified: true,
+          avatar: "👩",
+          about:
+            "أبحث عن تعارف جاد قائم على الاحترام والثقة.",
+          seeking:
+            "أبحث عن شريك حياة جاد ومحترم.",
+          photos: []
+        },
+
+        102: {
+          id: 102,
+          name: "عضوة جديدة",
+          age: 34,
+          country: "ألمانيا",
+          city: "كولن",
+          maritalStatus: "عزباء",
+          language: "الألمانية",
+          education: "جامعي",
+          profession: "—",
+          online: true,
+          verified: false,
+          avatar: "👩🏻",
+          about:
+            "شخصية هادئة وأحب الاستقرار.",
+          seeking:
+            "أبحث عن علاقة جادة تنتهي بالزواج.",
+          photos: []
+        },
+
+        103: {
+          id: 103,
+          name: "عضوة جديدة",
+          age: 31,
+          country: "فرنسا",
+          city: "باريس",
+          maritalStatus: "مطلقة",
+          language: "الفرنسية",
+          education: "جامعي",
+          profession: "—",
+          online: false,
+          verified: true,
+          avatar: "👩‍🦰",
+          about:
+            "أقدر الصراحة والاحترام والتفاهم.",
+          seeking:
+            "أبحث عن شريك حياة جاد.",
+          photos: []
+        },
+
+        104: {
+          id: 104,
+          name: "عضوة جديدة",
+          age: 27,
+          country: "إسبانيا",
+          city: "مدريد",
+          maritalStatus: "عزباء",
+          language: "الإسبانية",
+          education: "جامعي",
+          profession: "—",
+          online: true,
+          verified: false,
+          avatar: "👩🏼",
+          about:
+            "أحب الحياة الهادئة والأسرة.",
+          seeking:
+            "أبحث عن الزواج والاستقرار.",
+          photos: []
+        },
+
+        201: {
+          id: 201,
+          name: "عضو جديد",
+          age: 32,
+          country: "ألمانيا",
+          city: "برلين",
+          maritalStatus: "أعزب",
+          language: "العربية",
+          education: "جامعي",
+          profession: "—",
+          online: true,
+          verified: true,
+          avatar: "👨",
+          about:
+            "أبحث عن علاقة جادة مبنية على الثقة والاحترام.",
+          seeking:
+            "أبحث عن شريكة حياة جادة ومحترمة.",
+          photos: []
+        },
+
+        202: {
+          id: 202,
+          name: "عضو جديد",
+          age: 38,
+          country: "ألمانيا",
+          city: "هامبورغ",
+          maritalStatus: "أعزب",
+          language: "الألمانية",
+          education: "جامعي",
+          profession: "—",
+          online: false,
+          verified: false,
+          avatar: "👨🏻",
+          about:
+            "أحب الاستقرار والحياة الأسرية.",
+          seeking:
+            "أبحث عن الزواج والاستقرار.",
+          photos: []
+        },
+
+        203: {
+          id: 203,
+          name: "عضو جديد",
+          age: 29,
+          country: "فرنسا",
+          city: "ليون",
+          maritalStatus: "أعزب",
+          language: "الفرنسية",
+          education: "جامعي",
+          profession: "—",
+          online: true,
+          verified: true,
+          avatar: "👨‍🦰",
+          about:
+            "أحب الصراحة والتفاهم.",
+          seeking:
+            "أبحث عن شريكة حياة جادة.",
+          photos: []
+        },
+
+        204: {
+          id: 204,
+          name: "عضو جديد",
+          age: 41,
+          country: "إسبانيا",
+          city: "مدريد",
+          maritalStatus: "مطلق",
+          language: "الإسبانية",
+          education: "جامعي",
+          profession: "—",
+          online: true,
+          verified: false,
+          avatar: "👨🏼",
+          about:
+            "أقدر الاحترام والعائلة.",
+          seeking:
+            "أبحث عن علاقة جادة.",
+          photos: []
+        }
+
+      };
+
+
+      let selectedMember =
+        demoProfiles[memberId];
+
+
+      /*
+       * حماية إضافية في النسخة التجريبية:
+       * العضو لا يفتح ملفًا من الجنس الآخر
+       * إلا إذا كان موجودًا أصلًا ضمن قائمة العرض المسموحة.
+       */
+
+      if (!selectedMember) {
+
+        openModal(
+          "تعذر فتح الملف",
+          "لم يتم العثور على بيانات هذا العضو."
+        );
+
+        return;
+      }
+
+
+      localStorage.setItem(
+        "sakanSelectedMember",
+        JSON.stringify(selectedMember)
+      );
+
+
+      window.location.href =
+        "member-profile.html";
+
+    });
+
+  });
       button.addEventListener("click", () => {
         openModal(
           "ملف العضو",
