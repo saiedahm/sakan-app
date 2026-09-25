@@ -1,5 +1,9 @@
 document.addEventListener("DOMContentLoaded", () => {
 
+    /* =====================================================
+       ELEMENTS
+    ===================================================== */
+
     const backHomeBtn =
         document.getElementById("backHomeBtn");
 
@@ -71,18 +75,19 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     /* =====================================================
-       LOGIN CHECK
+       LOGIN
     ===================================================== */
 
-    const loggedIn =
-        localStorage.getItem("sakanLoggedIn");
-
-    if (loggedIn !== "true") {
+    if (
+        localStorage.getItem("sakanLoggedIn") !==
+        "true"
+    ) {
 
         window.location.href =
             "../index.html";
 
         return;
+
     }
 
 
@@ -106,39 +111,53 @@ document.addEventListener("DOMContentLoaded", () => {
         document.getElementById("modalOkBtn");
 
 
-    function openModal(title, text) {
+    function openModal(
+        title,
+        text
+    ) {
 
-        modalTitle.textContent = title;
+        modalTitle.textContent =
+            title;
 
-        modalText.textContent = text;
+        modalText.textContent =
+            text;
 
-        modal.classList.remove("hidden");
+        modal.classList.remove(
+            "hidden"
+        );
+
     }
 
 
     function closeModal() {
 
-        modal.classList.add("hidden");
+        modal.classList.add(
+            "hidden"
+        );
+
     }
 
 
-    closeModalBtn.addEventListener(
+    closeModalBtn?.addEventListener(
         "click",
         closeModal
     );
 
 
-    modalOkBtn.addEventListener(
+    modalOkBtn?.addEventListener(
         "click",
         closeModal
     );
 
 
-    modal.addEventListener(
+    modal?.addEventListener(
         "click",
-        (event) => {
+        event => {
 
-            if (event.target === modal) {
+            if (
+                event.target ===
+                modal
+            ) {
 
                 closeModal();
 
@@ -152,7 +171,7 @@ document.addEventListener("DOMContentLoaded", () => {
        BACK
     ===================================================== */
 
-    backHomeBtn.addEventListener(
+    backHomeBtn?.addEventListener(
         "click",
         () => {
 
@@ -164,7 +183,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     /* =====================================================
-       SELECTED MEMBER
+       LOAD MEMBER
     ===================================================== */
 
     let member = null;
@@ -172,115 +191,182 @@ document.addEventListener("DOMContentLoaded", () => {
 
     try {
 
-        const savedMember =
+        const saved =
             localStorage.getItem(
                 "sakanSelectedMember"
             );
 
 
-        if (savedMember) {
+        if (saved) {
 
             member =
-                JSON.parse(savedMember);
+                JSON.parse(saved);
 
         }
 
     } catch (error) {
 
         console.error(
-            "تعذر قراءة بيانات العضو",
+            "تعذر قراءة بيانات العضو:",
             error
         );
 
     }
 
-
-    /*
-     * في حال فتح الصفحة بدون اختيار عضو،
-     * نعرض ملفًا تجريبيًا بدل ترك الصفحة فارغة.
-     */
 
     if (!member) {
 
         member = {
 
-          /* =====================================================
-   RECORD VISIT
-===================================================== */
+            id: 999,
+            name: "عضو جديد",
+            age: "—",
+            country: "—",
+            city: "—",
+            maritalStatus: "—",
+            language: "—",
+            education: "—",
+            profession: "—",
+            online: false,
+            verified: false,
+            avatar: "👤",
+            about:
+                "لم تتم إضافة نبذة عن هذا العضو بعد.",
+            seeking:
+                "لم تتم إضافة معلومات عن شريك العمر بعد.",
+            photos: []
 
-function recordVisit(profile) {
-
-    try {
-
-        if (!profile || !profile.id) {
-            return;
-        }
-
-        const saved =
-            JSON.parse(
-                localStorage.getItem(
-                    "sakanVisitors"
-                ) || "[]"
-            );
-
-        const visitor = {
-            id: profile.id,
-            name: profile.name,
-            age: profile.age,
-            country: profile.country,
-            city: profile.city,
-            online: profile.online,
-            verified: profile.verified,
-            avatar: profile.avatar,
-            about: profile.about,
-            seeking: profile.seeking,
-            photos: profile.photos || [],
-            visitedAt:
-                new Date().toISOString()
         };
 
-        const filtered =
-            saved.filter(
-                (item) =>
-                    Number(item.id) !==
-                    Number(profile.id)
+    }
+
+
+    /* =====================================================
+       RECORD VISIT
+    ===================================================== */
+
+    function recordVisit(
+        profile
+    ) {
+
+        if (
+            !profile ||
+            !profile.id ||
+            profile.id === 999
+        ) {
+
+            return;
+
+        }
+
+
+        try {
+
+            const visitors =
+                JSON.parse(
+                    localStorage.getItem(
+                        "sakanVisitors"
+                    ) || "[]"
+                );
+
+
+            const visitor = {
+
+                id:
+                    profile.id,
+
+                name:
+                    profile.name,
+
+                age:
+                    profile.age,
+
+                country:
+                    profile.country,
+
+                city:
+                    profile.city,
+
+                online:
+                    profile.online,
+
+                verified:
+                    profile.verified,
+
+                avatar:
+                    profile.avatar,
+
+                about:
+                    profile.about,
+
+                seeking:
+                    profile.seeking,
+
+                photos:
+                    profile.photos || [],
+
+                visitedAt:
+                    new Date().toISOString()
+
+            };
+
+
+            const filtered =
+                visitors.filter(
+                    item =>
+                        Number(item.id) !==
+                        Number(profile.id)
+                );
+
+
+            filtered.unshift(
+                visitor
             );
 
-        filtered.unshift(visitor);
 
-        localStorage.setItem(
-            "sakanVisitors",
-            JSON.stringify(
-                filtered.slice(0, 50)
-            )
-        );
+            localStorage.setItem(
+                "sakanVisitors",
+                JSON.stringify(
+                    filtered.slice(
+                        0,
+                        50
+                    )
+                )
+            );
 
-    } catch (error) {
+        } catch (error) {
 
-        console.error(
-            "تعذر تسجيل الزيارة:",
-            error
-        );
+            console.error(
+                "تعذر تسجيل الزيارة:",
+                error
+            );
+
+        }
 
     }
-}
 
 
-recordVisit(member);
+    recordVisit(
+        member
+    );
+
 
     /* =====================================================
        FILL PROFILE
     ===================================================== */
 
     memberName.textContent =
-        member.name || "عضو جديد";
+        member.name ||
+        "عضو جديد";
 
 
     memberBasicInfo.textContent =
         `${member.age || "—"} سنة • ${member.country || "—"}`;
 
 
-    if (member.online) {
+    if (
+        member.online
+    ) {
 
         onlineStatus.classList.remove(
             "hidden"
@@ -301,7 +387,9 @@ recordVisit(member);
     }
 
 
-    if (member.verified) {
+    if (
+        member.verified
+    ) {
 
         verifiedBadge.classList.remove(
             "hidden"
@@ -317,7 +405,8 @@ recordVisit(member);
 
 
     mainPhoto.textContent =
-        member.avatar || "👤";
+        member.avatar ||
+        "👤";
 
 
     aboutText.textContent =
@@ -331,31 +420,38 @@ recordVisit(member);
 
 
     ageValue.textContent =
-        member.age || "—";
+        member.age ||
+        "—";
 
 
     countryValue.textContent =
-        member.country || "—";
+        member.country ||
+        "—";
 
 
     cityValue.textContent =
-        member.city || "—";
+        member.city ||
+        "—";
 
 
     maritalValue.textContent =
-        member.maritalStatus || "—";
+        member.maritalStatus ||
+        "—";
 
 
     languageValue.textContent =
-        member.language || "—";
+        member.language ||
+        "—";
 
 
     educationValue.textContent =
-        member.education || "—";
+        member.education ||
+        "—";
 
 
     professionValue.textContent =
-        member.profession || "—";
+        member.profession ||
+        "—";
 
 
     /* =====================================================
@@ -363,7 +459,9 @@ recordVisit(member);
     ===================================================== */
 
     const photos =
-        Array.isArray(member.photos)
+        Array.isArray(
+            member.photos
+        )
             ? member.photos
             : [];
 
@@ -372,12 +470,21 @@ recordVisit(member);
         photos.length;
 
 
-    if (photos.length === 0) {
+    if (
+        photos.length ===
+        0
+    ) {
 
-        for (let i = 0; i < 3; i++) {
+        for (
+            let i = 0;
+            i < 3;
+            i++
+        ) {
 
             const box =
-                document.createElement("div");
+                document.createElement(
+                    "div"
+                );
 
             box.className =
                 "photo-box";
@@ -385,54 +492,69 @@ recordVisit(member);
             box.textContent =
                 "🖼️";
 
-            photosGrid.appendChild(box);
+            photosGrid.appendChild(
+                box
+            );
 
         }
 
     } else {
 
-        photos.forEach((photo) => {
+        photos.forEach(
+            photo => {
 
-            const box =
-                document.createElement("div");
+                const box =
+                    document.createElement(
+                        "div"
+                    );
 
-            box.className =
-                "photo-box";
+                box.className =
+                    "photo-box";
 
-            if (photo.preview) {
 
-                const image =
-                    document.createElement("img");
+                if (
+                    photo &&
+                    photo.preview
+                ) {
 
-                image.src =
-                    photo.preview;
+                    const image =
+                        document.createElement(
+                            "img"
+                        );
 
-                image.style.width =
-                    "100%";
+                    image.src =
+                        photo.preview;
 
-                image.style.height =
-                    "100%";
+                    image.style.width =
+                        "100%";
 
-                image.style.objectFit =
-                    "cover";
+                    image.style.height =
+                        "100%";
 
-                image.style.borderRadius =
-                    "12px";
+                    image.style.objectFit =
+                        "cover";
 
-                box.innerHTML = "";
+                    image.style.borderRadius =
+                        "12px";
 
-                box.appendChild(image);
+                    box.appendChild(
+                        image
+                    );
 
-            } else {
+                } else {
 
-                box.textContent =
-                    "🖼️";
+                    box.textContent =
+                        "🖼️";
+
+                }
+
+
+                photosGrid.appendChild(
+                    box
+                );
 
             }
-
-            photosGrid.appendChild(box);
-
-        });
+        );
 
     }
 
@@ -441,41 +563,180 @@ recordVisit(member);
        FAVORITE
     ===================================================== */
 
-    favoriteBtn.addEventListener(
+    function getFavorites() {
+
+        try {
+
+            return JSON.parse(
+                localStorage.getItem(
+                    "sakanFavorites"
+                ) || "[]"
+            );
+
+        } catch {
+
+            return [];
+
+        }
+
+    }
+
+
+    function saveFavorites(
+        favorites
+    ) {
+
+        localStorage.setItem(
+            "sakanFavorites",
+            JSON.stringify(
+                favorites
+            )
+        );
+
+    }
+
+
+    function updateFavoriteButton() {
+
+        if (!favoriteBtn) {
+            return;
+        }
+
+
+        const exists =
+            getFavorites().some(
+                item =>
+                    Number(item.id) ===
+                    Number(member.id)
+            );
+
+
+        favoriteBtn.textContent =
+            exists
+                ? "★ مفضلة"
+                : "☆ مفضلة";
+
+    }
+
+
+    favoriteBtn?.addEventListener(
         "click",
         () => {
 
-            if (
-                favoriteBtn.textContent
-                    .includes("☆")
-            ) {
+            let favorites =
+                getFavorites();
 
-                favoriteBtn.textContent =
-                    "★ مفضلة";
+
+            const exists =
+                favorites.some(
+                    item =>
+                        Number(item.id) ===
+                        Number(member.id)
+                );
+
+
+            if (exists) {
+
+                favorites =
+                    favorites.filter(
+                        item =>
+                            Number(item.id) !==
+                            Number(member.id)
+                    );
 
             } else {
 
-                favoriteBtn.textContent =
-                    "☆ مفضلة";
+                favorites.push({
+                    ...member,
+                    photos: []
+                });
 
             }
 
+
+            saveFavorites(
+                favorites
+            );
+
+
+            updateFavoriteButton();
+
         }
     );
+
+
+    updateFavoriteButton();
 
 
     /* =====================================================
        MESSAGE
     ===================================================== */
 
-    messageBtn.addEventListener(
+    messageBtn?.addEventListener(
         "click",
         () => {
 
-            openModal(
-                "المراسلة",
-                "سيتم تشغيل المحادثة الحقيقية وربطها بقاعدة البيانات والترجمة التلقائية في المرحلة القادمة."
-            );
+            if (!member.id) {
+                return;
+            }
+
+
+            let conversations = [];
+
+
+            try {
+
+                conversations =
+                    JSON.parse(
+                        localStorage.getItem(
+                            "sakanMessages"
+                        ) || "[]"
+                    );
+
+            } catch {
+
+                conversations =
+                    [];
+
+            }
+
+
+            const exists =
+                conversations.some(
+                    item =>
+                        Number(
+                            item.memberId
+                        ) ===
+                        Number(
+                            member.id
+                        )
+                );
+
+
+            if (!exists) {
+
+                conversations.push({
+
+                    memberId:
+                        member.id,
+
+                    messages: []
+
+                });
+
+
+                localStorage.setItem(
+                    "sakanMessages",
+                    JSON.stringify(
+                        conversations
+                    )
+                );
+
+            }
+
+
+            window.location.href =
+                "messages.html";
 
         }
     );
@@ -485,7 +746,7 @@ recordVisit(member);
        MORE
     ===================================================== */
 
-    moreBtn.addEventListener(
+    moreBtn?.addEventListener(
         "click",
         () => {
 
@@ -502,13 +763,13 @@ recordVisit(member);
        REPORT
     ===================================================== */
 
-    reportBtn.addEventListener(
+    reportBtn?.addEventListener(
         "click",
         () => {
 
             openModal(
                 "الإبلاغ عن العضو",
-                "سيتم فتح قائمة أسباب الإبلاغ مثل الاحتيال، طلب الأموال، الإساءة، التحرش، المحتوى غير المناسب أو الحساب المشبوه."
+                "سيتم لاحقًا فتح أسباب الإبلاغ مثل طلب الأموال أو الاحتيال أو الإساءة أو التحرش أو المحتوى غير المناسب."
             );
 
         }
@@ -519,16 +780,16 @@ recordVisit(member);
        BLOCK
     ===================================================== */
 
-    blockBtn.addEventListener(
+    blockBtn?.addEventListener(
         "click",
         () => {
 
             openModal(
                 "حظر العضو",
-                "بعد تشغيل نظام الحظر الحقيقي، لن يتمكن العضو المحظور من مراسلتك أو التواصل معك."
+                "سيتم لاحقًا تشغيل نظام الحظر الحقيقي لمنع التواصل بين الحسابين."
             );
 
         }
     );
 
-}); 
+});
