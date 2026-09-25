@@ -1,0 +1,149 @@
+ <!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>الصورة الرئيسية | سكن</title>
+
+  <link rel="stylesheet" href="../css/main-photo.css">
+</head>
+
+<body>
+
+  <header class="topbar">
+    <div class="brand">
+      <div class="brand-mark">س</div>
+      <div>
+        <h1>سكن</h1>
+        <span>منصة التعارف والزواج</span>
+      </div>
+    </div>
+
+    <div class="step-box">
+      <strong>الخطوة 3 من 3</strong>
+      <span>اختيار الصورة الرئيسية</span>
+    </div>
+  </header>
+
+  <main class="page">
+
+    <section class="intro">
+      <span class="eyebrow">ملفك الشخصي</span>
+
+      <h2>اختر صورتك الرئيسية</h2>
+
+      <p>
+        اختر الصورة التي تريد ظهورها بشكل رئيسي في ملفك أمام الأعضاء.
+      </p>
+
+      <div class="notice">
+        <span>🛡️</span>
+        <div>
+          <strong>مراجعة الصور</strong>
+          <p>
+            جميع الصور تخضع للمراجعة قبل ظهورها للأعضاء.
+            يجب أن تكون الصورة واضحة ومحترمة وخالية من أي محتوى مخالف.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="photos-card">
+
+      <div class="card-header">
+        <div>
+          <h3>صورك المختارة</h3>
+          <p>اضغط على الصورة التي تريد جعلها الصورة الرئيسية.</p>
+        </div>
+
+        <div class="photo-count">
+          <span id="photoCount">0</span>
+          صور
+        </div>
+      </div>
+
+      <div id="emptyState" class="empty-state">
+        <div class="empty-icon">📷</div>
+
+        <h3>لم يتم العثور على صور</h3>
+
+        <p>
+          ارجع إلى خطوة الصور واختر صورة واحدة على الأقل.
+        </p>
+
+        <button id="backToPhotosBtn" class="secondary-btn">
+          العودة إلى الصور
+        </button>
+      </div>
+
+      <div id="photosGrid" class="photos-grid"></div>
+
+      <div id="selectedInfo" class="selected-info hidden">
+        <span class="selected-check">✓</span>
+
+        <div>
+          <strong>تم اختيار الصورة الرئيسية</strong>
+          <p id="selectedText">
+            سيتم استخدامها كصورتك الرئيسية بعد الموافقة عليها.
+          </p>
+        </div>
+      </div>
+
+    </section>
+
+    <section class="rules-card">
+
+      <h3>ملاحظات مهمة</h3>
+
+      <div class="rules-grid">
+
+        <div class="rule">
+          <span>✓</span>
+          <p>يجب أن تكون الصورة لك شخصيًا.</p>
+        </div>
+
+        <div class="rule">
+          <span>✓</span>
+          <p>يفضل أن تكون الصورة واضحة وذات إضاءة جيدة.</p>
+        </div>
+
+        <div class="rule">
+          <span>✓</span>
+          <p>يمنع المحتوى العاري أو الفاضح أو غير اللائق.</p>
+        </div>
+
+        <div class="rule">
+          <span>✓</span>
+          <p>لا يسمح بصور الأطفال كصور للملف الشخصي.</p>
+        </div>
+
+      </div>
+
+    </section>
+
+    <div class="actions">
+
+      <button id="backBtn" class="back-btn">
+        ← العودة
+      </button>
+
+      <button id="continueBtn" class="continue-btn">
+        حفظ ومتابعة
+        <span>←</span>
+      </button>
+
+    </div>
+
+    <div id="message" class="message"></div>
+
+  </main>
+
+  <footer>
+    © سكن — منصة التعارف والزواج
+  </footer>
+
+  <script src="../js/main-photo.js"></script>
+
+</body>
+</html>
