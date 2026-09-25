@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>صوري | منصة سكن</title>
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <link rel="stylesheet"
+          href="../css/photos.css">
+</head>
+
+<body>
+
+<!-- =====================================================
+     TOP BAR
+===================================================== -->
+
+<header class="top-bar">
+
+    <div class="top-logo">
+
+        <div class="logo-circle">
+
+            <img
+                src="../assets/logo/sakan-logo.png"
+                alt="سكن"
+                onerror="this.style.display='none'">
+
+        </div>
+
+        <div>
+
+            <div class="logo-name">
+                سكن
+            </div>
+
+            <div class="logo-subtitle">
+                للتعارف والزواج
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="page-title">
+
+        <i class="fa-solid fa-images"></i>
+
+        صوري
+
+    </div>
+
+
+    <div class="step-indicator">
+
+        الخطوة <strong>2</strong> من <strong>3</strong>
+
+    </div>
+
+</header>
+
+
+<!-- =====================================================
+     MAIN
+===================================================== -->
+
+<main class="photos-page">
+
+    <section class="photos-card">
+
+
+        <!-- HEADER -->
+
+        <div class="card-header">
+
+            <div>
+
+                <h1>
+                    أضف صورك
+                </h1>
+
+                <p>
+                    الصور تساعد الأعضاء على التعرف عليك بشكل أفضل.
+                    اختر صورًا واضحة ومحترمة تعبر عن شخصيتك.
+                </p>
+
+            </div>
+
+
+            <div class="header-icon">
+
+                <i class="fa-solid fa-camera-retro"></i>
+
+            </div>
+
+        </div>
+
+
+        <!-- =================================================
+             UPLOAD AREA
+        ================================================= -->
+
+        <div class="upload-section">
+
+            <div class="upload-box">
+
+                <div class="upload-icon">
+
+                    <i class="fa-solid fa-cloud-arrow-up"></i>
+
+                </div>
+
+
+                <h2>
+                    حمل الصور من ملفاتك
+                </h2>
+
+
+                <p>
+                    يمكنك اختيار أكثر من صورة من جهازك
+                </p>
+
+
+                <label
+                    for="photoInput"
+                    class="upload-button">
+
+                    <i class="fa-solid fa-folder-open"></i>
+
+                    اختيار الصور
+
+                </label>
+
+
+                <input
+                    type="file"
+                    id="photoInput"
+                    accept="image/jpeg,image/png,image/webp"
+                    multiple
+                    hidden>
+
+            </div>
+
+
+            <!-- CAMERA -->
+
+            <div class="camera-box">
+
+                <div class="camera-icon">
+
+                    <i class="fa-solid fa-camera"></i>
+
+                </div>
+
+
+                <h2>
+                    التقط صورة مباشرة
+                </h2>
+
+
+                <p>
+                    استخدم كاميرا جهازك لالتقاط صورة
+                </p>
+
+
+                <button
+                    type="button"
+                    id="cameraBtn"
+                    class="camera-button">
+
+                    <i class="fa-solid fa-camera"></i>
+
+                    فتح الكاميرا
+
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <!-- =================================================
+             CAMERA AREA
+        ================================================= -->
+
+        <div
+            id="cameraArea"
+            class="camera-area hidden">
+
+            <div class="camera-preview">
+
+                <video
+                    id="cameraVideo"
+                    autoplay
+                    playsinline>
+                </video>
+
+                <canvas
+                    id="cameraCanvas"
+                    hidden>
+                </canvas>
+
+            </div>
+
+
+            <div class="camera-actions">
+
+                <button
+                    type="button"
+                    id="takePhotoBtn"
+                    class="gold-action-btn">
+
+                    <i class="fa-solid fa-camera"></i>
+
+                    التقاط الصورة
+
+                </button>
+
+
+                <button
+                    type="button"
+                    id="closeCameraBtn"
+                    class="secondary-btn">
+
+                    إغلاق الكاميرا
+
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <!-- =================================================
+             RULES
+        ================================================= -->
+
+        <div class="rules-box">
+
+            <div class="rules-title">
+
+                <i class="fa-solid fa-shield-heart"></i>
+
+                قواعد الصور في منصة سكن
+
+            </div>
+
+
+            <div class="rules-grid">
+
+                <div class="rule">
+
+                    <i class="fa-solid fa-check"></i>
+
+                    <span>
+                        صورة واضحة ومحترمة
+                    </span>
+
+                </div>
+
+
+                <div class="rule">
+
+                    <i class="fa-solid fa-check"></i>
+
+                    <span>
+                        يجب أن تكون الصورة لك
+                    </span>
+
+                </div>
+
+
+                <div class="rule">
+
+                    <i class="fa-solid fa-ban"></i>
+
+                    <span>
+                        ممنوع الصور العارية أو الفاضحة
+                    </span>
+
+                </div>
+
+
+                <div class="rule">
+
+                    <i class="fa-solid fa-ban"></i>
+
+                    <span>
+                        ممنوع صور الأطفال
+                    </span>
+
+                </div>
+
+
+                <div class="rule">
+
+                    <i class="fa-solid fa-ban"></i>
+
+                    <span>
+                        ممنوع الصور غير اللائقة
+                    </span>
+
+                </div>
+
+
+                <div class="rule">
+
+                    <i class="fa-solid fa-circle-info"></i>
+
+                    <span>
+                        الصور تخضع للمراجعة قبل ظهورها
+                    </span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- =================================================
+             SELECTED PHOTOS
+        ================================================= -->
+
+        <section class="selected-section">
+
+            <div class="selected-header">
+
+                <div>
+
+                    <h2>
+                        الصور المختارة
+                    </h2>
+
+                    <p>
+                        اختر صورة أو أكثر ثم تابع.
+                    </p>
+
+                </div>
+
+
+                <div class="photo-count">
+
+                    <span id="photoCount">
+                        0
+                    </span>
+
+                    / 6
+
+                </div>
+
+            </div>
+
+
+            <div
+                id="photoGrid"
+                class="photo-grid">
+
+                <div
+                    id="emptyPhotos"
+                    class="empty-photos">
+
+                    <i class="fa-regular fa-image"></i>
+
+                    <p>
+                        لم تتم إضافة أي صور بعد
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             MAIN PHOTO INFO
+        ================================================= -->
+
+        <div class="main-photo-info">
+
+            <i class="fa-solid fa-star"></i>
+
+            <div>
+
+                <strong>
+                    الصورة الرئيسية
+                </strong>
+
+                <p>
+                    بعد مراجعة الصور المقبولة، يمكنك اختيار
+                    صورة واحدة لتكون صورتك الرئيسية.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!-- =================================================
+             ACTIONS
+        ================================================= -->
+
+        <div class="form-actions">
+
+            <button
+                type="button"
+                id="backBtn"
+                class="secondary-btn">
+
+                <i class="fa-solid fa-arrow-right"></i>
+
+                رجوع
+
+            </button>
+
+
+            <button
+                type="button"
+                id="continueBtn"
+                class="gold-action-btn">
+
+                حفظ ومتابعة
+
+                <i class="fa-solid fa-arrow-left"></i>
+
+            </button>
+
+        </div>
+
+    </section>
+
+</main>
+
+
+<!-- =====================================================
+     MESSAGE
+===================================================== -->
+
+<div
+    id="messageBox"
+    class="message-box">
+</div>
+
+
+<script src="../js/photos.js"></script>
+
+</body>
+</html> 
