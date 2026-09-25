@@ -1,141 +1,522 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>منصة سكن للتعارف والزواج الشرعي - sakanapp.net</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <title>منصة سكن | للتعارف والزواج</title>
+
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+  >
+
   <link rel="stylesheet" href="css/style.css">
 </head>
-<body>
 
-  <!-- شريط العناوين العلوي والتواصل -->
-  <header class="main-header">
-    <div class="logo-container">
-      <h1>منصة سكن <span>2026</span></h1>
-      <p class="tagline">sakanapp.net</p>
-    </div>
-    <div class="top-actions">
-      <a href="contact.html" class="btn-top-contact"><i class="fa-solid fa-paper-plane"></i> اتصل بنا</a>
-    </div>
-  </header>
+<body class="landing-page">
 
-  <!-- 1️⃣ شريط الصور الدوارة الفوري (إعلان الـ 99 سنت - يدور باستمرار) -->
-  <section class="banner-carousel-wrapper" aria-label="الإعلانات المميزة">
-  <div class="carousel-track" id="rotating-banner-track">
+  <!-- =====================================================
+       شريط التشغيل التجريبي
+  ====================================================== -->
 
-    <div class="carousel-set">
-      <div class="carousel-item-ad">
-        <img src="https://i.pravatar.cc/300?img=1" alt="إعلان مميز">
-        <span class="ad-badge">VIP</span>
-      </div>
-
-      <div class="carousel-item-ad">
-        <img src="https://i.pravatar.cc/300?img=2" alt="إعلان مميز">
-        <span class="ad-badge">VIP</span>
-      </div>
-
-      <div class="carousel-item-ad">
-        <img src="https://i.pravatar.cc/300?img=3" alt="إعلان مميز">
-        <span class="ad-badge">VIP</span>
-      </div>
-
-      <div class="carousel-item-ad placeholder-ad" onclick="pay99CentsForAd()">
-        <i class="fa-solid fa-plus-circle"></i>
-        أضف صورتك هنا بـ 0.99$ لمدة 5 دقائق
-      </div>
-    </div>
-
-    <!-- نسخة ثانية حتى يستمر الدوران بدون فراغ -->
-    <div class="carousel-set" aria-hidden="true">
-      <div class="carousel-item-ad">
-        <img src="https://i.pravatar.cc/300?img=1" alt="">
-      </div>
-
-      <div class="carousel-item-ad">
-        <img src="https://i.pravatar.cc/300?img=2" alt="">
-      </div>
-
-      <div class="carousel-item-ad">
-        <img src="https://i.pravatar.cc/300?img=3" alt="">
-      </div>
-
-      <div class="carousel-item-ad placeholder-ad">
-        <i class="fa-solid fa-plus-circle"></i>
-        أضف صورتك هنا بـ 0.99$ لمدة 5 دقائق
-      </div>
-    </div>
-
+  <div class="trial-bar">
+    <span>
+      🟡 أهلًا بكم في منصة سكن — المنصة تعمل حاليًا خلال فترة تشغيل تجريبية لمدة 15 يومًا.
+    </span>
   </div>
-</section>
-  </section>
 
-  <!-- المنطقة الرئيسية للأعضاء الـ 50 -->
-  <main class="container">
-    <div class="section-title">
-      <h2><i class="fa-solid fa-users"></i> الاعضاء المتواجدون الآن</h2>
-      <p>تتم تصفية العرض تلقائياً لإظهار الجنس الآخر والأونلاين أولاً</p>
+
+  <!-- =====================================================
+       الصفحة الرئيسية الترحيبية
+  ====================================================== -->
+
+  <main class="welcome-page">
+
+    <div class="welcome-content">
+
+      <!-- الشعار -->
+
+      <div class="sakan-brand">
+
+        <div class="brand-logo">
+          سكن
+        </div>
+
+        <div class="brand-line"></div>
+
+        <div class="brand-subtitle">
+          للتعارف والزواج
+        </div>
+
+      </div>
+
+
+      <!-- البطاقة الرئيسية -->
+
+      <section class="welcome-card">
+
+        <div class="decor decor-top"></div>
+        <div class="decor decor-bottom"></div>
+
+        <div class="welcome-icon">
+          <i class="fa-solid fa-heart"></i>
+        </div>
+
+        <h1>
+          مرحبًا بكم في منصة سكن
+        </h1>
+
+        <h2>
+          للتعارف والزواج
+        </h2>
+
+        <p class="welcome-text">
+          خطوة واحدة بينك وبين شريك العمر
+          <span>❤️</span>
+        </p>
+
+        <button
+          type="button"
+          class="gold-button main-continue-button"
+          id="continueBtn"
+        >
+          استمر
+          <i class="fa-solid fa-arrow-left"></i>
+        </button>
+
+        <div class="welcome-security">
+          <i class="fa-solid fa-shield-halved"></i>
+          الخصوصية والأمان أولًا
+        </div>
+
+      </section>
+
     </div>
 
-    <div class="members-grid" id="members-container">
-      <!-- يتم تحميل بطاقات الأعضاء الـ 50 ديناميكياً هنا عبر JavaScript -->
-    </div>
   </main>
 
-  <!-- 2️⃣ تذييل الصفحة القانوني (Footer - معتمد في ألمانيا والاتحاد الأوروبي) -->
-  <footer class="site-footer">
-    <div class="footer-owner-info">
-      <p><strong>www.sakanapp.net</strong> | إدارة: <strong>Ahmed Ismail Saed</strong></p>
-      <p><i class="fa-solid fa-location-dot"></i> Ehndorfer Str. 130, 24537 / 24534 Neumünster, Germany</p>
-      <p><i class="fa-solid fa-phone"></i> Telefon: 015123937937 | <i class="fa-solid fa-envelope"></i> service@sakanapp.net</p>
-    </div>
 
-    <div class="footer-links-grid">
-      <button onclick="openLegalModal('privacy')"><i class="fa-solid fa-shield-halved"></i> سياسة الخصوصية (GDPR)</button>
-      <button onclick="openLegalModal('security')"><i class="fa-solid fa-lock"></i> الأمان والسلامة</button>
-      <button onclick="openLegalModal('impressum')"><i class="fa-solid fa-scale-balanced"></i> البصمة القانونية (Impressum)</button>
-      <button class="btn-lang-selector" onclick="toggleLangModal()"><i class="fa-solid fa-globe"></i> اللغات</button>
-    </div>
+  <!-- =====================================================
+       نافذة الخصوصية والأمان
+  ====================================================== -->
 
-    <div class="footer-copyright-bar">
-      <span>جميع الحقوق محفوظة منصة سكن www.sakanapp.net 2026©</span>
-    </div>
-  </footer>
+  <div
+    class="modal-overlay hidden"
+    id="privacyModal"
+    role="dialog"
+    aria-modal="true"
+  >
 
-  <!-- 3️⃣ النافذة المنبثقة للتفاصيل القانونية مع زر الإغلاق ✖️ -->
-  <div id="legal-modal" class="modal-overlay">
-    <div class="modal-box">
-      <button class="close-modal-btn" onclick="closeLegalModal()">
-        <i class="fa-solid fa-xmark"></i>
+    <div class="sakan-modal privacy-modal">
+
+      <button
+        type="button"
+        class="modal-close"
+        data-close="privacyModal"
+        aria-label="إغلاق"
+      >
+        ×
       </button>
-      <div id="modal-legal-content" class="modal-body"></div>
-      <div class="modal-footer">
-        <button onclick="closeLegalModal()" class="btn-modal-close">إغلاق</button>
+
+
+      <div class="modal-brand">
+        سكن
       </div>
+
+      <div class="modal-title-icon">
+        <i class="fa-solid fa-shield-halved"></i>
+      </div>
+
+      <h2>
+        الخصوصية والأمان
+      </h2>
+
+      <p class="modal-description">
+        قبل دخول منصة سكن، نرجو قراءة قواعد الخصوصية
+        والأمان والموافقة عليها.
+      </p>
+
+
+      <div class="security-rules">
+
+        <div class="security-rule">
+          <i class="fa-solid fa-lock"></i>
+          <span>
+            نحترم خصوصية الأعضاء ونحافظ على بيانات الحساب.
+          </span>
+        </div>
+
+        <div class="security-rule">
+          <i class="fa-solid fa-money-bill-transfer"></i>
+          <span>
+            يمنع طلب أو إرسال الأموال بين الأعضاء.
+          </span>
+        </div>
+
+        <div class="security-rule">
+          <i class="fa-solid fa-ban"></i>
+          <span>
+            يمنع السب والإهانة والتحرش والتهديد والمحتوى غير اللائق.
+          </span>
+        </div>
+
+        <div class="security-rule">
+          <i class="fa-solid fa-user-shield"></i>
+          <span>
+            يمكنك حظر أي عضو والإبلاغ عنه عند وجود مشكلة.
+          </span>
+        </div>
+
+        <div class="security-rule">
+          <i class="fa-solid fa-location-dot"></i>
+          <span>
+            يفضل أن يكون اللقاء الأول في مكان عام وآمن.
+          </span>
+        </div>
+
+        <div class="security-rule">
+          <i class="fa-solid fa-triangle-exclamation"></i>
+          <span>
+            لا تشارك كلمة المرور أو بياناتك المالية مع أي شخص.
+          </span>
+        </div>
+
+      </div>
+
+
+      <!-- الموافقة -->
+
+      <label class="privacy-checkbox">
+
+        <input
+          type="checkbox"
+          id="privacyConsent"
+        >
+
+        <span>
+          أوافق على سياسة الخصوصية والأمان
+          وقواعد استخدام منصة سكن.
+        </span>
+
+      </label>
+
+
+      <!-- الأزرار -->
+
+      <div class="modal-buttons">
+
+        <button
+          type="button"
+          class="gold-button"
+          id="acceptPrivacy"
+          disabled
+        >
+          موافق ومتابعة
+          <i class="fa-solid fa-arrow-left"></i>
+        </button>
+
+        <button
+          type="button"
+          class="outline-button"
+          id="declinePrivacy"
+        >
+          رفض والخروج
+        </button>
+
+      </div>
+
     </div>
+
   </div>
 
-  <!-- 4️⃣ نافذة اختيار اللغات العالمية -->
-  <div id="lang-modal" class="modal-overlay">
-    <div class="modal-box">
-      <button class="close-modal-btn" onclick="closeLangModal()">
-        <i class="fa-solid fa-xmark"></i>
+
+  <!-- =====================================================
+       نافذة تسجيل الدخول / التسجيل
+  ====================================================== -->
+
+  <div
+    class="modal-overlay hidden"
+    id="authModal"
+    role="dialog"
+    aria-modal="true"
+  >
+
+    <div class="sakan-modal auth-modal">
+
+      <button
+        type="button"
+        class="modal-close"
+        data-close="authModal"
+        aria-label="إغلاق"
+      >
+        ×
       </button>
-      <h3><i class="fa-solid fa-globe"></i> اختر اللغة / Select Language</h3>
-      <ul class="lang-list">
-        <li>🇸🇦 العربية <span class="active-lang">الرئيسية</span></li>
-        <li>🇩🇪 Deutsch <span class="coming-soon">قريباً</span></li>
-        <li>🇬🇧 English <span class="coming-soon">قريباً</span></li>
-        <li>🇫🇷 Français <span class="coming-soon">قريباً</span></li>
-        <li>🇪🇸 Español <span class="coming-soon">قريباً</span></li>
-        <li>🇹🇷 Türkçe <span class="coming-soon">قريباً</span></li>
-      </ul>
-      <div class="modal-footer">
-        <button onclick="closeLangModal()" class="btn-modal-close">إغلاق</button>
+
+
+      <div class="modal-brand">
+        سكن
       </div>
+
+      <div class="modal-title-icon">
+        <i class="fa-solid fa-house-heart"></i>
+      </div>
+
+      <h2>
+        مرحبًا بك في منصة سكن
+      </h2>
+
+      <p class="modal-description">
+        هل أنت عضو جديد أم لديك حساب بالفعل؟
+      </p>
+
+
+      <!-- اختيار نوع المستخدم -->
+
+      <div class="member-choice">
+
+        <button
+          type="button"
+          class="member-choice-card"
+          id="newMemberBtn"
+        >
+
+          <div class="choice-icon">
+            <i class="fa-solid fa-user-plus"></i>
+          </div>
+
+          <strong>
+            عضو جديد
+          </strong>
+
+          <span>
+            إنشاء حساب جديد
+          </span>
+
+        </button>
+
+
+        <button
+          type="button"
+          class="member-choice-card"
+          id="existingMemberBtn"
+        >
+
+          <div class="choice-icon">
+            <i class="fa-solid fa-right-to-bracket"></i>
+          </div>
+
+          <strong>
+            عضو مشترك
+          </strong>
+
+          <span>
+            تسجيل الدخول
+          </span>
+
+        </button>
+
+      </div>
+
+
+      <!-- =================================================
+           التسجيل
+      ================================================== -->
+
+      <div
+        class="auth-panel hidden"
+        id="newMemberPanel"
+      >
+
+        <div class="panel-heading">
+          <i class="fa-solid fa-user-plus"></i>
+          إنشاء حساب جديد
+        </div>
+
+
+        <button
+          type="button"
+          class="social-button"
+        >
+          <span>G</span>
+          المتابعة باستخدام Google
+        </button>
+
+
+        <button
+          type="button"
+          class="social-button"
+        >
+          <span>f</span>
+          المتابعة باستخدام Facebook
+        </button>
+
+
+        <div class="divider">
+          <span>أو بالبريد الإلكتروني</span>
+        </div>
+
+
+        <div class="input-group">
+
+          <label>
+            البريد الإلكتروني
+          </label>
+
+          <input
+            type="email"
+            id="registerEmail"
+            placeholder="example@email.com"
+            autocomplete="email"
+          >
+
+        </div>
+
+
+        <div class="input-group">
+
+          <label>
+            كلمة المرور
+          </label>
+
+          <input
+            type="password"
+            id="registerPassword"
+            placeholder="كلمة المرور"
+            autocomplete="new-password"
+          >
+
+        </div>
+
+
+        <div class="input-group">
+
+          <label>
+            تأكيد كلمة المرور
+          </label>
+
+          <input
+            type="password"
+            id="registerPasswordConfirm"
+            placeholder="تأكيد كلمة المرور"
+            autocomplete="new-password"
+          >
+
+        </div>
+
+
+        <button
+          type="button"
+          class="gold-button full-button"
+          id="registerButton"
+        >
+          إنشاء الحساب ومتابعة
+          <i class="fa-solid fa-arrow-left"></i>
+        </button>
+
+      </div>
+
+
+      <!-- =================================================
+           تسجيل الدخول
+      ================================================== -->
+
+      <div
+        class="auth-panel hidden"
+        id="loginPanel"
+      >
+
+        <div class="panel-heading">
+          <i class="fa-solid fa-right-to-bracket"></i>
+          تسجيل الدخول
+        </div>
+
+
+        <div class="input-group">
+
+          <label>
+            البريد الإلكتروني
+          </label>
+
+          <input
+            type="email"
+            id="loginEmail"
+            placeholder="example@email.com"
+            autocomplete="email"
+          >
+
+        </div>
+
+
+        <div class="input-group">
+
+          <label>
+            كلمة المرور
+          </label>
+
+          <input
+            type="password"
+            id="loginPassword"
+            placeholder="كلمة المرور"
+            autocomplete="current-password"
+          >
+
+        </div>
+
+
+        <button
+          type="button"
+          class="gold-button full-button"
+          id="loginButton"
+        >
+          دخول
+          <i class="fa-solid fa-arrow-left"></i>
+        </button>
+
+
+        <button
+          type="button"
+          class="forgot-password"
+          id="forgotPassword"
+        >
+          نسيت كلمة المرور؟
+        </button>
+
+
+        <div class="divider">
+          <span>أو</span>
+        </div>
+
+
+        <button
+          type="button"
+          class="social-button"
+        >
+          <span>G</span>
+          الدخول باستخدام Google
+        </button>
+
+
+        <button
+          type="button"
+          class="social-button"
+        >
+          <span>f</span>
+          الدخول باستخدام Facebook
+        </button>
+
+      </div>
+
     </div>
+
   </div>
 
-<script src="js/app.js"></script>
+
+  <!-- =====================================================
+       JavaScript
+  ====================================================== -->
+
+  <script src="js/app.js"></script>
+
 </body>
 </html>
