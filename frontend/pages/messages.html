@@ -1,0 +1,141 @@
+ <!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>الرسائل | سكن</title>
+
+    <link rel="stylesheet" href="../css/messages.css">
+</head>
+
+<body>
+
+<header class="messages-header">
+
+    <div class="brand">
+
+        <div class="brand-mark">
+            س
+        </div>
+
+        <div>
+            <h1>سكن</h1>
+            <span>الرسائل</span>
+        </div>
+
+    </div>
+
+    <button
+        id="backHomeBtn"
+        class="back-btn">
+
+        ← الرئيسية
+
+    </button>
+
+</header>
+
+
+<main class="messages-container">
+
+    <section class="messages-layout">
+
+
+        <aside class="conversations">
+
+            <div class="conversation-title">
+
+                <span class="small-title">
+                    التواصل
+                </span>
+
+                <h2>
+                    محادثاتي
+                </h2>
+
+            </div>
+
+
+            <div
+                id="conversationList"
+                class="conversation-list">
+
+            </div>
+
+        </aside>
+
+
+        <section class="chat">
+
+            <div
+                id="chatEmpty"
+                class="chat-empty">
+
+                <div>
+                    ✉️
+                </div>
+
+                <h3>
+                    اختر محادثة
+                </h3>
+
+                <p>
+                    اختر عضوًا من القائمة لعرض المحادثة.
+                </p>
+
+            </div>
+
+
+            <div
+                id="chatArea"
+                class="chat-area"
+                style="display:none;">
+
+                <div
+                    id="chatHeader"
+                    class="chat-header">
+
+                </div>
+
+
+                <div
+                    id="messagesBox"
+                    class="messages-box">
+
+                </div>
+
+
+                <form
+                    id="messageForm"
+                    class="message-form">
+
+                    <input
+                        id="messageInput"
+                        type="text"
+                        placeholder="اكتب رسالتك..."
+                        autocomplete="off">
+
+                    <button
+                        type="submit">
+
+                        إرسال
+
+                    </button>
+
+                </form>
+
+            </div>
+
+        </section>
+
+    </section>
+
+</main>
+
+
+<script src="../js/messages.js"></script>
+
+</body>
+</html>
