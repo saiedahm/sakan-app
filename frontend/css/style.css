@@ -1248,7 +1248,7 @@ button {
             rgba(5, 14, 30, 0.90),
             rgba(5, 14, 30, 0.90)
         ),
-        url("../assets/backgrounds/members.png")
+       url("../assets/members.png")
         center center /
         cover
         no-repeat;
