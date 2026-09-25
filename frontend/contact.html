@@ -1,55 +1,627 @@
-
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="ar" dir="rtl">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>اتصل بنا - منصة سكن sakanapp.net</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <link rel="stylesheet" href="style.css">
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
+    <title>
+        اتصل بنا - منصة سكن
+    </title>
+
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <link
+        rel="stylesheet"
+        href="css/style.css">
+
+    <style>
+
+        .contact-body {
+            min-height: 100vh;
+            margin: 0;
+            background:
+                linear-gradient(
+                    rgba(5, 14, 30, 0.94),
+                    rgba(5, 14, 30, 0.96)
+                ),
+                url("assets/members.png")
+                center center /
+                cover
+                no-repeat;
+        }
+
+
+        .contact-page-wrapper {
+
+            min-height: 100vh;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            padding: 30px 16px;
+
+            box-sizing: border-box;
+
+        }
+
+
+        .contact-card-box {
+
+            width: 100%;
+
+            max-width: 760px;
+
+            background:
+                rgba(8, 18, 35, 0.96);
+
+            border:
+                1px solid
+                rgba(212, 175, 55, 0.30);
+
+            border-radius:
+                24px;
+
+            padding:
+                30px;
+
+            box-shadow:
+                0 20px 60px
+                rgba(0, 0, 0, 0.35);
+
+            box-sizing: border-box;
+
+        }
+
+
+        .contact-header {
+
+            text-align: center;
+
+            margin-bottom: 28px;
+
+        }
+
+
+        .contact-logo {
+
+            width: 78px;
+
+            height: 78px;
+
+            margin:
+                0 auto 14px;
+
+            border-radius:
+                20px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            overflow: hidden;
+
+            background:
+                rgba(255, 255, 255, 0.04);
+
+            border:
+                1px solid
+                rgba(212, 175, 55, 0.35);
+
+            box-shadow:
+                0 8px 25px
+                rgba(0, 0, 0, 0.25);
+
+        }
+
+
+        .contact-logo img {
+
+            width: 100%;
+
+            height: 100%;
+
+            object-fit: contain;
+
+            display: block;
+
+        }
+
+
+        .contact-brand-name {
+
+            color:
+                #d4af37;
+
+            font-size:
+                25px;
+
+            font-weight:
+                bold;
+
+            margin-bottom: 4px;
+
+        }
+
+
+        .contact-brand-subtitle {
+
+            color:
+                #8995a3;
+
+            font-size:
+                13px;
+
+            margin-bottom: 20px;
+
+        }
+
+
+        .btn-back-home {
+
+            display: inline-flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            gap: 8px;
+
+            min-height: 42px;
+
+            padding:
+                0 18px;
+
+            border-radius:
+                10px;
+
+            border:
+                1px solid
+                rgba(212, 175, 55, 0.35);
+
+            background:
+                rgba(212, 175, 55, 0.05);
+
+            color:
+                #d4af37;
+
+            text-decoration:
+                none;
+
+            font-weight:
+                bold;
+
+            margin-bottom: 22px;
+
+            transition:
+                0.2s ease;
+
+        }
+
+
+        .btn-back-home:hover {
+
+            background:
+                rgba(212, 175, 55, 0.10);
+
+            transform:
+                translateY(-1px);
+
+        }
+
+
+        .contact-header h2 {
+
+            margin:
+                0 0 10px;
+
+            color:
+                #ffffff;
+
+            font-size:
+                24px;
+
+        }
+
+
+        .contact-subtext {
+
+            color:
+                #b7c0cb;
+
+            margin:
+                8px 0;
+
+            font-size:
+                14px;
+
+        }
+
+
+        .contact-direct-mail {
+
+            color:
+                #d4af37;
+
+            margin:
+                8px 0 0;
+
+            font-size:
+                13px;
+
+            line-height:
+                1.8;
+
+        }
+
+
+        .form-group {
+
+            margin-bottom:
+                20px;
+
+        }
+
+
+        .form-group label {
+
+            display: block;
+
+            color:
+                #ffffff;
+
+            font-weight:
+                bold;
+
+            margin-bottom:
+                8px;
+
+        }
+
+
+        .form-group input,
+        .form-group textarea {
+
+            width: 100%;
+
+            box-sizing: border-box;
+
+            border:
+                1px solid
+                rgba(255, 255, 255, 0.12);
+
+            border-radius:
+                12px;
+
+            background:
+                rgba(255, 255, 255, 0.05);
+
+            color:
+                #ffffff;
+
+            padding:
+                13px 14px;
+
+            font-family:
+                inherit;
+
+            font-size:
+                14px;
+
+            outline: none;
+
+            transition:
+                0.2s ease;
+
+        }
+
+
+        .form-group textarea {
+
+            resize:
+                vertical;
+
+            min-height:
+                150px;
+
+        }
+
+
+        .form-group input::placeholder,
+        .form-group textarea::placeholder {
+
+            color:
+                #7f8b99;
+
+        }
+
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+
+            border-color:
+                rgba(212, 175, 55, 0.65);
+
+            box-shadow:
+                0 0 0 3px
+                rgba(212, 175, 55, 0.08);
+
+        }
+
+
+        .btn-submit-gold {
+
+            width: 100%;
+
+            min-height:
+                52px;
+
+            border:
+                0;
+
+            border-radius:
+                12px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #d4af37,
+                    #b89020
+                );
+
+            color:
+                #07111f;
+
+            font-family:
+                inherit;
+
+            font-size:
+                15px;
+
+            font-weight:
+                bold;
+
+            cursor:
+                pointer;
+
+            transition:
+                0.2s ease;
+
+        }
+
+
+        .btn-submit-gold:hover {
+
+            transform:
+                translateY(-1px);
+
+            box-shadow:
+                0 10px 25px
+                rgba(212, 175, 55, 0.18);
+
+        }
+
+
+        @media (max-width: 600px) {
+
+            .contact-card-box {
+
+                padding:
+                    22px 17px;
+
+                border-radius:
+                    20px;
+
+            }
+
+
+            .contact-logo {
+
+                width: 68px;
+
+                height: 68px;
+
+                border-radius:
+                    18px;
+
+            }
+
+
+            .contact-header h2 {
+
+                font-size:
+                    21px;
+
+            }
+
+
+            .contact-brand-name {
+
+                font-size:
+                    22px;
+
+            }
+
+        }
+
+    </style>
+
 </head>
+
+
 <body class="contact-body">
 
-  <div class="contact-page-wrapper">
+
+<div class="contact-page-wrapper">
+
+
     <div class="contact-card-box">
-      <div class="contact-header">
-        <a href="index.html" class="btn-back-home"><i class="fa-solid fa-arrow-right"></i> العودة للرئيسية</a>
-        <h2><i class="fa-solid fa-paper-plane"></i> اتصل بإدارة منصة سكن</h2>
-        <p class="contact-subtext">Ahmed Ismail Saed - Neumünster, Germany</p>
-        <p class="contact-direct-mail"><i class="fa-solid fa-envelope"></i> service@sakanapp.net | info@sakanapp.net</p>
-      </div>
 
-      <form id="contact-form" onsubmit="handleContactSubmit(event)">
-        <!-- المربع 1: عنوان الرسالة -->
-        <div class="form-group">
-          <label>1. عنوان الرسالة (Subject):</label>
-          <input type="text" id="contact-subject" placeholder="أدخل موضوع الرسالة..." required>
+
+        <div class="contact-header">
+
+
+            <div class="contact-logo">
+
+                <img
+                    src="assets/logo/sakan-logo.png"
+                    alt="شعار منصة سكن">
+
+            </div>
+
+
+            <div class="contact-brand-name">
+                سكن
+            </div>
+
+
+            <div class="contact-brand-subtitle">
+                للتعارف والزواج
+            </div>
+
+
+            <a
+                href="index.html"
+                class="btn-back-home">
+
+                <i class="fa-solid fa-arrow-right"></i>
+
+                العودة للرئيسية
+
+            </a>
+
+
+            <h2>
+
+                <i class="fa-solid fa-paper-plane"></i>
+
+                اتصل بإدارة منصة سكن
+
+            </h2>
+
+
+            <p class="contact-subtext">
+
+                Ahmed Ismail Saed - Neumünster, Germany
+
+            </p>
+
+
+            <p class="contact-direct-mail">
+
+                <i class="fa-solid fa-envelope"></i>
+
+                service@sakanapp.net
+
+                &nbsp;|&nbsp;
+
+                info@sakanapp.net
+
+            </p>
+
+
         </div>
 
-        <!-- المربع 2: نص الرسالة الكبير -->
-        <div class="form-group">
-          <label>2. نص الرسالة (Message):</label>
-          <textarea id="contact-message" rows="6" placeholder="اكتب تفاصيل استفسارك هنا..." required></textarea>
-        </div>
 
-        <!-- المربع 3: البريد الإلكتروني للمرسل -->
-        <div class="form-group">
-          <label>3. بريدك الإلكتروني للرد عليك (Your Email):</label>
-          <input type="email" id="contact-email" placeholder="example@mail.com" required>
-        </div>
+        <form
+            id="contact-form"
+            onsubmit="handleContactSubmit(event)">
 
-        <!-- المربع 4: زر الإرسال -->
-        <button type="submit" class="btn-submit-gold"><i class="fa-solid fa-paper-plane"></i> 4. إرسال الرسالة إلى الإدارة</button>
-      </form>
+
+            <div class="form-group">
+
+                <label>
+                    1. عنوان الرسالة (Subject):
+                </label>
+
+                <input
+                    type="text"
+                    id="contact-subject"
+                    placeholder="أدخل موضوع الرسالة..."
+                    required>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+                    2. نص الرسالة (Message):
+                </label>
+
+                <textarea
+                    id="contact-message"
+                    rows="6"
+                    placeholder="اكتب تفاصيل استفسارك هنا..."
+                    required></textarea>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+                    3. بريدك الإلكتروني للرد عليك (Your Email):
+                </label>
+
+                <input
+                    type="email"
+                    id="contact-email"
+                    placeholder="example@mail.com"
+                    required>
+
+            </div>
+
+
+            <button
+                type="submit"
+                class="btn-submit-gold">
+
+                <i class="fa-solid fa-paper-plane"></i>
+
+                4. إرسال الرسالة إلى الإدارة
+
+            </button>
+
+
+        </form>
+
+
     </div>
-  </div>
 
-  <script>
+</div>
+
+
+<script>
+
     function handleContactSubmit(e) {
-      e.preventDefault();
-      alert('شكرًا لتواصلك مع منصة سكن (sakanapp.net).\nتم توجيه رسالتك إلى إدارة الدعم المباشر service@sakanapp.net وسيتم الرد عليك في أقرب وقت.');
-      window.location.href = 'index.html';
+
+        e.preventDefault();
+
+        alert(
+            'شكرًا لتواصلك مع منصة سكن (sakanapp.net).\n' +
+            'تم توجيه رسالتك إلى إدارة الدعم المباشر service@sakanapp.net ' +
+            'وسيتم الرد عليك في أقرب وقت.'
+        );
+
+        window.location.href =
+            'index.html';
+
     }
-  </script>
+
+</script>
+
+
 </body>
 </html>
