@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>ملف العضو | سكن</title>
+
+    <link rel="stylesheet"
+          href="../css/member-profile.css">
+</head>
+
+<body>
+
+<!-- =====================================================
+     HEADER
+===================================================== -->
+
+<header class="profile-header">
+
+    <div class="brand">
+
+        <div class="brand-mark">
+            س
+        </div>
+
+        <div>
+            <h1>سكن</h1>
+            <span>منصة التعارف والزواج</span>
+        </div>
+
+    </div>
+
+
+    <button
+        type="button"
+        id="backHomeBtn"
+        class="back-home-btn">
+
+        ← العودة للرئيسية
+
+    </button>
+
+</header>
+
+
+<!-- =====================================================
+     PROFILE PAGE
+===================================================== -->
+
+<main class="profile-container">
+
+    <!-- =================================================
+         PROFILE HERO
+    ================================================== -->
+
+    <section class="profile-card">
+
+        <div class="profile-cover"></div>
+
+
+        <div class="profile-main">
+
+            <div class="main-photo-wrapper">
+
+                <div
+                    id="mainPhoto"
+                    class="main-photo">
+
+                    👤
+
+                </div>
+
+                <span
+                    id="onlineStatus"
+                    class="online-status hidden">
+                </span>
+
+            </div>
+
+
+            <div class="profile-heading">
+
+                <div class="name-row">
+
+                    <h2 id="memberName">
+                        عضو جديد
+                    </h2>
+
+                    <span
+                        id="verifiedBadge"
+                        class="verified-badge hidden">
+
+                        ✓
+
+                    </span>
+
+                </div>
+
+
+                <p id="memberBasicInfo">
+                    العمر • البلد
+                </p>
+
+
+                <div class="member-state"
+                     id="memberState">
+
+                    متاح للتعارف
+
+                </div>
+
+            </div>
+
+
+            <div class="profile-actions">
+
+                <button
+                    type="button"
+                    id="favoriteBtn"
+                    class="action-btn">
+
+                    ☆ مفضلة
+
+                </button>
+
+
+                <button
+                    type="button"
+                    id="messageBtn"
+                    class="action-btn gold-action">
+
+                    ✉️ مراسلة
+
+                </button>
+
+
+                <button
+                    type="button"
+                    id="moreBtn"
+                    class="action-btn">
+
+                    ⋮
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =================================================
+         PROFILE CONTENT
+    ================================================== -->
+
+    <div class="profile-layout">
+
+
+        <!-- =================================================
+             MAIN COLUMN
+        ================================================== -->
+
+        <section class="main-column">
+
+
+            <!-- ABOUT -->
+
+            <div class="content-card">
+
+                <div class="card-title">
+                    <span>👤</span>
+                    <h3>نبذة عني</h3>
+                </div>
+
+
+                <p
+                    id="aboutText"
+                    class="about-text">
+
+                    لم تتم إضافة نبذة بعد.
+
+                </p>
+
+            </div>
+
+
+            <!-- SEEKING -->
+
+            <div class="content-card">
+
+                <div class="card-title">
+                    <span>❤️</span>
+                    <h3>شريك / شريكة العمر</h3>
+                </div>
+
+
+                <p
+                    id="seekingText"
+                    class="about-text">
+
+                    لم تتم إضافة معلومات بعد.
+
+                </p>
+
+            </div>
+
+
+            <!-- PHOTOS -->
+
+            <div class="content-card">
+
+                <div class="card-title">
+
+                    <span>🖼️</span>
+
+                    <h3>
+                        الصور
+                    </h3>
+
+                    <span
+                        id="photoCount"
+                        class="photo-counter">
+
+                        0
+
+                    </span>
+
+                </div>
+
+
+                <div
+                    id="photosGrid"
+                    class="photos-grid">
+
+                </div>
+
+            </div>
+
+
+        </section>
+
+
+        <!-- =================================================
+             SIDE COLUMN
+        ================================================== -->
+
+        <aside class="side-column">
+
+
+            <!-- BASIC DATA -->
+
+            <div class="content-card">
+
+                <div class="card-title">
+
+                    <span>📋</span>
+
+                    <h3>
+                        معلومات أساسية
+                    </h3>
+
+                </div>
+
+
+                <div class="info-list">
+
+
+                    <div class="info-row">
+
+                        <span>
+                            🎂 العمر
+                        </span>
+
+                        <strong id="ageValue">
+                            —
+                        </strong>
+
+                    </div>
+
+
+                    <div class="info-row">
+
+                        <span>
+                            🌍 البلد
+                        </span>
+
+                        <strong id="countryValue">
+                            —
+                        </strong>
+
+                    </div>
+
+
+                    <div class="info-row">
+
+                        <span>
+                            📍 المدينة
+                        </span>
+
+                        <strong id="cityValue">
+                            —
+                        </strong>
+
+                    </div>
+
+
+                    <div class="info-row">
+
+                        <span>
+                            💍 الحالة الاجتماعية
+                        </span>
+
+                        <strong id="maritalValue">
+                            —
+                        </strong>
+
+                    </div>
+
+
+                    <div class="info-row">
+
+                        <span>
+                            🗣️ اللغة
+                        </span>
+
+                        <strong id="languageValue">
+                            —
+                        </strong>
+
+                    </div>
+
+
+                    <div class="info-row">
+
+                        <span>
+                            🎓 التعليم
+                        </span>
+
+                        <strong id="educationValue">
+                            —
+                        </strong>
+
+                    </div>
+
+
+                    <div class="info-row">
+
+                        <span>
+                            💼 المهنة
+                        </span>
+
+                        <strong id="professionValue">
+                            —
+                        </strong>
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+
+            <!-- SAFETY -->
+
+            <div class="safety-card">
+
+                <div class="safety-icon">
+                    🛡️
+                </div>
+
+                <div>
+
+                    <strong>
+                        تذكير أمان
+                    </strong>
+
+                    <p>
+                        لا ترسل أو تستقبل أموالًا من أي عضو،
+                        وخذ حذرك عند مشاركة معلوماتك الشخصية.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- REPORT -->
+
+            <button
+                type="button"
+                id="reportBtn"
+                class="report-btn">
+
+                🚩 الإبلاغ عن هذا العضو
+
+            </button>
+
+
+            <button
+                type="button"
+                id="blockBtn"
+                class="block-btn">
+
+                🚫 حظر العضو
+
+            </button>
+
+
+        </aside>
+
+    </div>
+
+</main>
+
+
+<!-- =====================================================
+     MODAL
+===================================================== -->
+
+<div
+    id="profileModal"
+    class="modal hidden">
+
+    <div class="modal-box">
+
+        <button
+            type="button"
+            id="closeModalBtn"
+            class="close-modal">
+
+            ×
+
+        </button>
+
+        <div class="modal-icon">
+            🛡️
+        </div>
+
+        <h3 id="modalTitle">
+            سكن
+        </h3>
+
+        <p id="modalText">
+            —
+        </p>
+
+        <button
+            type="button"
+            id="modalOkBtn"
+            class="modal-ok">
+
+            حسنًا
+
+        </button>
+
+    </div>
+
+</div>
+
+
+<script src="../js/member-profile.js"></script>
+
+</body>
+</html> 
