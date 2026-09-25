@@ -1,24 +1,111 @@
+ const jwt = require("jsonwebtoken");
 
-// backend/authMiddleware.js - التشفير وحماية الجلسات
-const jwt = require('jsonwebtoken');
+function getJwtSecret() {
 
-const JWT_SECRET = process.env.JWT_SECRET || 'sakan_secret_key_2026';
+    const secret =
+        process.env.JWT_SECRET;
 
-function authenticateToken(req, res, next) {
-  const authHeader = req.headers['authorization'];
-  const token = authHeader && authHeader.split(' ')[1];
+    if (!secret) {
 
-  if (!token) return res.status(401).json({ error: 'غير مصرح: يرجى تسجيل الدخول' });
+        throw new Error(
+            "JWT_SECRET غير موجود في ملف البيئة."
+        );
 
-  jwt.verify(token, JWT_SECRET, (err, user) => {
-    if (err) return res.status(403).json({ error: 'رمز الجلسة غير صالح' });
-    req.user = user;
-    next();
-  });
+    }
+
+    return secret;
 }
 
-function generateToken(user) {
-  return jwt.sign({ userId: user._id, memberId: user.memberId }, JWT_SECRET, { expiresIn: '30d' });
+
+/* =====================================================
+   AUTHENTICATE
+===================================================== */
+
+function authenticateToken(
+    req,
+    res,
+    next
+) {
+
+    const authHeader =
+        req.headers.authorization;
+
+    const token =
+        authHeader &&
+        authHeader.startsWith("Bearer ")
+            ? authHeader.slice(7)
+            : null;
+
+
+    if (!token) {
+
+        return res.status(401).json({
+            error:
+                "غير مصرح: يرجى تسجيل الدخول."
+        });
+
+    }
+
+
+    try {
+
+        const decoded =
+            jwt.verify(
+                token,
+                getJwtSecret()
+            );
+
+
+        req.user =
+            decoded;
+
+
+        next();
+
+    } catch {
+
+        return res.status(403).json({
+            error:
+                "رمز الجلسة غير صالح أو منتهي."
+        });
+
+    }
+
 }
 
-module.exports = { authenticateToken, generateToken };
+
+/* =====================================================
+   GENERATE TOKEN
+===================================================== */
+
+function generateToken(
+    user
+) {
+
+    return jwt.sign(
+        {
+            userId:
+                user._id.toString(),
+
+            memberId:
+                user.memberId,
+
+            gender:
+                user.gender
+        },
+
+        getJwtSecret(),
+
+        {
+            expiresIn:
+                "30d"
+        }
+    );
+
+}
+
+
+module.exports = {
+    authenticateToken,
+    generateToken
+};
