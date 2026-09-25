@@ -767,7 +767,13 @@ document.addEventListener("DOMContentLoaded", () => {
         return;
       }
 
-      if (type === "search") {
+     if (type === "search") {
+
+    window.location.href =
+        "member-search.html";
+
+    return;
+}
         openModal(
           "البحث عن عضو",
           "سيتم إضافة البحث بالاسم والعمر والبلد واللغة وغيرها مع احترام قاعدة الجنس المقابل."
