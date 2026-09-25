@@ -1,522 +1,364 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>منصة سكن | للتعارف والزواج</title>
+    <title>منصة سكن | للتعارف والزواج</title>
 
-  <link
-    rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-  >
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-  <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/style.css">
 </head>
 
-<body class="landing-page">
+<body>
 
-  <!-- =====================================================
-       شريط التشغيل التجريبي
-  ====================================================== -->
+<!-- =====================================================
+     PRIVACY & SAFETY SCREEN
+===================================================== -->
 
-  <div class="trial-bar">
-    <span>
-      🟡 أهلًا بكم في منصة سكن — المنصة تعمل حاليًا خلال فترة تشغيل تجريبية لمدة 15 يومًا.
-    </span>
-  </div>
+<div id="privacyScreen" class="screen active">
 
+    <div class="privacy-card">
 
-  <!-- =====================================================
-       الصفحة الرئيسية الترحيبية
-  ====================================================== -->
-
-  <main class="welcome-page">
-
-    <div class="welcome-content">
-
-      <!-- الشعار -->
-
-      <div class="sakan-brand">
-
-        <div class="brand-logo">
-          سكن
+        <div class="logo-circle">
+            <img src="assets/logo/sakan-logo.png"
+                 alt="Sakan"
+                 onerror="this.style.display='none'">
+            <span>سكن</span>
         </div>
 
-        <div class="brand-line"></div>
+        <h1>الخصوصية والأمان</h1>
 
-        <div class="brand-subtitle">
-          للتعارف والزواج
-        </div>
-
-      </div>
-
-
-      <!-- البطاقة الرئيسية -->
-
-      <section class="welcome-card">
-
-        <div class="decor decor-top"></div>
-        <div class="decor decor-bottom"></div>
-
-        <div class="welcome-icon">
-          <i class="fa-solid fa-heart"></i>
-        </div>
-
-        <h1>
-          مرحبًا بكم في منصة سكن
-        </h1>
-
-        <h2>
-          للتعارف والزواج
-        </h2>
-
-        <p class="welcome-text">
-          خطوة واحدة بينك وبين شريك العمر
-          <span>❤️</span>
+        <p class="privacy-intro">
+            قبل الدخول إلى منصة سكن، يرجى قراءة قواعد الخصوصية
+            والأمان والموافقة عليها.
         </p>
 
-        <button
-          type="button"
-          class="gold-button main-continue-button"
-          id="continueBtn"
-        >
-          استمر
-          <i class="fa-solid fa-arrow-left"></i>
-        </button>
+        <div class="security-box">
 
-        <div class="welcome-security">
-          <i class="fa-solid fa-shield-halved"></i>
-          الخصوصية والأمان أولًا
+            <div class="security-item">
+                <i class="fa-solid fa-shield-halved"></i>
+                <span>نحافظ على خصوصية بياناتك الشخصية.</span>
+            </div>
+
+            <div class="security-item">
+                <i class="fa-solid fa-user-shield"></i>
+                <span>لا تظهر كلمة المرور أو البريد الإلكتروني للأعضاء الآخرين.</span>
+            </div>
+
+            <div class="security-item">
+                <i class="fa-solid fa-ban"></i>
+                <span>يُمنع الاحتيال وطلب الأموال والإساءة والتحرش.</span>
+            </div>
+
+            <div class="security-item">
+                <i class="fa-solid fa-triangle-exclamation"></i>
+                <span>لا ترسل أو تستقبل أموالًا من أعضاء المنصة.</span>
+            </div>
+
+            <div class="security-item">
+                <i class="fa-solid fa-flag"></i>
+                <span>يمكنك الإبلاغ عن أي عضو أو محتوى مخالف.</span>
+            </div>
+
         </div>
 
-      </section>
+        <p class="privacy-note">
+            باستخدامك للمنصة أنت تؤكد أنك قرأت هذه القواعد
+            وتوافق على الالتزام بها.
+        </p>
+
+        <div class="privacy-buttons">
+
+            <button
+                type="button"
+                id="acceptPrivacyBtn"
+                class="gold-btn">
+
+                <i class="fa-solid fa-check"></i>
+                موافقة ومتابعة
+
+            </button>
+
+            <button
+                type="button"
+                id="rejectPrivacyBtn"
+                class="dark-btn">
+
+                <i class="fa-solid fa-xmark"></i>
+                رفض
+
+            </button>
+
+        </div>
 
     </div>
 
-  </main>
+</div>
 
 
-  <!-- =====================================================
-       نافذة الخصوصية والأمان
-  ====================================================== -->
+<!-- =====================================================
+     WELCOME SCREEN
+===================================================== -->
 
-  <div
-    class="modal-overlay hidden"
-    id="privacyModal"
-    role="dialog"
-    aria-modal="true"
-  >
+<div id="welcomeScreen" class="screen">
 
-    <div class="sakan-modal privacy-modal">
+    <div class="welcome-container">
 
-      <button
-        type="button"
-        class="modal-close"
-        data-close="privacyModal"
-        aria-label="إغلاق"
-      >
-        ×
-      </button>
+        <div class="welcome-overlay"></div>
 
+        <div class="welcome-content">
 
-      <div class="modal-brand">
-        سكن
-      </div>
+            <div class="brand">
 
-      <div class="modal-title-icon">
-        <i class="fa-solid fa-shield-halved"></i>
-      </div>
+                <div class="brand-logo">
+                    <img src="assets/logo/sakan-logo.png"
+                         alt="Sakan"
+                         onerror="this.style.display='none'">
+                </div>
 
-      <h2>
-        الخصوصية والأمان
-      </h2>
+                <div class="brand-name">
+                    سكن
+                </div>
 
-      <p class="modal-description">
-        قبل دخول منصة سكن، نرجو قراءة قواعد الخصوصية
-        والأمان والموافقة عليها.
-      </p>
+            </div>
 
+            <div class="gold-line"></div>
 
-      <div class="security-rules">
+            <h1>
+                مرحبًا بكم في منصة سكن
+            </h1>
 
-        <div class="security-rule">
-          <i class="fa-solid fa-lock"></i>
-          <span>
-            نحترم خصوصية الأعضاء ونحافظ على بيانات الحساب.
-          </span>
+            <h2>
+                للتعارف والزواج
+            </h2>
+
+            <p>
+                خطوة واحدة بينك وبين شريك العمر
+                <span>❤️</span>
+            </p>
+
+            <button
+                type="button"
+                id="continueBtn"
+                class="main-gold-btn">
+
+                استمر
+
+                <i class="fa-solid fa-arrow-left"></i>
+
+            </button>
+
         </div>
-
-        <div class="security-rule">
-          <i class="fa-solid fa-money-bill-transfer"></i>
-          <span>
-            يمنع طلب أو إرسال الأموال بين الأعضاء.
-          </span>
-        </div>
-
-        <div class="security-rule">
-          <i class="fa-solid fa-ban"></i>
-          <span>
-            يمنع السب والإهانة والتحرش والتهديد والمحتوى غير اللائق.
-          </span>
-        </div>
-
-        <div class="security-rule">
-          <i class="fa-solid fa-user-shield"></i>
-          <span>
-            يمكنك حظر أي عضو والإبلاغ عنه عند وجود مشكلة.
-          </span>
-        </div>
-
-        <div class="security-rule">
-          <i class="fa-solid fa-location-dot"></i>
-          <span>
-            يفضل أن يكون اللقاء الأول في مكان عام وآمن.
-          </span>
-        </div>
-
-        <div class="security-rule">
-          <i class="fa-solid fa-triangle-exclamation"></i>
-          <span>
-            لا تشارك كلمة المرور أو بياناتك المالية مع أي شخص.
-          </span>
-        </div>
-
-      </div>
-
-
-      <!-- الموافقة -->
-
-      <label class="privacy-checkbox">
-
-        <input
-          type="checkbox"
-          id="privacyConsent"
-        >
-
-        <span>
-          أوافق على سياسة الخصوصية والأمان
-          وقواعد استخدام منصة سكن.
-        </span>
-
-      </label>
-
-
-      <!-- الأزرار -->
-
-      <div class="modal-buttons">
-
-        <button
-          type="button"
-          class="gold-button"
-          id="acceptPrivacy"
-          disabled
-        >
-          موافق ومتابعة
-          <i class="fa-solid fa-arrow-left"></i>
-        </button>
-
-        <button
-          type="button"
-          class="outline-button"
-          id="declinePrivacy"
-        >
-          رفض والخروج
-        </button>
-
-      </div>
 
     </div>
 
-  </div>
+</div>
 
 
-  <!-- =====================================================
-       نافذة تسجيل الدخول / التسجيل
-  ====================================================== -->
+<!-- =====================================================
+     LOGIN / REGISTER SCREEN
+===================================================== -->
 
-  <div
-    class="modal-overlay hidden"
-    id="authModal"
-    role="dialog"
-    aria-modal="true"
-  >
+<div id="accountScreen" class="screen">
 
-    <div class="sakan-modal auth-modal">
+    <div class="account-card">
 
-      <button
-        type="button"
-        class="modal-close"
-        data-close="authModal"
-        aria-label="إغلاق"
-      >
-        ×
-      </button>
+        <div class="account-header">
 
+            <div class="small-logo">
+                <img src="assets/logo/sakan-logo.png"
+                     alt="Sakan"
+                     onerror="this.style.display='none'">
+            </div>
 
-      <div class="modal-brand">
-        سكن
-      </div>
+            <h2>منصة سكن</h2>
 
-      <div class="modal-title-icon">
-        <i class="fa-solid fa-house-heart"></i>
-      </div>
-
-      <h2>
-        مرحبًا بك في منصة سكن
-      </h2>
-
-      <p class="modal-description">
-        هل أنت عضو جديد أم لديك حساب بالفعل؟
-      </p>
-
-
-      <!-- اختيار نوع المستخدم -->
-
-      <div class="member-choice">
-
-        <button
-          type="button"
-          class="member-choice-card"
-          id="newMemberBtn"
-        >
-
-          <div class="choice-icon">
-            <i class="fa-solid fa-user-plus"></i>
-          </div>
-
-          <strong>
-            عضو جديد
-          </strong>
-
-          <span>
-            إنشاء حساب جديد
-          </span>
-
-        </button>
-
-
-        <button
-          type="button"
-          class="member-choice-card"
-          id="existingMemberBtn"
-        >
-
-          <div class="choice-icon">
-            <i class="fa-solid fa-right-to-bracket"></i>
-          </div>
-
-          <strong>
-            عضو مشترك
-          </strong>
-
-          <span>
-            تسجيل الدخول
-          </span>
-
-        </button>
-
-      </div>
-
-
-      <!-- =================================================
-           التسجيل
-      ================================================== -->
-
-      <div
-        class="auth-panel hidden"
-        id="newMemberPanel"
-      >
-
-        <div class="panel-heading">
-          <i class="fa-solid fa-user-plus"></i>
-          إنشاء حساب جديد
-        </div>
-
-
-        <button
-          type="button"
-          class="social-button"
-        >
-          <span>G</span>
-          المتابعة باستخدام Google
-        </button>
-
-
-        <button
-          type="button"
-          class="social-button"
-        >
-          <span>f</span>
-          المتابعة باستخدام Facebook
-        </button>
-
-
-        <div class="divider">
-          <span>أو بالبريد الإلكتروني</span>
-        </div>
-
-
-        <div class="input-group">
-
-          <label>
-            البريد الإلكتروني
-          </label>
-
-          <input
-            type="email"
-            id="registerEmail"
-            placeholder="example@email.com"
-            autocomplete="email"
-          >
+            <p>
+                أهلاً بك في طريقك نحو شريك العمر
+            </p>
 
         </div>
 
 
-        <div class="input-group">
+        <!-- اختيار عضو جديد / عضو موجود -->
 
-          <label>
-            كلمة المرور
-          </label>
+        <div id="accountChoice">
 
-          <input
-            type="password"
-            id="registerPassword"
-            placeholder="كلمة المرور"
-            autocomplete="new-password"
-          >
+            <h3>مرحبًا بك</h3>
 
-        </div>
+            <p class="account-description">
+                هل أنت عضو جديد أم لديك حساب بالفعل؟
+            </p>
 
+            <div class="choice-buttons">
 
-        <div class="input-group">
+                <button
+                    type="button"
+                    id="newMemberBtn"
+                    class="gold-btn">
 
-          <label>
-            تأكيد كلمة المرور
-          </label>
+                    <i class="fa-solid fa-user-plus"></i>
+                    عضو جديد
 
-          <input
-            type="password"
-            id="registerPasswordConfirm"
-            placeholder="تأكيد كلمة المرور"
-            autocomplete="new-password"
-          >
+                </button>
 
-        </div>
+                <button
+                    type="button"
+                    id="existingMemberBtn"
+                    class="dark-btn">
 
+                    <i class="fa-solid fa-right-to-bracket"></i>
+                    لدي حساب بالفعل
 
-        <button
-          type="button"
-          class="gold-button full-button"
-          id="registerButton"
-        >
-          إنشاء الحساب ومتابعة
-          <i class="fa-solid fa-arrow-left"></i>
-        </button>
+                </button>
 
-      </div>
-
-
-      <!-- =================================================
-           تسجيل الدخول
-      ================================================== -->
-
-      <div
-        class="auth-panel hidden"
-        id="loginPanel"
-      >
-
-        <div class="panel-heading">
-          <i class="fa-solid fa-right-to-bracket"></i>
-          تسجيل الدخول
-        </div>
-
-
-        <div class="input-group">
-
-          <label>
-            البريد الإلكتروني
-          </label>
-
-          <input
-            type="email"
-            id="loginEmail"
-            placeholder="example@email.com"
-            autocomplete="email"
-          >
+            </div>
 
         </div>
 
 
-        <div class="input-group">
+        <!-- تسجيل جديد -->
 
-          <label>
-            كلمة المرور
-          </label>
+        <div id="registerBox" class="form-box hidden">
 
-          <input
-            type="password"
-            id="loginPassword"
-            placeholder="كلمة المرور"
-            autocomplete="current-password"
-          >
+            <h3>إنشاء حساب جديد</h3>
+
+            <p class="form-subtitle">
+                اختر طريقة إنشاء حسابك
+            </p>
+
+            <button
+                type="button"
+                class="social-btn google-btn"
+                id="googleRegisterBtn">
+
+                <i class="fa-brands fa-google"></i>
+                التسجيل بواسطة Google
+
+            </button>
+
+            <button
+                type="button"
+                class="social-btn facebook-btn"
+                id="facebookRegisterBtn">
+
+                <i class="fa-brands fa-facebook-f"></i>
+                التسجيل بواسطة Facebook
+
+            </button>
+
+            <div class="or-divider">
+                <span>أو</span>
+            </div>
+
+            <label>البريد الإلكتروني</label>
+
+            <input
+                type="email"
+                id="registerEmail"
+                placeholder="example@email.com">
+
+            <label>كلمة المرور</label>
+
+            <input
+                type="password"
+                id="registerPassword"
+                placeholder="كلمة المرور">
+
+            <button
+                type="button"
+                id="registerBtn"
+                class="gold-btn full-btn">
+
+                إنشاء الحساب
+
+            </button>
+
+            <button
+                type="button"
+                id="backFromRegister"
+                class="back-btn">
+
+                ← العودة
+
+            </button>
 
         </div>
 
 
-        <button
-          type="button"
-          class="gold-button full-button"
-          id="loginButton"
-        >
-          دخول
-          <i class="fa-solid fa-arrow-left"></i>
-        </button>
+        <!-- تسجيل الدخول -->
 
+        <div id="loginBox" class="form-box hidden">
 
-        <button
-          type="button"
-          class="forgot-password"
-          id="forgotPassword"
-        >
-          نسيت كلمة المرور؟
-        </button>
+            <h3>تسجيل الدخول</h3>
 
+            <p class="form-subtitle">
+                أدخل بيانات حسابك
+            </p>
 
-        <div class="divider">
-          <span>أو</span>
+            <label>البريد الإلكتروني</label>
+
+            <input
+                type="email"
+                id="loginEmail"
+                placeholder="example@email.com">
+
+            <label>كلمة المرور</label>
+
+            <input
+                type="password"
+                id="loginPassword"
+                placeholder="كلمة المرور">
+
+            <button
+                type="button"
+                id="loginBtn"
+                class="gold-btn full-btn">
+
+                دخول
+
+            </button>
+
+            <button
+                type="button"
+                id="forgotPasswordBtn"
+                class="forgot-btn">
+
+                نسيت كلمة المرور؟
+
+            </button>
+
+            <button
+                type="button"
+                id="backFromLogin"
+                class="back-btn">
+
+                ← العودة
+
+            </button>
+
         </div>
-
-
-        <button
-          type="button"
-          class="social-button"
-        >
-          <span>G</span>
-          الدخول باستخدام Google
-        </button>
-
-
-        <button
-          type="button"
-          class="social-button"
-        >
-          <span>f</span>
-          الدخول باستخدام Facebook
-        </button>
-
-      </div>
 
     </div>
 
-  </div>
+</div>
 
 
-  <!-- =====================================================
-       JavaScript
-  ====================================================== -->
+<!-- =====================================================
+     MESSAGE
+===================================================== -->
 
-  <script src="js/app.js"></script>
+<div id="messageBox" class="message-box"></div>
+
+
+<!-- =====================================================
+     JAVASCRIPT
+===================================================== -->
+
+<script src="js/app.js"></script>
 
 </body>
-</html>
+</html> 
