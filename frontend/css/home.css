@@ -616,3 +616,16 @@ footer {
     flex-direction: column;
   }
 } 
+.verified-badge {
+  display: inline-grid;
+  place-items: center;
+  width: 17px;
+  height: 17px;
+  margin-right: 5px;
+  border-radius: 50%;
+  background: #48a765;
+  color: #ffffff;
+  font-size: 10px;
+  font-weight: bold;
+  vertical-align: middle;
+}
