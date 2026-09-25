@@ -1229,3 +1229,114 @@ button {
     }
 
 }
+/* =====================================================
+   SAKAN WATERMARK BACKGROUND
+   يستخدم في شاشات البداية قبل الصفحة الرئيسية
+===================================================== */
+
+#welcomeScreen,
+#accountScreen,
+#newMemberScreen,
+#existingMemberScreen {
+
+    position: relative;
+
+    overflow: hidden;
+
+    background:
+        linear-gradient(
+            rgba(5, 14, 30, 0.90),
+            rgba(5, 14, 30, 0.90)
+        ),
+        url("../assets/backgrounds/members.png")
+        center center /
+        cover
+        no-repeat;
+}
+
+
+/* طبقة إضافية ناعمة حتى تبقى الواجهة واضحة */
+
+#welcomeScreen::before,
+#accountScreen::before,
+#newMemberScreen::before,
+#existingMemberScreen::before {
+
+    content: "";
+
+    position: absolute;
+
+    inset: 0;
+
+    background:
+        radial-gradient(
+            circle at center,
+            rgba(20, 70, 150, 0.08),
+            transparent 55%
+        );
+
+    pointer-events: none;
+
+    z-index: 0;
+}
+
+
+/* محتوى الصفحات فوق الصورة */
+
+#welcomeScreen > *,
+#accountScreen > *,
+#newMemberScreen > *,
+#existingMemberScreen > * {
+
+    position: relative;
+
+    z-index: 1;
+}
+
+
+/* =====================================================
+   WELCOME
+===================================================== */
+
+#welcomeScreen .welcome-container {
+
+    background:
+        transparent;
+
+}
+
+
+/* طبقة ترحيب ناعمة فوق المائية */
+
+#welcomeScreen .welcome-overlay {
+
+    background:
+        linear-gradient(
+            to bottom,
+            rgba(2, 8, 18, 0.30),
+            rgba(2, 8, 18, 0.68)
+        );
+
+}
+
+
+/* =====================================================
+   MOBILE
+===================================================== */
+
+@media (max-width: 800px) {
+
+    #welcomeScreen,
+    #accountScreen,
+    #newMemberScreen,
+    #existingMemberScreen {
+
+        background-position:
+            center center;
+
+        background-size:
+            auto 100%;
+
+    }
+
+}
