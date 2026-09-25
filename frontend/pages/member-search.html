@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>البحث عن عضو | سكن</title>
+
+    <link rel="stylesheet"
+          href="../css/member-search.css">
+</head>
+
+<body>
+
+<header class="search-header">
+
+    <div class="brand">
+
+        <div class="brand-mark">
+            س
+        </div>
+
+        <div>
+            <h1>سكن</h1>
+            <span>منصة التعارف والزواج</span>
+        </div>
+
+    </div>
+
+
+    <button
+        type="button"
+        id="backHomeBtn"
+        class="back-home-btn">
+
+        ← الرئيسية
+
+    </button>
+
+</header>
+
+
+<main class="search-container">
+
+    <section class="search-intro">
+
+        <span class="small-title">
+            البحث
+        </span>
+
+        <h2>
+            ابحث عن عضو
+        </h2>
+
+        <p>
+            ابحث عن الأعضاء المناسبين لك حسب الاسم والبلد والعمر والحالة.
+        </p>
+
+    </section>
+
+
+    <section class="security-notice">
+
+        <span class="notice-icon">
+            🔒
+        </span>
+
+        <div>
+
+            <strong>
+                البحث الآمن
+            </strong>
+
+            <p id="genderNotice">
+                يتم عرض الأعضاء المناسبين لك فقط.
+            </p>
+
+        </div>
+
+    </section>
+
+
+    <section class="search-card">
+
+        <div class="search-grid">
+
+            <div class="field field-wide">
+
+                <label for="nameSearch">
+                    الاسم أو الاسم المستعار
+                </label>
+
+                <div class="input-wrapper">
+
+                    <span>
+                        🔍
+                    </span>
+
+                    <input
+                        type="text"
+                        id="nameSearch"
+                        placeholder="اكتب الاسم أو الاسم المستعار">
+
+                </div>
+
+            </div>
+
+
+            <div class="field">
+
+                <label for="countrySearch">
+                    البلد
+                </label>
+
+                <select id="countrySearch">
+
+                    <option value="">
+                        جميع البلدان
+                    </option>
+
+                    <option value="ألمانيا">
+                        ألمانيا
+                    </option>
+
+                    <option value="فرنسا">
+                        فرنسا
+                    </option>
+
+                    <option value="إسبانيا">
+                        إسبانيا
+                    </option>
+
+                    <option value="النمسا">
+                        النمسا
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <div class="field">
+
+                <label for="maritalSearch">
+                    الحالة الاجتماعية
+                </label>
+
+                <select id="maritalSearch">
+
+                    <option value="">
+                        جميع الحالات
+                    </option>
+
+                    <option value="أعزب">
+                        أعزب
+                    </option>
+
+                    <option value="عزباء">
+                        عزباء
+                    </option>
+
+                    <option value="مطلق">
+                        مطلق
+                    </option>
+
+                    <option value="مطلقة">
+                        مطلقة
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <div class="field">
+
+                <label for="minAge">
+                    العمر من
+                </label>
+
+                <input
+                    type="number"
+                    id="minAge"
+                    min="18"
+                    max="100"
+                    placeholder="18">
+
+            </div>
+
+
+            <div class="field">
+
+                <label for="maxAge">
+                    العمر إلى
+                </label>
+
+                <input
+                    type="number"
+                    id="maxAge"
+                    min="18"
+                    max="100"
+                    placeholder="70">
+
+            </div>
+
+        </div>
+
+
+        <div class="search-actions">
+
+            <button
+                type="button"
+                id="resetBtn"
+                class="reset-btn">
+
+                إعادة ضبط
+
+            </button>
+
+
+            <button
+                type="button"
+                id="searchBtn"
+                class="search-btn">
+
+                🔍 بحث
+
+            </button>
+
+        </div>
+
+    </section>
+
+
+    <section class="results-section">
+
+        <div class="results-heading">
+
+            <div>
+
+                <span class="small-title">
+                    النتائج
+                </span>
+
+                <h2 id="resultsTitle">
+                    الأعضاء المناسبون
+                </h2>
+
+            </div>
+
+            <span
+                id="resultsCount"
+                class="results-count">
+
+                0 نتيجة
+
+            </span>
+
+        </div>
+
+
+        <div
+            id="resultsGrid"
+            class="results-grid">
+
+        </div>
+
+
+        <div
+            id="noResults"
+            class="no-results hidden">
+
+            <div class="empty-icon">
+                🔎
+            </div>
+
+            <h3>
+                لم نجد نتائج
+            </h3>
+
+            <p>
+                جرّب تغيير معايير البحث.
+            </p>
+
+        </div>
+
+    </section>
+
+</main>
+
+
+<div
+    id="searchModal"
+    class="modal hidden">
+
+    <div class="modal-box">
+
+        <button
+            type="button"
+            id="closeModal"
+            class="close-modal">
+
+            ×
+
+        </button>
+
+        <div class="modal-icon">
+            ✨
+        </div>
+
+        <h3 id="modalTitle">
+            سكن
+        </h3>
+
+        <p id="modalText">
+            —
+        </p>
+
+        <button
+            type="button"
+            id="modalOk"
+            class="modal-ok">
+
+            حسنًا
+
+        </button>
+
+    </div>
+
+</div>
+
+
+<script src="../js/member-search.js"></script>
+
+</body>
+</html> 
