@@ -204,42 +204,69 @@ document.addEventListener("DOMContentLoaded", () => {
 
         member = {
 
-            id: 999,
+          /* =====================================================
+   RECORD VISIT
+===================================================== */
 
-            name: "عضو جديد",
+function recordVisit(profile) {
 
-            age: "—",
+    try {
 
-            country: "—",
+        if (!profile || !profile.id) {
+            return;
+        }
 
-            city: "—",
+        const saved =
+            JSON.parse(
+                localStorage.getItem(
+                    "sakanVisitors"
+                ) || "[]"
+            );
 
-            maritalStatus: "—",
-
-            language: "—",
-
-            education: "—",
-
-            profession: "—",
-
-            online: false,
-
-            verified: false,
-
-            avatar: "👤",
-
-            about:
-                "لم تتم إضافة نبذة عن هذا العضو بعد.",
-
-            seeking:
-                "لم تتم إضافة معلومات عن شريك العمر بعد.",
-
-            photos: []
-
+        const visitor = {
+            id: profile.id,
+            name: profile.name,
+            age: profile.age,
+            country: profile.country,
+            city: profile.city,
+            online: profile.online,
+            verified: profile.verified,
+            avatar: profile.avatar,
+            about: profile.about,
+            seeking: profile.seeking,
+            photos: profile.photos || [],
+            visitedAt:
+                new Date().toISOString()
         };
 
-    }
+        const filtered =
+            saved.filter(
+                (item) =>
+                    Number(item.id) !==
+                    Number(profile.id)
+            );
 
+        filtered.unshift(visitor);
+
+        localStorage.setItem(
+            "sakanVisitors",
+            JSON.stringify(
+                filtered.slice(0, 50)
+            )
+        );
+
+    } catch (error) {
+
+        console.error(
+            "تعذر تسجيل الزيارة:",
+            error
+        );
+
+    }
+}
+
+
+recordVisit(member);
 
     /* =====================================================
        FILL PROFILE
