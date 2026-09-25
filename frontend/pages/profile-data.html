@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>بياناتي | منصة سكن</title>
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <link rel="stylesheet" href="../css/profile-data.css">
+</head>
+
+<body>
+
+<!-- =====================================================
+     TOP BAR
+===================================================== -->
+
+<header class="top-bar">
+
+    <div class="top-logo">
+
+        <div class="logo-circle">
+            <img src="../assets/logo/sakan-logo.png"
+                 alt="سكن"
+                 onerror="this.style.display='none'">
+        </div>
+
+        <div>
+            <div class="logo-name">سكن</div>
+            <div class="logo-subtitle">للتعارف والزواج</div>
+        </div>
+
+    </div>
+
+    <div class="page-title">
+        <i class="fa-solid fa-user-pen"></i>
+        بياناتي
+    </div>
+
+    <div class="step-indicator">
+        الخطوة <strong>1</strong> من <strong>3</strong>
+    </div>
+
+</header>
+
+
+<!-- =====================================================
+     MAIN
+===================================================== -->
+
+<main class="profile-page">
+
+    <section class="profile-card">
+
+        <!-- HEADER -->
+
+        <div class="card-header">
+
+            <div>
+                <h1>بياناتي الشخصية</h1>
+
+                <p>
+                    أدخل بياناتك الأساسية حتى نساعدك في العثور
+                    على شريك الحياة المناسب.
+                </p>
+            </div>
+
+            <div class="header-icon">
+                <i class="fa-solid fa-id-card"></i>
+            </div>
+
+        </div>
+
+
+        <!-- NOTICE -->
+
+        <div class="private-notice">
+
+            <i class="fa-solid fa-lock"></i>
+
+            <span>
+                اسمك الحقيقي وبيانات حسابك الخاصة لا تظهر للأعضاء الآخرين.
+                الاسم المستعار هو الاسم الذي يظهر في ملفك العام.
+            </span>
+
+        </div>
+
+
+        <!-- =================================================
+             FORM
+        ================================================= -->
+
+        <form id="profileDataForm">
+
+
+            <!-- ROW 1 -->
+
+            <div class="form-grid">
+
+                <div class="field">
+
+                    <label for="realName">
+                        الاسم الحقيقي
+                        <span>*</span>
+                    </label>
+
+                    <input
+                        type="text"
+                        id="realName"
+                        name="realName"
+                        autocomplete="name"
+                        placeholder="اكتب اسمك الحقيقي"
+                        required>
+
+                    <small>
+                        يستخدم لإدارة الحساب والتحقق فقط.
+                    </small>
+
+                </div>
+
+
+                <div class="field">
+
+                    <label for="displayName">
+                        الاسم المستعار
+                        <span>*</span>
+                    </label>
+
+                    <input
+                        type="text"
+                        id="displayName"
+                        name="displayName"
+                        placeholder="الاسم الذي سيظهر للأعضاء"
+                        required>
+
+                    <small>
+                        يمكنك استخدام اسم مستعار بدل اسمك الحقيقي.
+                    </small>
+
+                </div>
+
+            </div>
+
+
+            <!-- ROW 2 -->
+
+            <div class="form-grid three-columns">
+
+                <div class="field">
+
+                    <label for="gender">
+                        الجنس
+                        <span>*</span>
+                    </label>
+
+                    <select id="gender" name="gender" required>
+
+                        <option value="">
+                            اختر الجنس
+                        </option>
+
+                        <option value="male">
+                            رجل
+                        </option>
+
+                        <option value="female">
+                            امرأة
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <div class="field">
+
+                    <label for="birthDate">
+                        تاريخ الميلاد
+                        <span>*</span>
+                    </label>
+
+                    <input
+                        type="date"
+                        id="birthDate"
+                        name="birthDate"
+                        required>
+
+                </div>
+
+
+                <div class="field">
+
+                    <label>
+                        العمر
+                    </label>
+
+                    <div class="age-display">
+
+                        <span id="ageValue">--</span>
+
+                        <span>سنة</span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- ROW 3 -->
+
+            <div class="form-grid three-columns">
+
+                <div class="field">
+
+                    <label for="country">
+                        الدولة
+                        <span>*</span>
+                    </label>
+
+                    <select id="country" name="country" required>
+
+                        <option value="">
+                            اختر الدولة
+                        </option>
+
+                        <option value="germany">ألمانيا</option>
+                        <option value="egypt">مصر</option>
+                        <option value="saudi-arabia">السعودية</option>
+                        <option value="uae">الإمارات</option>
+                        <option value="kuwait">الكويت</option>
+                        <option value="qatar">قطر</option>
+                        <option value="bahrain">البحرين</option>
+                        <option value="oman">عُمان</option>
+                        <option value="jordan">الأردن</option>
+                        <option value="lebanon">لبنان</option>
+                        <option value="morocco">المغرب</option>
+                        <option value="algeria">الجزائر</option>
+                        <option value="tunisia">تونس</option>
+                        <option value="iraq">العراق</option>
+                        <option value="syria">سوريا</option>
+                        <option value="palestine">فلسطين</option>
+                        <option value="turkey">تركيا</option>
+                        <option value="france">فرنسا</option>
+                        <option value="italy">إيطاليا</option>
+                        <option value="spain">إسبانيا</option>
+                        <option value="other">
+                            دولة أخرى
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <div class="field">
+
+                    <label for="city">
+                        المدينة
+                        <span>*</span>
+                    </label>
+
+                    <input
+                        type="text"
+                        id="city"
+                        name="city"
+                        placeholder="اكتب المدينة"
+                        required>
+
+                </div>
+
+
+                <div class="field">
+
+                    <label for="maritalStatus">
+                        الحالة الاجتماعية
+                        <span>*</span>
+                    </label>
+
+                    <select
+                        id="maritalStatus"
+                        name="maritalStatus"
+                        required>
+
+                        <option value="">
+                            اختر الحالة
+                        </option>
+
+                        <option value="single">
+                            أعزب / عزباء
+                        </option>
+
+                        <option value="married">
+                            متزوج / متزوجة
+                        </option>
+
+                        <option value="divorced">
+                            مطلق / مطلقة
+                        </option>
+
+                        <option value="widowed">
+                            أرمل / أرملة
+                        </option>
+
+                        <option value="separated">
+                            منفصل / منفصلة
+                        </option>
+
+                    </select>
+
+                </div>
+
+            </div>
+
+
+            <!-- ROW 4 -->
+
+            <div class="form-grid three-columns">
+
+                <div class="field">
+
+                    <label for="language">
+                        اللغة المفضلة
+                        <span>*</span>
+                    </label>
+
+                    <select id="language" name="language" required>
+
+                        <option value="">
+                            اختر اللغة
+                        </option>
+
+                        <option value="ar">
+                            العربية
+                        </option>
+
+                        <option value="de">
+                            الألمانية
+                        </option>
+
+                        <option value="en">
+                            الإنجليزية
+                        </option>
+
+                        <option value="fr">
+                            الفرنسية
+                        </option>
+
+                        <option value="es">
+                            الإسبانية
+                        </option>
+
+                        <option value="tr">
+                            التركية
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <div class="field">
+
+                    <label for="education">
+                        التعليم
+                        <span>*</span>
+                    </label>
+
+                    <select id="education" name="education" required>
+
+                        <option value="">
+                            اختر المستوى
+                        </option>
+
+                        <option value="school">
+                            تعليم مدرسي
+                        </option>
+
+                        <option value="high-school">
+                            ثانوية
+                        </option>
+
+                        <option value="diploma">
+                            دبلوم
+                        </option>
+
+                        <option value="bachelor">
+                            بكالوريوس
+                        </option>
+
+                        <option value="master">
+                            ماجستير
+                        </option>
+
+                        <option value="phd">
+                            دكتوراه
+                        </option>
+
+                        <option value="other">
+                            أخرى
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <div class="field">
+
+                    <label for="profession">
+                        المهنة
+                        <span>*</span>
+                    </label>
+
+                    <select id="profession" name="profession" required>
+
+                        <option value="">
+                            اختر المهنة
+                        </option>
+
+                        <option value="employee">
+                            موظف / موظفة
+                        </option>
+
+                        <option value="business">
+                            صاحب عمل
+                        </option>
+
+                        <option value="doctor">
+                            طبيب / طبيبة
+                        </option>
+
+                        <option value="engineer">
+                            مهندس / مهندسة
+                        </option>
+
+                        <option value="teacher">
+                            معلم / معلمة
+                        </option>
+
+                        <option value="lawyer">
+                            محامي / محامية
+                        </option>
+
+                        <option value="nurse">
+                            تمريض
+                        </option>
+
+                        <option value="it">
+                            تقنية ومعلومات
+                        </option>
+
+                        <option value="student">
+                            طالب / طالبة
+                        </option>
+
+                        <option value="retired">
+                            متقاعد / متقاعدة
+                        </option>
+
+                        <option value="self-employed">
+                            عمل حر
+                        </option>
+
+                        <option value="other">
+                            أخرى
+                        </option>
+
+                    </select>
+
+                </div>
+
+            </div>
+
+
+            <!-- =================================================
+                 FREE TEXT
+            ================================================= -->
+
+            <div class="text-fields">
+
+                <div class="field">
+
+                    <label for="aboutMe">
+                        نبذة عني
+                        <span>*</span>
+                    </label>
+
+                    <textarea
+                        id="aboutMe"
+                        name="aboutMe"
+                        maxlength="600"
+                        placeholder="اكتب نبذة بسيطة عن نفسك، شخصيتك واهتماماتك..."
+                        required></textarea>
+
+                    <div class="counter">
+                        <span id="aboutCounter">0</span>
+                        / 600
+                    </div>
+
+                </div>
+
+
+                <div class="field">
+
+                    <label for="lookingFor">
+                        شريك / شريكة العمر الذي أبحث عنه
+                        <span>*</span>
+                    </label>
+
+                    <textarea
+                        id="lookingFor"
+                        name="lookingFor"
+                        maxlength="600"
+                        placeholder="ما الصفات التي تبحث عنها في شريك الحياة؟"
+                        required></textarea>
+
+                    <div class="counter">
+                        <span id="lookingCounter">0</span>
+                        / 600
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- =================================================
+                 PUBLIC NAME OPTION
+            ================================================= -->
+
+            <div class="public-name-option">
+
+                <label class="checkbox-row">
+
+                    <input
+                        type="checkbox"
+                        id="showRealName"
+                        name="showRealName">
+
+                    <span class="custom-check"></span>
+
+                    <span>
+                        أرغب في إظهار اسمي الحقيقي بدلًا من الاسم المستعار
+                        في ملفي العام.
+                    </span>
+
+                </label>
+
+            </div>
+
+
+            <!-- =================================================
+                 CONFIRMATION
+            ================================================= -->
+
+            <div class="confirmation-box">
+
+                <i class="fa-solid fa-circle-check"></i>
+
+                <div>
+
+                    <strong>
+                        تأكيد البيانات
+                    </strong>
+
+                    <p>
+                        أؤكد أن البيانات التي أدخلتها صحيحة،
+                        وأنني أستخدم معلوماتي الشخصية الحقيقية.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- =================================================
+                 ACTIONS
+            ================================================= -->
+
+            <div class="form-actions">
+
+                <button
+                    type="button"
+                    id="backBtn"
+                    class="secondary-btn">
+
+                    <i class="fa-solid fa-arrow-right"></i>
+                    رجوع
+
+                </button>
+
+
+                <button
+                    type="submit"
+                    id="saveProfileBtn"
+                    class="gold-action-btn">
+
+                    حفظ ومتابعة
+
+                    <i class="fa-solid fa-arrow-left"></i>
+
+                </button>
+
+            </div>
+
+        </form>
+
+    </section>
+
+</main>
+
+
+<!-- =====================================================
+     MESSAGE
+===================================================== -->
+
+<div id="messageBox" class="message-box"></div>
+
+
+<script src="../js/profile-data.js"></script>
+
+</body>
+</html> 
