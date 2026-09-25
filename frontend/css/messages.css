@@ -1,0 +1,251 @@
+ * {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    font-family: Arial, Tahoma, sans-serif;
+    background: #06101d;
+    color: #f4efe4;
+}
+
+button,
+input {
+    font-family: inherit;
+}
+
+.messages-header {
+    min-height: 78px;
+    padding: 14px 5%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #071321;
+    border-bottom: 1px solid rgba(255,255,255,.06);
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.brand-mark {
+    width: 48px;
+    height: 48px;
+    display: grid;
+    place-items: center;
+    border-radius: 14px;
+    background: linear-gradient(145deg,#e0c06c,#9c742d);
+    color: #07111f;
+    font-size: 25px;
+    font-weight: bold;
+}
+
+.brand h1 {
+    margin: 0;
+    color: #d9b85f;
+}
+
+.brand span {
+    color: #7f8c9d;
+    font-size: 11px;
+}
+
+.back-btn {
+    padding: 10px 16px;
+    border-radius: 9px;
+    border: 1px solid rgba(216,179,93,.35);
+    background: #0d1b2d;
+    color: #d9b85f;
+    cursor: pointer;
+}
+
+.messages-container {
+    width: min(1180px, 92%);
+    margin: 35px auto 60px;
+}
+
+.messages-layout {
+    display: grid;
+    grid-template-columns: 320px 1fr;
+    min-height: 650px;
+    overflow: hidden;
+    border-radius: 18px;
+    background: #0b192a;
+    border: 1px solid rgba(255,255,255,.06);
+}
+
+.conversations {
+    border-left: 1px solid rgba(255,255,255,.06);
+}
+
+.conversation-title {
+    padding: 20px;
+    border-bottom: 1px solid rgba(255,255,255,.06);
+}
+
+.conversation-title h2 {
+    margin: 6px 0 0;
+}
+
+.small-title {
+    color: #d7b65d;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.conversation-item {
+    padding: 15px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    cursor: pointer;
+    border-bottom: 1px solid rgba(255,255,255,.04);
+}
+
+.conversation-item:hover,
+.conversation-item.active {
+    background: rgba(216,179,93,.07);
+}
+
+.avatar {
+    width: 48px;
+    height: 48px;
+    display: grid;
+    place-items: center;
+    flex-shrink: 0;
+    border-radius: 50%;
+    background: #17283c;
+    border: 1px solid rgba(216,179,93,.2);
+    font-size: 23px;
+}
+
+.conversation-name {
+    font-size: 13px;
+}
+
+.conversation-preview {
+    margin-top: 5px;
+    color: #788698;
+    font-size: 10px;
+}
+
+.chat {
+    min-width: 0;
+}
+
+.chat-empty {
+    height: 100%;
+    min-height: 650px;
+    display: grid;
+    place-content: center;
+    text-align: center;
+    color: #7e8c9d;
+}
+
+.chat-empty div {
+    font-size: 45px;
+}
+
+.chat-empty h3 {
+    color: #cbd3dd;
+}
+
+.chat-empty p {
+    font-size: 12px;
+}
+
+.chat-area {
+    height: 100%;
+}
+
+.chat-header {
+    padding: 19px 22px;
+    border-bottom: 1px solid rgba(255,255,255,.06);
+    color: #d9bd70;
+    font-weight: bold;
+}
+
+.messages-box {
+    height: 500px;
+    overflow-y: auto;
+    padding: 22px;
+    display: flex;
+    flex-direction: column;
+    gap: 11px;
+}
+
+.message-row {
+    display: flex;
+}
+
+.message-row.mine {
+    justify-content: flex-start;
+}
+
+.message-row.theirs {
+    justify-content: flex-end;
+}
+
+.message {
+    max-width: 70%;
+    padding: 11px 14px;
+    border-radius: 14px;
+    font-size: 12px;
+    line-height: 1.7;
+}
+
+.mine .message {
+    background: linear-gradient(135deg,#dcbf68,#9c742d);
+    color: #07111f;
+}
+
+.theirs .message {
+    background: #16273b;
+    color: #d4dce5;
+}
+
+.message-form {
+    display: flex;
+    gap: 10px;
+    padding: 15px;
+    border-top: 1px solid rgba(255,255,255,.06);
+}
+
+.message-form input {
+    flex: 1;
+    min-height: 45px;
+    padding: 10px 13px;
+    border-radius: 9px;
+    border: 1px solid rgba(255,255,255,.08);
+    background: #101f31;
+    color: #eee;
+    outline: none;
+}
+
+.message-form button {
+    width: 100px;
+    border: 0;
+    border-radius: 9px;
+    background: #d9b85f;
+    color: #07111f;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+@media (max-width: 800px) {
+    .messages-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .conversations {
+        border-left: 0;
+        border-bottom: 1px solid rgba(255,255,255,.06);
+    }
+
+    .messages-box {
+        height: 400px;
+    }
+}
