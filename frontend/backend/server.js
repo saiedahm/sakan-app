@@ -917,7 +917,54 @@ app.post(
 
 app.get(
     "/api/me",
-   /* =====================================================
+    authenticateToken,
+    async (req, res) => {
+
+        try {
+
+            const user =
+                await User.findById(
+                    req.user.userId
+                );
+
+
+            if (!user) {
+
+                return res.status(404).json({
+                    error:
+                        "الحساب غير موجود."
+                });
+
+            }
+
+
+            res.json({
+                user:
+                    publicUser(
+                        user
+                    )
+            });
+
+        } catch (error) {
+
+            console.error(
+                "GET CURRENT USER ERROR:",
+                error
+            );
+
+
+            res.status(500).json({
+                error:
+                    "تعذر جلب بيانات الحساب."
+            });
+
+        }
+
+    }
+);
+
+
+/* =====================================================
    UPDATE CURRENT USER PROFILE
 ===================================================== */
 
@@ -962,10 +1009,6 @@ app.put(
             } = req.body;
 
 
-            /* -----------------------------------------
-               REQUIRED DATA
-            ----------------------------------------- */
-
             if (
                 !realName ||
                 !displayName ||
@@ -987,10 +1030,6 @@ app.put(
             }
 
 
-            /* -----------------------------------------
-               GENDER
-            ----------------------------------------- */
-
             const normalizedGender =
                 normalizeGender(
                     gender
@@ -1008,10 +1047,6 @@ app.put(
 
             }
 
-
-            /* -----------------------------------------
-               AGE
-            ----------------------------------------- */
 
             const age =
                 calculateAge(
@@ -1031,10 +1066,6 @@ app.put(
 
             }
 
-
-            /* -----------------------------------------
-               UPDATE
-            ----------------------------------------- */
 
             user.realName =
                 String(
@@ -1129,10 +1160,6 @@ app.put(
             await user.save();
 
 
-            /* -----------------------------------------
-               RESPONSE
-            ----------------------------------------- */
-
             res.json({
 
                 success:
@@ -1145,9 +1172,7 @@ app.put(
 
             });
 
-        }
-
-        catch (error) {
+        } catch (error) {
 
             console.error(
                 "UPDATE PROFILE ERROR:",
@@ -1166,6 +1191,11 @@ app.put(
 );
 
 
+/* =====================================================
+   HOME MEMBERS
+   IMPORTANT:
+   Gender comes from authenticated user.
+===================================================== */
 /* =====================================================
    HOME MEMBERS
    IMPORTANT:
