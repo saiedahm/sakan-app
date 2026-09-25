@@ -917,6 +917,12 @@ app.post(
 
 app.get(
     "/api/me",
+   /* =====================================================
+   UPDATE CURRENT USER PROFILE
+===================================================== */
+
+app.put(
+    "/api/me",
     authenticateToken,
     async (req, res) => {
 
@@ -938,18 +944,220 @@ app.get(
             }
 
 
+            const {
+                realName,
+                displayName,
+                gender,
+                birthDate,
+                country,
+                city,
+                maritalStatus,
+                language,
+                education,
+                profession,
+                aboutMe,
+                lookingFor,
+                showRealName,
+                preferredLanguage
+            } = req.body;
+
+
+            /* -----------------------------------------
+               REQUIRED DATA
+            ----------------------------------------- */
+
+            if (
+                !realName ||
+                !displayName ||
+                !gender ||
+                !birthDate ||
+                !country ||
+                !city ||
+                !maritalStatus ||
+                !language ||
+                !education ||
+                !profession
+            ) {
+
+                return res.status(400).json({
+                    error:
+                        "البيانات الأساسية مطلوبة."
+                });
+
+            }
+
+
+            /* -----------------------------------------
+               GENDER
+            ----------------------------------------- */
+
+            const normalizedGender =
+                normalizeGender(
+                    gender
+                );
+
+
+            if (
+                !normalizedGender
+            ) {
+
+                return res.status(400).json({
+                    error:
+                        "قيمة الجنس غير صحيحة."
+                });
+
+            }
+
+
+            /* -----------------------------------------
+               AGE
+            ----------------------------------------- */
+
+            const age =
+                calculateAge(
+                    birthDate
+                );
+
+
+            if (
+                age === null ||
+                age < 18
+            ) {
+
+                return res.status(400).json({
+                    error:
+                        "يجب أن يكون عمر العضو 18 عامًا أو أكثر."
+                });
+
+            }
+
+
+            /* -----------------------------------------
+               UPDATE
+            ----------------------------------------- */
+
+            user.realName =
+                String(
+                    realName
+                ).trim();
+
+
+            user.displayName =
+                String(
+                    displayName
+                ).trim();
+
+
+            user.gender =
+                normalizedGender;
+
+
+            user.birthDate =
+                new Date(
+                    birthDate
+                );
+
+
+            user.age =
+                age;
+
+
+            user.country =
+                String(
+                    country
+                ).trim();
+
+
+            user.city =
+                String(
+                    city
+                ).trim();
+
+
+            user.maritalStatus =
+                String(
+                    maritalStatus
+                ).trim();
+
+
+            user.language =
+                String(
+                    language
+                ).trim();
+
+
+            user.education =
+                String(
+                    education
+                ).trim();
+
+
+            user.profession =
+                String(
+                    profession
+                ).trim();
+
+
+            user.aboutMe =
+                String(
+                    aboutMe || ""
+                ).trim();
+
+
+            user.lookingFor =
+                String(
+                    lookingFor || ""
+                ).trim();
+
+
+            user.showRealName =
+                Boolean(
+                    showRealName
+                );
+
+
+            user.preferredLanguage =
+                preferredLanguage ||
+                language ||
+                "ar";
+
+
+            user.lastSeenAt =
+                new Date();
+
+
+            await user.save();
+
+
+            /* -----------------------------------------
+               RESPONSE
+            ----------------------------------------- */
+
             res.json({
+
+                success:
+                    true,
+
                 user:
                     publicUser(
                         user
                     )
+
             });
 
-        } catch {
+        }
+
+        catch (error) {
+
+            console.error(
+                "UPDATE PROFILE ERROR:",
+                error
+            );
+
 
             res.status(500).json({
                 error:
-                    "تعذر جلب بيانات الحساب."
+                    "تعذر حفظ بيانات الملف."
             });
 
         }
