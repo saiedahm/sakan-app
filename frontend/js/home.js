@@ -1,4 +1,4 @@
- document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", () => {
 
     /* =====================================================
        ELEMENTS
@@ -36,23 +36,20 @@
 
 
     /* =====================================================
-       LOGIN CHECK
+       LOGIN
     ===================================================== */
 
-    const loggedIn =
-        localStorage.getItem("sakanLoggedIn");
-
-    if (loggedIn !== "true") {
-
-        window.location.href =
-            "../index.html";
-
+    if (
+        localStorage.getItem("sakanLoggedIn") !==
+        "true"
+    ) {
+        window.location.href = "../index.html";
         return;
     }
 
 
     /* =====================================================
-       CURRENT PROFILE
+       PROFILE
     ===================================================== */
 
     function getCurrentProfile() {
@@ -64,21 +61,16 @@
                     "sakanProfileData"
                 );
 
-            if (!saved) {
-                return null;
-            }
+            return saved
+                ? JSON.parse(saved)
+                : null;
 
-            return JSON.parse(saved);
-
-        } catch (error) {
-
-            console.error(
-                "تعذر قراءة بيانات الملف:",
-                error
-            );
+        } catch {
 
             return null;
+
         }
+
     }
 
 
@@ -87,36 +79,36 @@
 
 
     /* =====================================================
-       NORMALIZE GENDER
+       GENDER
     ===================================================== */
 
     function normalizeGender(value) {
 
-        if (!value) {
-            return null;
-        }
-
         const gender =
-            String(value)
+            String(value || "")
                 .trim()
                 .toLowerCase();
 
         if (
-            gender === "male" ||
-            gender === "man" ||
-            gender === "ذكر" ||
-            gender === "رجل"
+            [
+                "male",
+                "man",
+                "ذكر",
+                "رجل"
+            ].includes(gender)
         ) {
             return "male";
         }
 
         if (
-            gender === "female" ||
-            gender === "woman" ||
-            gender === "أنثى" ||
-            gender === "امرأة" ||
-            gender === "بنت" ||
-            gender === "فتاة"
+            [
+                "female",
+                "woman",
+                "أنثى",
+                "امرأة",
+                "بنت",
+                "فتاة"
+            ].includes(gender)
         ) {
             return "female";
         }
@@ -129,6 +121,21 @@
         normalizeGender(
             currentProfile?.gender
         );
+
+
+    function getOppositeGender() {
+
+        if (currentGender === "male") {
+            return "female";
+        }
+
+        if (currentGender === "female") {
+            return "male";
+        }
+
+        return null;
+
+    }
 
 
     /* =====================================================
@@ -260,7 +267,6 @@
             }
 
         ],
-
 
         male: [
 
@@ -399,83 +405,148 @@
             return;
         }
 
-        modalTitle.textContent =
-            title;
+        if (modalTitle) {
+            modalTitle.textContent = title;
+        }
 
-        modalText.textContent =
-            text;
+        if (modalText) {
+            modalText.textContent = text;
+        }
 
-        modal.classList.remove(
-            "hidden"
-        );
+        modal.classList.remove("hidden");
+
     }
 
 
     function closeModal() {
 
-        if (!modal) {
-            return;
+        if (modal) {
+            modal.classList.add("hidden");
         }
 
-        modal.classList.add(
-            "hidden"
-        );
     }
 
 
-    if (closeModalBtn) {
-
-        closeModalBtn.addEventListener(
-            "click",
-            closeModal
-        );
-
-    }
+    closeModalBtn?.addEventListener(
+        "click",
+        closeModal
+    );
 
 
-    if (modalOkBtn) {
-
-        modalOkBtn.addEventListener(
-            "click",
-            closeModal
-        );
-
-    }
+    modalOkBtn?.addEventListener(
+        "click",
+        closeModal
+    );
 
 
-    if (modal) {
+    modal?.addEventListener(
+        "click",
+        (event) => {
 
-        modal.addEventListener(
-            "click",
-            (event) => {
-
-                if (
-                    event.target === modal
-                ) {
-                    closeModal();
-                }
-
+            if (event.target === modal) {
+                closeModal();
             }
-        );
 
-    }
+        }
+    );
 
 
     /* =====================================================
-       OPPOSITE GENDER
+       FAVORITES
     ===================================================== */
 
-    function getOppositeGender() {
+    function getFavorites() {
 
-        if (currentGender === "male") {
-            return "female";
+        try {
+
+            return JSON.parse(
+                localStorage.getItem(
+                    "sakanFavorites"
+                ) || "[]"
+            );
+
+        } catch {
+
+            return [];
+
         }
 
-        if (currentGender === "female") {
-            return "male";
+    }
+
+
+    function saveFavorites(
+        favorites
+    ) {
+
+        localStorage.setItem(
+            "sakanFavorites",
+            JSON.stringify(
+                favorites
+            )
+        );
+
+    }
+
+
+    function isFavorite(
+        memberId
+    ) {
+
+        return getFavorites().some(
+            item =>
+                Number(item.id) ===
+                Number(memberId)
+        );
+
+    }
+
+
+    function toggleFavorite(
+        member,
+        button
+    ) {
+
+        let favorites =
+            getFavorites();
+
+
+        const exists =
+            favorites.some(
+                item =>
+                    Number(item.id) ===
+                    Number(member.id)
+            );
+
+
+        if (exists) {
+
+            favorites =
+                favorites.filter(
+                    item =>
+                        Number(item.id) !==
+                        Number(member.id)
+                );
+
+            button.textContent =
+                "☆";
+
+        } else {
+
+            favorites.push({
+                ...member,
+                photos: []
+            });
+
+            button.textContent =
+                "★";
+
         }
 
-        return null;
+
+        saveFavorites(
+            favorites
+        );
+
     }
 
 
@@ -483,7 +554,9 @@
        MEMBER CARD
     ===================================================== */
 
-    function createMemberCard(member) {
+    function createMemberCard(
+        member
+    ) {
 
         const card =
             document.createElement(
@@ -494,22 +567,18 @@
             "member-card";
 
         card.dataset.memberId =
-            member.id;
+            String(member.id);
 
 
-        const verifiedBadge =
+        const verified =
             member.verified
-
-                ? `<span class="verified-badge">✓</span>`
-
+                ? '<span class="verified-badge">✓</span>'
                 : "";
 
 
-        const onlineBadge =
+        const online =
             member.online
-
-                ? `<span class="online-badge"></span>`
-
+                ? '<span class="online-badge"></span>'
                 : "";
 
 
@@ -523,14 +592,14 @@
 
                 </div>
 
-                ${onlineBadge}
+                ${online}
+
 
                 <button
                     type="button"
-                    class="favorite-btn"
-                    aria-label="إضافة للمفضلين">
+                    class="favorite-btn">
 
-                    ☆
+                    ${isFavorite(member.id) ? "★" : "☆"}
 
                 </button>
 
@@ -542,16 +611,14 @@
                 <h3>
 
                     ${member.name}
-
-                    ${verifiedBadge}
+                    ${verified}
 
                 </h3>
 
 
                 <p>
 
-                    ${member.age}
-                    سنة
+                    ${member.age} سنة
                     •
                     ${member.country}
 
@@ -583,11 +650,176 @@
 
 
         return card;
+
     }
 
 
     /* =====================================================
-       RENDER MEMBERS
+       OPEN MEMBER PROFILE
+    ===================================================== */
+
+    function openMemberProfile(
+        member
+    ) {
+
+        const opposite =
+            getOppositeGender();
+
+
+        if (
+            !member ||
+            member.gender !== opposite
+        ) {
+
+            openModal(
+                "غير متاح",
+                "هذا الملف ليس ضمن قائمة الأعضاء المسموح بعرضها."
+            );
+
+            return;
+
+        }
+
+
+        localStorage.setItem(
+            "sakanSelectedMember",
+            JSON.stringify({
+                ...member,
+                photos: []
+            })
+        );
+
+
+        window.location.href =
+            "member-profile.html";
+
+    }
+
+
+    /* =====================================================
+       MEMBER EVENTS
+    ===================================================== */
+
+    function attachMemberEvents() {
+
+        document
+            .querySelectorAll(
+                ".favorite-btn"
+            )
+            .forEach(
+                (button) => {
+
+                    button.addEventListener(
+                        "click",
+                        (event) => {
+
+                            event.stopPropagation();
+
+
+                            const card =
+                                button.closest(
+                                    ".member-card"
+                                );
+
+
+                            if (!card) {
+                                return;
+                            }
+
+
+                            const memberId =
+                                Number(
+                                    card.dataset.memberId
+                                );
+
+
+                            const opposite =
+                                getOppositeGender();
+
+
+                            const member =
+                                demoMembers[
+                                    opposite
+                                ]?.find(
+                                    item =>
+                                        Number(item.id) ===
+                                        memberId
+                                );
+
+
+                            if (member) {
+
+                                toggleFavorite(
+                                    member,
+                                    button
+                                );
+
+                            }
+
+                        }
+                    );
+
+                }
+            );
+
+
+        document
+            .querySelectorAll(
+                ".view-profile-btn"
+            )
+            .forEach(
+                (button) => {
+
+                    button.addEventListener(
+                        "click",
+                        () => {
+
+                            const card =
+                                button.closest(
+                                    ".member-card"
+                                );
+
+
+                            if (!card) {
+                                return;
+                            }
+
+
+                            const memberId =
+                                Number(
+                                    card.dataset.memberId
+                                );
+
+
+                            const opposite =
+                                getOppositeGender();
+
+
+                            const member =
+                                demoMembers[
+                                    opposite
+                                ]?.find(
+                                    item =>
+                                        Number(item.id) ===
+                                        memberId
+                                );
+
+
+                            openMemberProfile(
+                                member
+                            );
+
+                        }
+                    );
+
+                }
+            );
+
+    }
+
+
+    /* =====================================================
+       RENDER
     ===================================================== */
 
     function renderMembers(
@@ -597,6 +829,7 @@
         if (!membersGrid) {
             return;
         }
+
 
         membersGrid.innerHTML =
             "";
@@ -630,209 +863,41 @@
             `;
 
             return;
+
         }
 
 
         members
             .slice(0, 50)
-            .forEach((member) => {
+            .forEach(
+                member => {
 
-                membersGrid.appendChild(
-                    createMemberCard(member)
-                );
+                    membersGrid.appendChild(
+                        createMemberCard(
+                            member
+                        )
+                    );
 
-            });
+                }
+            );
 
 
         attachMemberEvents();
-    }
-
-
-    /* =====================================================
-       MEMBER EVENTS
-    ===================================================== */
-
-    function attachMemberEvents() {
-
-        document
-            .querySelectorAll(
-                ".favorite-btn"
-            )
-            .forEach((button) => {
-
-                button.addEventListener(
-                    "click",
-                    (event) => {
-
-                        event.stopPropagation();
-
-                        button.textContent =
-                            button.textContent.trim() === "☆"
-                                ? "★"
-                                : "☆";
-
-                    }
-                );
-
-            });
-
-
-        document
-            .querySelectorAll(
-                ".view-profile-btn"
-            )
-            .forEach((button) => {
-
-                button.addEventListener(
-                    "click",
-                    () => {
-
-                        const card =
-                            button.closest(
-                                ".member-card"
-                            );
-
-                        if (!card) {
-                            return;
-                        }
-
-
-                        const memberId =
-                            Number(
-                                card.dataset.memberId
-                            );
-
-
-                        const oppositeGender =
-                            getOppositeGender();
-
-
-                        let member =
-                            null;
-
-
-                        if (
-                            oppositeGender &&
-                            demoMembers[
-                                oppositeGender
-                            ]
-                        ) {
-
-                            member =
-                                demoMembers[
-                                    oppositeGender
-                                ].find(
-                                    (item) =>
-                                        item.id ===
-                                        memberId
-                                );
-
-                        }
-
-
-                        if (!member) {
-
-                            openModal(
-                                "تعذر فتح الملف",
-                                "لم يتم العثور على بيانات هذا العضو."
-                            );
-
-                            return;
-                        }
-
-
-                        /*
-                         * حماية إضافية:
-                         * لا نفتح ملفًا من الجنس غير المسموح.
-                         */
-
-                        if (
-                            member.gender !==
-                            oppositeGender
-                        ) {
-
-                            openModal(
-                                "غير متاح",
-                                "هذا الملف ليس ضمن قائمة الأعضاء المسموح بعرضها."
-                            );
-
-                            return;
-                        }
-
-
-                        localStorage.setItem(
-                            "sakanSelectedMember",
-                            JSON.stringify({
-                                id:
-                                    member.id,
-
-                                name:
-                                    member.name,
-
-                                age:
-                                    member.age,
-
-                                country:
-                                    member.country,
-
-                                city:
-                                    member.city,
-
-                                maritalStatus:
-                                    member.maritalStatus,
-
-                                language:
-                                    member.language,
-
-                                education:
-                                    member.education,
-
-                                profession:
-                                    member.profession,
-
-                                online:
-                                    member.online,
-
-                                verified:
-                                    member.verified,
-
-                                avatar:
-                                    member.avatar,
-
-                                about:
-                                    member.about,
-
-                                seeking:
-                                    member.seeking,
-
-                                photos:
-                                    []
-                            })
-                        );
-
-
-                        window.location.href =
-                            "member-profile.html";
-
-                    }
-                );
-
-            });
 
     }
 
 
     /* =====================================================
-       MAIN LOAD
+       HOME MEMBERS
     ===================================================== */
 
     function loadHomeMembers() {
 
-        const oppositeGender =
+        const opposite =
             getOppositeGender();
 
 
-        if (!oppositeGender) {
+        if (!opposite) {
 
             if (membersGrid) {
 
@@ -849,8 +914,7 @@
                             </strong>
 
                             <p>
-                                يجب تحديد الجنس في بيانات الحساب
-                                لعرض الأعضاء المناسبين.
+                                يجب تحديد الجنس في بيانات الحساب.
                             </p>
 
                         </div>
@@ -862,19 +926,16 @@
             }
 
             return;
+
         }
 
 
         const members =
-            demoMembers[
-                oppositeGender
-            ] || [];
+            demoMembers[opposite] ||
+            [];
 
 
-        if (
-            currentGender ===
-            "male"
-        ) {
+        if (currentGender === "male") {
 
             membersTitle.textContent =
                 "نساء قد يناسبنك";
@@ -901,8 +962,7 @@
 
 
     /* =====================================================
-       MOVING MEMBER STRIP
-       ALSO OPPOSITE GENDER ONLY
+       MOVING STRIP
     ===================================================== */
 
     function loadMemberStrip() {
@@ -912,18 +972,18 @@
         }
 
 
-        const oppositeGender =
+        const opposite =
             getOppositeGender();
 
 
-        if (!oppositeGender) {
+        if (!opposite) {
             return;
         }
 
 
         const members =
             demoMembers[
-                oppositeGender
+                opposite
             ] || [];
 
 
@@ -931,20 +991,17 @@
             "";
 
 
-        const repeated =
-            [
-                ...members,
-                ...members
-            ];
-
-
-        repeated.forEach(
-            (member) => {
+        [
+            ...members,
+            ...members
+        ].forEach(
+            member => {
 
                 const item =
                     document.createElement(
                         "div"
                     );
+
 
                 item.className =
                     "mini-member";
@@ -959,9 +1016,7 @@
                     </div>
 
                     <span>
-
                         ${member.name}
-
                     </span>
 
                 `;
@@ -985,284 +1040,236 @@
         .querySelectorAll(
             ".nav-item"
         )
-        .forEach((button) => {
+        .forEach(
+            button => {
 
-            button.addEventListener(
-                "click",
-                () => {
+                button.addEventListener(
+                    "click",
+                    () => {
 
-                    document
-                        .querySelectorAll(
-                            ".nav-item"
-                        )
-                        .forEach(
-                            (item) => {
+                        document
+                            .querySelectorAll(
+                                ".nav-item"
+                            )
+                            .forEach(
+                                item =>
+                                    item.classList.remove(
+                                        "active"
+                                    )
+                            );
 
-                                item.classList.remove(
-                                    "active"
+
+                        button.classList.add(
+                            "active"
+                        );
+
+
+                        const section =
+                            button.dataset.section;
+
+
+                        if (
+                            section ===
+                            "home"
+                        ) {
+
+                            loadHomeMembers();
+                            return;
+
+                        }
+
+
+                        if (
+                            section ===
+                            "messages"
+                        ) {
+
+                            window.location.href =
+                                "messages.html";
+
+                            return;
+
+                        }
+
+
+                        if (
+                            section ===
+                            "visitors"
+                        ) {
+
+                            window.location.href =
+                                "visitors.html";
+
+                            return;
+
+                        }
+
+
+                        if (
+                            section ===
+                            "favorites"
+                        ) {
+
+                            window.location.href =
+                                "favorites.html";
+
+                            return;
+
+                        }
+
+
+                        if (
+                            section ===
+                            "latest"
+                        ) {
+
+                            const opposite =
+                                getOppositeGender();
+
+
+                            if (opposite) {
+
+                                memberCategory.textContent =
+                                    "أحدث الأعضاء";
+
+
+                                membersTitle.textContent =
+                                    currentGender === "male"
+                                        ? "أحدث العضوات"
+                                        : "أحدث الأعضاء";
+
+
+                                renderMembers(
+                                    demoMembers[
+                                        opposite
+                                    ]
                                 );
 
                             }
-                        );
 
-
-                    button.classList.add(
-                        "active"
-                    );
-
-
-                    const section =
-                        button.dataset.section;
-
-
-                    if (
-                        section ===
-                        "home"
-                    ) {
-
-                        loadHomeMembers();
-
-                        return;
-                    }
-
-
-                    if (
-                        section ===
-                        "messages"
-                    ) {
-
-                        openModal(
-                            "الرسائل",
-                            "قسم الرسائل سيتم ربطه بنظام المحادثات وقاعدة البيانات في المرحلة القادمة."
-                        );
-
-                        return;
-                    }
-
-
-                    if (
-                        section ===
-                        "visitors"
-                    ) {
-
-                        openModal(
-                            "من زار صفحتي",
-                            "سيظهر هنا الأعضاء الذين قاموا بزيارة ملفك."
-                        );
-
-                        return;
-                    }
-
-
-                    if (
-                        section ===
-                        "favorites"
-                    ) {
-
-                        openModal(
-                            "المفضلون",
-                            "سيتم حفظ الأعضاء المفضلين داخل حسابك."
-                        );
-
-                        return;
-                    }
-
-
-                    if (
-                        section ===
-                        "latest"
-                    ) {
-
-                        const oppositeGender =
-                            getOppositeGender();
-
-
-                        if (
-                            oppositeGender
-                        ) {
-
-                            memberCategory.textContent =
-                                "أحدث الأعضاء";
-
-
-                            membersTitle.textContent =
-                                currentGender ===
-                                "male"
-
-                                    ? "أحدث العضوات"
-
-                                    : "أحدث الأعضاء";
-
-
-                            renderMembers(
-                                demoMembers[
-                                    oppositeGender
-                                ]
-                            );
+                            return;
 
                         }
 
-                        return;
-                    }
-
-
-                    if (
-                        section ===
-                        "online"
-                    ) {
-
-                        const oppositeGender =
-                            getOppositeGender();
-
 
                         if (
-                            oppositeGender
+                            section ===
+                            "online"
                         ) {
 
-                            const onlineMembers =
-                                demoMembers[
-                                    oppositeGender
-                                ].filter(
-                                    (member) =>
-                                        member.online
+                            const opposite =
+                                getOppositeGender();
+
+
+                            if (opposite) {
+
+                                const online =
+                                    demoMembers[
+                                        opposite
+                                    ].filter(
+                                        member =>
+                                            member.online
+                                    );
+
+
+                                memberCategory.textContent =
+                                    "متصلون الآن";
+
+
+                                membersTitle.textContent =
+                                    currentGender === "male"
+                                        ? "العضوات المتصلات الآن"
+                                        : "الأعضاء المتصلون الآن";
+
+
+                                renderMembers(
+                                    online
                                 );
 
-
-                            memberCategory.textContent =
-                                "متصلون الآن";
-
-
-                            membersTitle.textContent =
-                                currentGender ===
-                                "male"
-
-                                    ? "العضوات المتصلات الآن"
-
-                                    : "الأعضاء المتصلون الآن";
-
-
-                            renderMembers(
-                                onlineMembers
-                            );
+                            }
 
                         }
 
                     }
+                );
 
-                }
-            );
-
-        });
+            }
+        );
 
 
     /* =====================================================
        REFRESH
     ===================================================== */
 
-    if (refreshBtn) {
+    refreshBtn?.addEventListener(
+        "click",
+        () => {
 
-        refreshBtn.addEventListener(
-            "click",
-            () => {
-
-                refreshBtn.textContent =
-                    "↻ جارٍ التحديث...";
+            refreshBtn.textContent =
+                "↻ جارٍ التحديث...";
 
 
-                setTimeout(
-                    () => {
+            setTimeout(
+                () => {
 
-                        loadHomeMembers();
-
-                        loadMemberStrip();
-
-
-                        refreshBtn.textContent =
-                            "↻ تحديث";
+                    loadHomeMembers();
+                    loadMemberStrip();
 
 
-                        openModal(
-                            "تم التحديث",
-                            "تم تحديث قائمة الأعضاء المناسبة لحسابك."
-                        );
+                    refreshBtn.textContent =
+                        "↻ تحديث";
 
-                    },
-                    500
-                );
 
-            }
-        );
+                    openModal(
+                        "تم التحديث",
+                        "تم تحديث قائمة الأعضاء المناسبة لحسابك."
+                    );
 
-    }
+                },
+                500
+            );
+
+        }
+    );
 
 
     /* =====================================================
-       COMMERCIAL AD
+       TOP BUTTONS
     ===================================================== */
 
-    const advertiseBtn =
-        document.getElementById(
-            "advertiseBtn"
-        );
-
-
-    if (advertiseBtn) {
-
-        advertiseBtn.addEventListener(
+    document
+        .getElementById("advertiseBtn")
+        ?.addEventListener(
             "click",
             () => {
 
                 openModal(
                     "أعلن معنا",
-                    "سيتم إنشاء طلب الإعلان التجاري واختيار الباقة ثم الدفع والمراجعة."
+                    "سيتم إنشاء طلب إعلان تجاري ثم اختيار الباقة والدفع والمراجعة."
                 );
 
             }
         );
 
-    }
 
-
-    /* =====================================================
-       FEATURED MEMBER AD
-    ===================================================== */
-
-    const featuredAdBtn =
-        document.getElementById(
-            "featuredAdBtn"
-        );
-
-
-    if (featuredAdBtn) {
-
-        featuredAdBtn.addEventListener(
+    document
+        .getElementById("featuredAdBtn")
+        ?.addEventListener(
             "click",
             () => {
 
                 openModal(
                     "إعلان مميز — €0.99",
-                    "سيتم اختيار الصورة ثم الدفع، وبعد تأكيد الدفع تدخل الصورة إلى المراجعة قبل النشر."
+                    "سيتم اختيار الصورة ثم الدفع وبعد المراجعة تدخل إلى قائمة الإعلانات المميزة."
                 );
 
             }
         );
 
-    }
 
-
-    /* =====================================================
-       PROFILE BUTTON
-    ===================================================== */
-
-    const profileBtn =
-        document.getElementById(
-            "profileBtn"
-        );
-
-
-    if (profileBtn) {
-
-        profileBtn.addEventListener(
+    document
+        .getElementById("profileBtn")
+        ?.addEventListener(
             "click",
             () => {
 
@@ -1272,34 +1279,20 @@
             }
         );
 
-    }
 
-
-    /* =====================================================
-       LANGUAGE
-    ===================================================== */
-
-    const languageBtn =
-        document.getElementById(
-            "languageBtn"
-        );
-
-
-    if (languageBtn) {
-
-        languageBtn.addEventListener(
+    document
+        .getElementById("languageBtn")
+        ?.addEventListener(
             "click",
             () => {
 
                 openModal(
                     "لغة المنصة",
-                    "العربية مفعلة حاليًا. سيتم إضافة الألمانية والإنجليزية والفرنسية والإسبانية والتركية لاحقًا."
+                    "العربية مفعلة حاليًا. اللغات الأخرى سنضيفها لاحقًا."
                 );
 
             }
         );
-
-    }
 
 
     /* =====================================================
@@ -1310,70 +1303,73 @@
         .querySelectorAll(
             ".tool-card"
         )
-        .forEach((tool) => {
+        .forEach(
+            tool => {
 
-            tool.addEventListener(
-                "click",
-                () => {
+                tool.addEventListener(
+                    "click",
+                    () => {
 
-                    const type =
-                        tool.dataset.tool;
+                        const type =
+                            tool.dataset.tool;
 
 
-                    if (
-                        type ===
-                        "edit"
-                    ) {
+                        if (
+                            type ===
+                            "edit"
+                        ) {
 
-                        window.location.href =
-                            "profile-data.html";
+                            window.location.href =
+                                "profile-data.html";
 
-                        return;
+                            return;
+
+                        }
+
+
+                        if (
+                            type === "photos" ||
+                            type === "myPhotos"
+                        ) {
+
+                            window.location.href =
+                                "photos.html";
+
+                            return;
+
+                        }
+
+
+                        if (
+                            type ===
+                            "search"
+                        ) {
+
+                            window.location.href =
+                                "member-search.html";
+
+                            return;
+
+                        }
+
+
+                        if (
+                            type ===
+                            "settings"
+                        ) {
+
+                            openModal(
+                                "الإعدادات",
+                                "سيتم هنا إدارة إعدادات الخصوصية والإشعارات وكلمة المرور."
+                            );
+
+                        }
+
                     }
+                );
 
-
-                    if (
-                        type ===
-                        "photos" ||
-                        type ===
-                        "myPhotos"
-                    ) {
-
-                        window.location.href =
-                            "photos.html";
-
-                        return;
-                    }
-
-
-                    if (
-                        type ===
-                        "search"
-                    ) {
-
-                        window.location.href =
-                            "member-search.html";
-
-                        return;
-                    }
-
-
-                    if (
-                        type ===
-                        "settings"
-                    ) {
-
-                        openModal(
-                            "الإعدادات",
-                            "سيتم هنا إدارة الخصوصية والإشعارات وكلمة المرور والحساب."
-                        );
-
-                    }
-
-                }
-            );
-
-        });
+            }
+        );
 
 
     /* =====================================================
@@ -1386,45 +1382,31 @@
             "sakanLoggedIn"
         );
 
+
         window.location.href =
             "../index.html";
+
     }
 
 
-    const logoutBtn =
-        document.getElementById(
-            "logoutBtn"
-        );
-
-
-    if (logoutBtn) {
-
-        logoutBtn.addEventListener(
+    document
+        .getElementById("logoutBtn")
+        ?.addEventListener(
             "click",
             logout
         );
 
-    }
 
-
-    const logoutTool =
-        document.getElementById(
-            "logoutTool"
-        );
-
-
-    if (logoutTool) {
-
-        logoutTool.addEventListener(
+    document
+        .getElementById("logoutTool")
+        ?.addEventListener(
             "click",
             logout
         );
-
-    }
 
 
     /* =====================================================
-       INITIAL LOAD
+       INITIAL
     ===================================================== */
 
     loadHomeMembers();
