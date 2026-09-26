@@ -43,8 +43,12 @@ document.addEventListener("DOMContentLoaded", () => {
         localStorage.getItem("sakanLoggedIn") !==
         "true"
     ) {
-        window.location.href = "../index.html";
+
+        window.location.href =
+            "../index.html";
+
         return;
+
     }
 
 
@@ -97,8 +101,11 @@ document.addEventListener("DOMContentLoaded", () => {
                 "رجل"
             ].includes(gender)
         ) {
+
             return "male";
+
         }
+
 
         if (
             [
@@ -110,8 +117,11 @@ document.addEventListener("DOMContentLoaded", () => {
                 "فتاة"
             ].includes(gender)
         ) {
+
             return "female";
+
         }
+
 
         return null;
 
@@ -129,14 +139,20 @@ document.addEventListener("DOMContentLoaded", () => {
         if (
             currentGender === "male"
         ) {
+
             return "female";
+
         }
+
 
         if (
             currentGender === "female"
         ) {
+
             return "male";
+
         }
+
 
         return null;
 
@@ -414,15 +430,22 @@ document.addEventListener("DOMContentLoaded", () => {
             return;
         }
 
+
         if (modalTitle) {
+
             modalTitle.textContent =
                 title;
+
         }
 
+
         if (modalText) {
+
             modalText.textContent =
                 text;
+
         }
+
 
         modal.classList.remove(
             "hidden"
@@ -434,9 +457,11 @@ document.addEventListener("DOMContentLoaded", () => {
     function closeModal() {
 
         if (modal) {
+
             modal.classList.add(
                 "hidden"
             );
+
         }
 
     }
@@ -462,7 +487,9 @@ document.addEventListener("DOMContentLoaded", () => {
                 event.target ===
                 modal
             ) {
+
                 closeModal();
+
             }
 
         }
@@ -545,15 +572,20 @@ document.addEventListener("DOMContentLoaded", () => {
                         Number(member.id)
                 );
 
+
             button.textContent =
                 "☆";
 
         } else {
 
             favorites.push({
+
                 ...member,
+
                 photos: []
+
             });
+
 
             button.textContent =
                 "★";
@@ -581,8 +613,10 @@ document.addEventListener("DOMContentLoaded", () => {
                 "article"
             );
 
+
         card.className =
             "member-card";
+
 
         card.dataset.memberId =
             String(member.id);
@@ -590,13 +624,17 @@ document.addEventListener("DOMContentLoaded", () => {
 
         const verified =
             member.verified
+
                 ? '<span class="verified-badge">✓</span>'
+
                 : "";
 
 
         const online =
             member.online
+
                 ? '<span class="online-badge"></span>'
+
                 : "";
 
 
@@ -610,7 +648,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 </div>
 
+
                 ${online}
+
 
                 <button
                     type="button"
@@ -632,6 +672,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 <h3>
 
                     ${member.name}
+
                     ${verified}
 
                 </h3>
@@ -650,7 +691,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
                     ${
                         member.online
+
                             ? "متصل الآن"
+
                             : "غير متصل"
                     }
 
@@ -706,8 +749,13 @@ document.addEventListener("DOMContentLoaded", () => {
         localStorage.setItem(
             "sakanSelectedMember",
             JSON.stringify({
+
                 ...member,
-                photos: []
+
+                photos:
+                    member.photos ||
+                    []
+
             })
         );
 
@@ -876,11 +924,13 @@ document.addEventListener("DOMContentLoaded", () => {
                         ℹ️
                     </span>
 
+
                     <div>
 
                         <strong>
                             لا توجد نتائج حاليًا
                         </strong>
+
 
                         <p>
                             سيظهر الأعضاء هنا عند توفرهم.
@@ -939,11 +989,13 @@ document.addEventListener("DOMContentLoaded", () => {
                             ⚠️
                         </span>
 
+
                         <div>
 
                             <strong>
                                 أكمل بياناتك أولًا
                             </strong>
+
 
                             <p>
                                 يجب تحديد الجنس في بيانات الحساب.
@@ -999,8 +1051,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
     /* =====================================================
        MOVING TOP STRIP
-       10 صور مربعة ثابتة الحجم
-       تتكرر مرة ثانية للحركة المستمرة
+       10 صور مربعة
+       الضغط على الصورة = فتح ملف العضو
     ===================================================== */
 
     function loadMemberStrip() {
@@ -1021,12 +1073,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
         /*
-         * عشر صور مربعة.
-         *
-         * هذه الصور مؤقتة للعرض.
-         * عند ربط صور الأعضاء الحقيقية لاحقًا
-         * يمكن استبدال الرابط داخل المصفوفة
-         * بدون تغيير التصميم.
+         * الصور العشر المربعة
          */
 
         const portraitUrls = [
@@ -1059,26 +1106,79 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
         /*
-         * أول 10 صور
+         * إنشاء 10 أعضاء.
          */
 
         const tenMembers =
             portraitUrls.map(
                 (url, index) => {
 
+                    const member =
+                        members[
+                            index %
+                            Math.max(
+                                members.length,
+                                1
+                            )
+                        ] || {
+
+                            id:
+                                9000 + index,
+
+                            gender:
+                                opposite || "female",
+
+                            name:
+                                "عضو جديد",
+
+                            age:
+                                "—",
+
+                            country:
+                                "—",
+
+                            city:
+                                "—",
+
+                            maritalStatus:
+                                "—",
+
+                            language:
+                                "—",
+
+                            education:
+                                "—",
+
+                            profession:
+                                "—",
+
+                            online:
+                                true,
+
+                            verified:
+                                false,
+
+                            avatar:
+                                "👤",
+
+                            about:
+                                "لم تتم إضافة نبذة بعد.",
+
+                            seeking:
+                                "لم تتم إضافة معلومات بعد.",
+
+                            photos:
+                                []
+
+                        };
+
+
                     return {
 
-                        url,
+                        ...member,
 
-                        name:
-                            members[
-                                index %
-                                Math.max(
-                                    members.length,
-                                    1
-                                )
-                            ]?.name ||
-                            "عضو جديد"
+                        portraitUrl:
+                            url
 
                     };
 
@@ -1087,8 +1187,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
         /*
-         * نكرر المجموعة مرة ثانية
-         * حتى تكون الحركة مستمرة.
+         * تكرار الصور العشر
+         * للحركة المستمرة.
          */
 
         const movingMembers = [
@@ -1101,7 +1201,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
         movingMembers.forEach(
-            (member) => {
+            (member, index) => {
 
                 const element =
                     document.createElement(
@@ -1113,13 +1213,36 @@ document.addEventListener("DOMContentLoaded", () => {
                     "mini-member";
 
 
+                element.dataset.memberId =
+                    String(
+                        member.id
+                    );
+
+
+                element.setAttribute(
+                    "role",
+                    "button"
+                );
+
+
+                element.setAttribute(
+                    "aria-label",
+                    `فتح ملف ${member.name}`
+                );
+
+
+                element.tabIndex =
+                    0;
+
+
                 element.innerHTML = `
 
-                    <div class="mini-avatar">
+                    <div
+                        class="mini-avatar">
 
                         <img
 
-                            src="${member.url}"
+                            src="${member.portraitUrl}"
 
                             alt="${member.name}"
 
@@ -1137,6 +1260,109 @@ document.addEventListener("DOMContentLoaded", () => {
                     </span>
 
                 `;
+
+
+                /*
+                 * عند لمس الصورة أو مرور
+                 * الماوس فوقها تتوقف الحركة.
+                 */
+
+                element.addEventListener(
+                    "pointerenter",
+                    () => {
+
+                        stripTrack.style.animationPlayState =
+                            "paused";
+
+                    }
+                );
+
+
+                element.addEventListener(
+                    "pointerdown",
+                    () => {
+
+                        stripTrack.style.animationPlayState =
+                            "paused";
+
+                    }
+                );
+
+
+                element.addEventListener(
+                    "pointerleave",
+                    () => {
+
+                        stripTrack.style.animationPlayState =
+                            "running";
+
+                    }
+                );
+
+
+                /*
+                 * الضغط على الصورة:
+                 * فتح ملف العضو مباشرة.
+                 */
+
+                element.addEventListener(
+                    "click",
+                    () => {
+
+                        if (!member.id) {
+                            return;
+                        }
+
+
+                        stripTrack.style.animationPlayState =
+                            "paused";
+
+
+                        localStorage.setItem(
+                            "sakanSelectedMember",
+                            JSON.stringify({
+
+                                ...member,
+
+                                photos:
+                                    member.photos ||
+                                    []
+
+                            })
+                        );
+
+
+                        window.location.href =
+                            "member-profile.html";
+
+                    }
+                );
+
+
+                /*
+                 * دعم لوحة المفاتيح.
+                 */
+
+                element.addEventListener(
+                    "keydown",
+                    (event) => {
+
+                        if (
+                            event.key ===
+                                "Enter" ||
+                            event.key ===
+                                " "
+                        ) {
+
+                            event.preventDefault();
+
+
+                            element.click();
+
+                        }
+
+                    }
+                );
 
 
                 stripTrack.appendChild(
@@ -1379,6 +1605,10 @@ document.addEventListener("DOMContentLoaded", () => {
         );
 
 
+    /*
+     * الإعلان الداخلي المميز للعضو
+     */
+
     document
         .getElementById(
             "featuredAdBtn"
@@ -1388,8 +1618,8 @@ document.addEventListener("DOMContentLoaded", () => {
             () => {
 
                 openModal(
-                    "إعلان مميز — €0.99",
-                    "سيتم اختيار الصورة ثم الدفع وبعد المراجعة تدخل إلى قائمة الإعلانات المميزة."
+                    "ترويج ملف العضو — €0.99",
+                    "هذا الإعلان يجعل ملفك يظهر في شريط الأعضاء المميز أعلى المنصة لمدة الإعلان المحددة، لزيادة ظهوره داخل سكن."
                 );
 
             }
@@ -1461,8 +1691,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
                         if (
-                            type === "photos" ||
-                            type === "myPhotos"
+                            type ===
+                                "photos" ||
+                            type ===
+                                "myPhotos"
                         ) {
 
                             window.location.href =
