@@ -2499,13 +2499,19 @@ app.use(
    START
 ===================================================== */
 
-app.listen(
-    PORT,
-    () => {
+if (!process.env.VERCEL) {
 
-        console.log(
-            `🚀 Sakan API يعمل على المنفذ ${PORT}`
-        );
+    app.listen(
+        PORT,
+        () => {
 
-    }
-);
+            console.log(
+                `🚀 Sakan API يعمل على المنفذ ${PORT}`
+            );
+
+        }
+    );
+
+}
+
+module.exports = app;
