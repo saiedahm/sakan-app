@@ -351,25 +351,90 @@ function isValidObjectId(
    DATABASE
 ===================================================== */
 
-mongoose
-    .connect(MONGODB_URI)
-    .then(() => {
+let mongoConnectionPromise = null;
 
-        console.log(
-            "✅ تم الاتصال بقاعدة بيانات سكن."
+async function connectDatabase() {
+
+    if (!MONGODB_URI) {
+
+        throw new Error(
+            "MONGODB_URI غير موجود في متغيرات البيئة."
         );
 
-    })
-    .catch((error) => {
+    }
 
-        console.error(
-            "❌ فشل الاتصال بقاعدة البيانات:",
-            error.message
-        );
+    if (
+        mongoose.connection.readyState === 1
+    ) {
 
-        process.exit(1);
+        return;
 
-    });
+    }
+
+    if (
+        !mongoConnectionPromise
+    ) {
+
+        mongoConnectionPromise =
+            mongoose
+                .connect(
+                    MONGODB_URI,
+                    {
+                        serverSelectionTimeoutMS: 5000
+                    }
+                )
+                .catch(
+                    function (error) {
+
+                        mongoConnectionPromise =
+                            null;
+
+                        throw error;
+
+                    }
+                );
+
+    }
+
+    await mongoConnectionPromise;
+
+}
+
+
+app.use(
+    "/api/",
+    async function (
+        req,
+        res,
+        next
+    ) {
+
+        try {
+
+            await connectDatabase();
+
+            next();
+
+        }
+
+        catch (error) {
+
+            console.error(
+                "❌ Database connection error:",
+                error.message
+            );
+
+            res.status(503).json({
+
+                error:
+                    "قاعدة البيانات غير متاحة حاليًا."
+
+            });
+
+        }
+
+    }
+);
 
 
 /* =====================================================
