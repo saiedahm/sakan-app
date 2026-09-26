@@ -114,6 +114,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         return null;
+
     }
 
 
@@ -125,11 +126,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function getOppositeGender() {
 
-        if (currentGender === "male") {
+        if (
+            currentGender === "male"
+        ) {
             return "female";
         }
 
-        if (currentGender === "female") {
+        if (
+            currentGender === "female"
+        ) {
             return "male";
         }
 
@@ -268,6 +273,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         ],
 
+
         male: [
 
             {
@@ -399,21 +405,28 @@ document.addEventListener("DOMContentLoaded", () => {
        MODAL
     ===================================================== */
 
-    function openModal(title, text) {
+    function openModal(
+        title,
+        text
+    ) {
 
         if (!modal) {
             return;
         }
 
         if (modalTitle) {
-            modalTitle.textContent = title;
+            modalTitle.textContent =
+                title;
         }
 
         if (modalText) {
-            modalText.textContent = text;
+            modalText.textContent =
+                text;
         }
 
-        modal.classList.remove("hidden");
+        modal.classList.remove(
+            "hidden"
+        );
 
     }
 
@@ -421,7 +434,9 @@ document.addEventListener("DOMContentLoaded", () => {
     function closeModal() {
 
         if (modal) {
-            modal.classList.add("hidden");
+            modal.classList.add(
+                "hidden"
+            );
         }
 
     }
@@ -443,7 +458,10 @@ document.addEventListener("DOMContentLoaded", () => {
         "click",
         (event) => {
 
-            if (event.target === modal) {
+            if (
+                event.target ===
+                modal
+            ) {
                 closeModal();
             }
 
@@ -594,12 +612,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 ${online}
 
-
                 <button
                     type="button"
                     class="favorite-btn">
 
-                    ${isFavorite(member.id) ? "★" : "☆"}
+                    ${
+                        isFavorite(member.id)
+                            ? "★"
+                            : "☆"
+                    }
 
                 </button>
 
@@ -668,7 +689,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
         if (
             !member ||
-            member.gender !== opposite
+            member.gender !==
+            opposite
         ) {
 
             openModal(
@@ -742,7 +764,9 @@ document.addEventListener("DOMContentLoaded", () => {
                                     opposite
                                 ]?.find(
                                     item =>
-                                        Number(item.id) ===
+                                        Number(
+                                            item.id
+                                        ) ===
                                         memberId
                                 );
 
@@ -800,7 +824,9 @@ document.addEventListener("DOMContentLoaded", () => {
                                     opposite
                                 ]?.find(
                                     item =>
-                                        Number(item.id) ===
+                                        Number(
+                                            item.id
+                                        ) ===
                                         memberId
                                 );
 
@@ -836,7 +862,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
         if (
-            !Array.isArray(members) ||
+            !Array.isArray(
+                members
+            ) ||
             members.length === 0
         ) {
 
@@ -844,7 +872,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 <div class="gender-notice">
 
-                    <span>ℹ️</span>
+                    <span>
+                        ℹ️
+                    </span>
 
                     <div>
 
@@ -905,7 +935,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
                     <div class="gender-notice">
 
-                        <span>⚠️</span>
+                        <span>
+                            ⚠️
+                        </span>
 
                         <div>
 
@@ -931,11 +963,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
         const members =
-            demoMembers[opposite] ||
-            [];
+            demoMembers[
+                opposite
+            ] || [];
 
 
-        if (currentGender === "male") {
+        if (
+            currentGender ===
+            "male"
+        ) {
 
             membersTitle.textContent =
                 "نساء قد يناسبنك";
@@ -962,7 +998,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     /* =====================================================
-       MOVING STRIP
+       MOVING TOP STRIP
+       10 صور مربعة ثابتة الحجم
+       تتكرر مرة ثانية للحركة المستمرة
     ===================================================== */
 
     function loadMemberStrip() {
@@ -976,54 +1014,133 @@ document.addEventListener("DOMContentLoaded", () => {
             getOppositeGender();
 
 
-        if (!opposite) {
-            return;
-        }
-
-
         const members =
             demoMembers[
                 opposite
             ] || [];
 
 
+        /*
+         * عشر صور مربعة.
+         *
+         * هذه الصور مؤقتة للعرض.
+         * عند ربط صور الأعضاء الحقيقية لاحقًا
+         * يمكن استبدال الرابط داخل المصفوفة
+         * بدون تغيير التصميم.
+         */
+
+        const portraitUrls = [
+
+            "https://i.pravatar.cc/160?img=1",
+
+            "https://i.pravatar.cc/160?img=2",
+
+            "https://i.pravatar.cc/160?img=3",
+
+            "https://i.pravatar.cc/160?img=4",
+
+            "https://i.pravatar.cc/160?img=5",
+
+            "https://i.pravatar.cc/160?img=6",
+
+            "https://i.pravatar.cc/160?img=7",
+
+            "https://i.pravatar.cc/160?img=8",
+
+            "https://i.pravatar.cc/160?img=9",
+
+            "https://i.pravatar.cc/160?img=10"
+
+        ];
+
+
         stripTrack.innerHTML =
             "";
 
 
-        [
-            ...members,
-            ...members
-        ].forEach(
-            member => {
+        /*
+         * أول 10 صور
+         */
 
-                const item =
+        const tenMembers =
+            portraitUrls.map(
+                (url, index) => {
+
+                    return {
+
+                        url,
+
+                        name:
+                            members[
+                                index %
+                                Math.max(
+                                    members.length,
+                                    1
+                                )
+                            ]?.name ||
+                            "عضو جديد"
+
+                    };
+
+                }
+            );
+
+
+        /*
+         * نكرر المجموعة مرة ثانية
+         * حتى تكون الحركة مستمرة.
+         */
+
+        const movingMembers = [
+
+            ...tenMembers,
+
+            ...tenMembers
+
+        ];
+
+
+        movingMembers.forEach(
+            (member) => {
+
+                const element =
                     document.createElement(
                         "div"
                     );
 
 
-                item.className =
+                element.className =
                     "mini-member";
 
 
-                item.innerHTML = `
+                element.innerHTML = `
 
                     <div class="mini-avatar">
 
-                        ${member.avatar}
+                        <img
+
+                            src="${member.url}"
+
+                            alt="${member.name}"
+
+                            loading="lazy"
+
+                            draggable="false">
 
                     </div>
 
+
                     <span>
+
                         ${member.name}
+
                     </span>
 
                 `;
 
 
                 stripTrack.appendChild(
-                    item
+                    element
                 );
 
             }
@@ -1074,6 +1191,7 @@ document.addEventListener("DOMContentLoaded", () => {
                         ) {
 
                             loadHomeMembers();
+
                             return;
 
                         }
@@ -1134,8 +1252,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
                                 membersTitle.textContent =
-                                    currentGender === "male"
+                                    currentGender ===
+                                    "male"
+
                                         ? "أحدث العضوات"
+
                                         : "أحدث الأعضاء";
 
 
@@ -1177,8 +1298,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
                                 membersTitle.textContent =
-                                    currentGender === "male"
+                                    currentGender ===
+                                    "male"
+
                                         ? "العضوات المتصلات الآن"
+
                                         : "الأعضاء المتصلون الآن";
 
 
@@ -1213,6 +1337,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 () => {
 
                     loadHomeMembers();
+
                     loadMemberStrip();
 
 
@@ -1238,7 +1363,9 @@ document.addEventListener("DOMContentLoaded", () => {
     ===================================================== */
 
     document
-        .getElementById("advertiseBtn")
+        .getElementById(
+            "advertiseBtn"
+        )
         ?.addEventListener(
             "click",
             () => {
@@ -1253,7 +1380,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     document
-        .getElementById("featuredAdBtn")
+        .getElementById(
+            "featuredAdBtn"
+        )
         ?.addEventListener(
             "click",
             () => {
@@ -1268,7 +1397,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     document
-        .getElementById("profileBtn")
+        .getElementById(
+            "profileBtn"
+        )
         ?.addEventListener(
             "click",
             () => {
@@ -1281,7 +1412,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     document
-        .getElementById("languageBtn")
+        .getElementById(
+            "languageBtn"
+        )
         ?.addEventListener(
             "click",
             () => {
@@ -1390,7 +1523,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     document
-        .getElementById("logoutBtn")
+        .getElementById(
+            "logoutBtn"
+        )
         ?.addEventListener(
             "click",
             logout
@@ -1398,7 +1533,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     document
-        .getElementById("logoutTool")
+        .getElementById(
+            "logoutTool"
+        )
         ?.addEventListener(
             "click",
             logout
