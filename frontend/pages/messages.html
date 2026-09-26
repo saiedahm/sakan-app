@@ -1,62 +1,121 @@
- <!DOCTYPE html>
+
+<!DOCTYPE html>
 <html lang="ar" dir="rtl">
 
 <head>
+
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0">
 
     <title>الرسائل | سكن</title>
 
-    <link rel="stylesheet" href="../css/messages.css">
+
+    <!-- تصميم الرسائل الحالي -->
+    <link
+        rel="stylesheet"
+        href="../css/messages.css">
+
+
+    <!-- الخلفية المائية المشتركة -->
+    <link
+        rel="stylesheet"
+        href="../css/platform-background.css">
+
 </head>
+
 
 <body>
 
+
+<!-- =====================================================
+     HEADER
+===================================================== -->
+
 <header class="messages-header">
+
 
     <div class="brand">
 
-     <div class="brand-mark">
-    <img
-        src="../assets/sakan-logo.png"
-        alt="شعار منصة سكن">
-</div>
-        <div>
-            <h1>سكن</h1>
-            <span>الرسائل</span>
+
+        <div class="brand-mark">
+
+            <img
+                src="../assets/sakan-logo.png"
+                alt="شعار منصة سكن">
+
         </div>
+
+
+        <div>
+
+            <h1>
+                سكن
+            </h1>
+
+            <span>
+                الرسائل
+            </span>
+
+        </div>
+
 
     </div>
 
+
+
     <button
         id="backHomeBtn"
-        class="back-btn">
+        class="back-btn"
+        type="button">
 
         ← الرئيسية
 
     </button>
 
+
 </header>
 
 
+
+<!-- =====================================================
+     MAIN
+===================================================== -->
+
 <main class="messages-container">
+
 
     <section class="messages-layout">
 
 
+        <!-- =================================================
+             CONVERSATIONS
+        ================================================== -->
+
         <aside class="conversations">
+
 
             <div class="conversation-title">
 
+
                 <span class="small-title">
+
                     التواصل
+
                 </span>
 
+
                 <h2>
+
                     محادثاتي
+
                 </h2>
 
+
             </div>
+
 
 
             <div
@@ -65,40 +124,62 @@
 
             </div>
 
+
         </aside>
 
 
+
+        <!-- =================================================
+             CHAT
+        ================================================== -->
+
         <section class="chat">
+
+
+            <!-- لا توجد محادثة -->
 
             <div
                 id="chatEmpty"
                 class="chat-empty">
 
+
                 <div>
                     ✉️
                 </div>
 
+
                 <h3>
+
                     اختر محادثة
+
                 </h3>
 
+
                 <p>
+
                     اختر عضوًا من القائمة لعرض المحادثة.
+
                 </p>
+
 
             </div>
 
+
+
+            <!-- المحادثة -->
 
             <div
                 id="chatArea"
                 class="chat-area"
                 style="display:none;">
 
+
                 <div
                     id="chatHeader"
                     class="chat-header">
 
                 </div>
+
 
 
                 <div
@@ -108,15 +189,18 @@
                 </div>
 
 
+
                 <form
                     id="messageForm"
                     class="message-form">
+
 
                     <input
                         id="messageInput"
                         type="text"
                         placeholder="اكتب رسالتك..."
                         autocomplete="off">
+
 
                     <button
                         type="submit">
@@ -125,18 +209,30 @@
 
                     </button>
 
+
                 </form>
+
 
             </div>
 
+
         </section>
 
+
     </section>
+
 
 </main>
 
 
+
+<!-- =====================================================
+     JAVASCRIPT
+===================================================== -->
+
 <script src="../js/messages.js"></script>
 
+
 </body>
+
 </html>
