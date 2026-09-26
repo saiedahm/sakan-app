@@ -1,4 +1,4 @@
-/* =====================================================
+ /* =====================================================
    SAKAN ENTRY SYSTEM
    Backend-ready authentication
 ===================================================== */
@@ -11,7 +11,7 @@
 const SAKAN_API_BASE = (
     window.SAKAN_API_BASE ||
     localStorage.getItem("sakanApiBase") ||
-    "http://localhost:5000/api"
+    "https://sakan-ijnkevzme-dnexora26-4685.vercel.app/api"
 ).replace(/\/$/, "");
 
 
@@ -1101,10 +1101,10 @@ document.addEventListener(
                         apiError
                     ) {
 
-                        /*
-                           إذا كان Backend غير منشور بعد،
-                           نستخدم وضع المعاينة فقط.
-                        */
+                        console.error(
+                            "Sakan API login error:",
+                            apiError
+                        );
 
                     }
 
