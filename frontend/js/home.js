@@ -1,4 +1,4 @@
-document.addEventListener("DOMContentLoaded", () => {
+ document.addEventListener("DOMContentLoaded", () => {
 
     /* =====================================================
        ELEMENTS
@@ -48,7 +48,6 @@ document.addEventListener("DOMContentLoaded", () => {
             "../index.html";
 
         return;
-
     }
 
 
@@ -106,7 +105,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
         }
 
-
         if (
             [
                 "female",
@@ -122,7 +120,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
         }
 
-
         return null;
 
     }
@@ -137,22 +134,22 @@ document.addEventListener("DOMContentLoaded", () => {
     function getOppositeGender() {
 
         if (
-            currentGender === "male"
+            currentGender ===
+            "male"
         ) {
 
             return "female";
 
         }
 
-
         if (
-            currentGender === "female"
+            currentGender ===
+            "female"
         ) {
 
             return "male";
 
         }
-
 
         return null;
 
@@ -160,7 +157,174 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     /* =====================================================
+       GENERATE ADDITIONAL MEMBERS
+       50 عضوة + 40 عضو
+    ===================================================== */
+
+    function generateAdditionalMembers(
+        gender,
+        count,
+        startId
+    ) {
+
+        const cities = [
+
+            ["ألمانيا", "برلين"],
+            ["ألمانيا", "هامبورغ"],
+            ["ألمانيا", "كولن"],
+            ["ألمانيا", "ميونخ"],
+            ["ألمانيا", "فرانكفورت"],
+            ["ألمانيا", "هانوفر"],
+            ["ألمانيا", "دوسلدورف"],
+            ["ألمانيا", "شتوتغارت"],
+            ["فرنسا", "باريس"],
+            ["فرنسا", "ليون"],
+            ["هولندا", "أمستردام"],
+            ["بلجيكا", "بروكسل"],
+            ["النمسا", "فيينا"],
+            ["إسبانيا", "مدريد"],
+            ["إيطاليا", "ميلانو"],
+            ["السويد", "ستوكهولم"],
+            ["سويسرا", "زيورخ"],
+            ["الدنمارك", "كوبنهاغن"]
+
+        ];
+
+
+        const languages = [
+
+            "العربية",
+            "العربية / الألمانية",
+            "الألمانية",
+            "الفرنسية",
+            "الإنجليزية",
+            "الإسبانية"
+
+        ];
+
+
+        const members = [];
+
+
+        for (
+            let index = 0;
+            index < count;
+            index++
+        ) {
+
+            const number =
+                String(index + 7)
+                    .padStart(2, "0");
+
+
+            const id =
+                startId + index;
+
+
+            const [country, city] =
+                cities[
+                    index % cities.length
+                ];
+
+
+            const age =
+                24 + (index % 17);
+
+
+            const online =
+                index % 3 !== 1;
+
+
+            const verified =
+                index % 5 === 0;
+
+
+            const maritalStatus =
+                gender === "female"
+
+                    ? (
+                        index % 4 === 0
+                            ? "مطلقة"
+                            : "عزباء"
+                    )
+
+                    : (
+                        index % 5 === 0
+                            ? "مطلق"
+                            : "أعزب"
+                    );
+
+
+            members.push({
+
+                id,
+
+                gender,
+
+                name:
+                    gender === "female"
+
+                        ? `عضوة جديدة ${number}`
+
+                        : `عضو جديد ${number}`,
+
+                age,
+
+                country,
+
+                city,
+
+                maritalStatus,
+
+                language:
+                    languages[
+                        index %
+                        languages.length
+                    ],
+
+                education:
+                    index % 4 === 0
+                        ? "دراسات عليا"
+                        : "جامعي",
+
+                profession:
+                    "—",
+
+                online,
+
+                verified,
+
+                avatar:
+                    gender === "female"
+                        ? "👩"
+                        : "👨",
+
+                about:
+                    gender === "female"
+
+                        ? "ملف تجريبي لعضوة جديدة داخل منصة سكن."
+
+                        : "ملف تجريبي لعضو جديد داخل منصة سكن.",
+
+                seeking:
+                    "أبحث عن تعارف جاد قائم على الاحترام والتفاهم.",
+
+                photos: []
+
+            });
+
+        }
+
+
+        return members;
+
+    }
+
+
+    /* =====================================================
        DEMO MEMBERS
+       50 FEMALE
+       40 MALE
     ===================================================== */
 
     const demoMembers = {
@@ -184,7 +348,8 @@ document.addEventListener("DOMContentLoaded", () => {
                 about:
                     "أبحث عن تعارف جاد قائم على الاحترام والثقة.",
                 seeking:
-                    "أبحث عن شريك حياة جاد ومحترم."
+                    "أبحث عن شريك حياة جاد ومحترم.",
+                photos: []
             },
 
             {
@@ -204,7 +369,8 @@ document.addEventListener("DOMContentLoaded", () => {
                 about:
                     "شخصية هادئة وأحب الاستقرار.",
                 seeking:
-                    "أبحث عن علاقة جادة تنتهي بالزواج."
+                    "أبحث عن علاقة جادة تنتهي بالزواج.",
+                photos: []
             },
 
             {
@@ -224,7 +390,8 @@ document.addEventListener("DOMContentLoaded", () => {
                 about:
                     "أقدر الصراحة والاحترام والتفاهم.",
                 seeking:
-                    "أبحث عن شريك حياة جاد."
+                    "أبحث عن شريك حياة جاد.",
+                photos: []
             },
 
             {
@@ -244,7 +411,8 @@ document.addEventListener("DOMContentLoaded", () => {
                 about:
                     "أحب الحياة الهادئة والأسرة.",
                 seeking:
-                    "أبحث عن الزواج والاستقرار."
+                    "أبحث عن الزواج والاستقرار.",
+                photos: []
             },
 
             {
@@ -264,7 +432,8 @@ document.addEventListener("DOMContentLoaded", () => {
                 about:
                     "أقدر الحياة الأسرية والتفاهم.",
                 seeking:
-                    "أبحث عن علاقة جادة ومستقرة."
+                    "أبحث عن علاقة جادة ومستقرة.",
+                photos: []
             },
 
             {
@@ -284,8 +453,15 @@ document.addEventListener("DOMContentLoaded", () => {
                 about:
                     "أحب الاستقرار والصراحة.",
                 seeking:
-                    "أبحث عن شريك حياة جاد."
-            }
+                    "أبحث عن شريك حياة جاد.",
+                photos: []
+            },
+
+            ...generateAdditionalMembers(
+                "female",
+                44,
+                107
+            )
 
         ],
 
@@ -309,7 +485,8 @@ document.addEventListener("DOMContentLoaded", () => {
                 about:
                     "أبحث عن علاقة جادة مبنية على الثقة والاحترام.",
                 seeking:
-                    "أبحث عن شريكة حياة جادة ومحترمة."
+                    "أبحث عن شريكة حياة جادة ومحترمة.",
+                photos: []
             },
 
             {
@@ -329,7 +506,8 @@ document.addEventListener("DOMContentLoaded", () => {
                 about:
                     "أحب الاستقرار والحياة الأسرية.",
                 seeking:
-                    "أبحث عن الزواج والاستقرار."
+                    "أبحث عن الزواج والاستقرار.",
+                photos: []
             },
 
             {
@@ -349,7 +527,8 @@ document.addEventListener("DOMContentLoaded", () => {
                 about:
                     "أحب الصراحة والتفاهم.",
                 seeking:
-                    "أبحث عن شريكة حياة جادة."
+                    "أبحث عن شريكة حياة جادة.",
+                photos: []
             },
 
             {
@@ -369,7 +548,8 @@ document.addEventListener("DOMContentLoaded", () => {
                 about:
                     "أقدر الاحترام والعائلة.",
                 seeking:
-                    "أبحث عن علاقة جادة."
+                    "أبحث عن علاقة جادة.",
+                photos: []
             },
 
             {
@@ -389,7 +569,8 @@ document.addEventListener("DOMContentLoaded", () => {
                 about:
                     "أبحث عن الاستقرار والتفاهم.",
                 seeking:
-                    "أبحث عن الزواج الجاد."
+                    "أبحث عن الزواج الجاد.",
+                photos: []
             },
 
             {
@@ -409,8 +590,15 @@ document.addEventListener("DOMContentLoaded", () => {
                 about:
                     "أحب الهدوء والاستقرار.",
                 seeking:
-                    "أبحث عن شريكة حياة."
-            }
+                    "أبحث عن شريكة حياة.",
+                photos: []
+            },
+
+            ...generateAdditionalMembers(
+                "male",
+                34,
+                207
+            )
 
         ]
 
@@ -582,7 +770,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 ...member,
 
-                photos: []
+                photos:
+                    member.photos || []
 
             });
 
@@ -648,9 +837,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 </div>
 
-
                 ${online}
-
 
                 <button
                     type="button"
@@ -691,9 +878,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
                     ${
                         member.online
-
                             ? "متصل الآن"
-
                             : "غير متصل"
                     }
 
@@ -761,7 +946,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
         window.location.href =
-            "member-profile.html";
+            "pages/member-profile.html";
 
     }
 
@@ -924,13 +1109,11 @@ document.addEventListener("DOMContentLoaded", () => {
                         ℹ️
                     </span>
 
-
                     <div>
 
                         <strong>
                             لا توجد نتائج حاليًا
                         </strong>
-
 
                         <p>
                             سيظهر الأعضاء هنا عند توفرهم.
@@ -989,13 +1172,11 @@ document.addEventListener("DOMContentLoaded", () => {
                             ⚠️
                         </span>
 
-
                         <div>
 
                             <strong>
                                 أكمل بياناتك أولًا
                             </strong>
-
 
                             <p>
                                 يجب تحديد الجنس في بيانات الحساب.
@@ -1051,8 +1232,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
     /* =====================================================
        MOVING TOP STRIP
-       10 صور مربعة
-       الضغط على الصورة = فتح ملف العضو
+       10 نساء للرجال
+       10 رجال للنساء
     ===================================================== */
 
     function loadMemberStrip() {
@@ -1073,32 +1254,51 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
         /*
-         * الصور العشر المربعة
+         * صور النساء
          */
 
-        const portraitUrls = [
+        const femalePortraits = [
 
-            "https://i.pravatar.cc/160?img=1",
-
-            "https://i.pravatar.cc/160?img=2",
-
-            "https://i.pravatar.cc/160?img=3",
-
-            "https://i.pravatar.cc/160?img=4",
-
-            "https://i.pravatar.cc/160?img=5",
-
-            "https://i.pravatar.cc/160?img=6",
-
-            "https://i.pravatar.cc/160?img=7",
-
-            "https://i.pravatar.cc/160?img=8",
-
-            "https://i.pravatar.cc/160?img=9",
-
-            "https://i.pravatar.cc/160?img=10"
+            "https://randomuser.me/api/portraits/women/1.jpg",
+            "https://randomuser.me/api/portraits/women/2.jpg",
+            "https://randomuser.me/api/portraits/women/3.jpg",
+            "https://randomuser.me/api/portraits/women/4.jpg",
+            "https://randomuser.me/api/portraits/women/5.jpg",
+            "https://randomuser.me/api/portraits/women/6.jpg",
+            "https://randomuser.me/api/portraits/women/7.jpg",
+            "https://randomuser.me/api/portraits/women/8.jpg",
+            "https://randomuser.me/api/portraits/women/9.jpg",
+            "https://randomuser.me/api/portraits/women/10.jpg"
 
         ];
+
+
+        /*
+         * صور الرجال
+         */
+
+        const malePortraits = [
+
+            "https://randomuser.me/api/portraits/men/1.jpg",
+            "https://randomuser.me/api/portraits/men/2.jpg",
+            "https://randomuser.me/api/portraits/men/3.jpg",
+            "https://randomuser.me/api/portraits/men/4.jpg",
+            "https://randomuser.me/api/portraits/men/5.jpg",
+            "https://randomuser.me/api/portraits/men/6.jpg",
+            "https://randomuser.me/api/portraits/men/7.jpg",
+            "https://randomuser.me/api/portraits/men/8.jpg",
+            "https://randomuser.me/api/portraits/men/9.jpg",
+            "https://randomuser.me/api/portraits/men/10.jpg"
+
+        ];
+
+
+        const portraitUrls =
+            opposite === "female"
+
+                ? femalePortraits
+
+                : malePortraits;
 
 
         stripTrack.innerHTML =
@@ -1106,7 +1306,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
         /*
-         * إنشاء 10 أعضاء.
+         * إنشاء 10 ملفات للشريط.
          */
 
         const tenMembers =
@@ -1126,10 +1326,15 @@ document.addEventListener("DOMContentLoaded", () => {
                                 9000 + index,
 
                             gender:
-                                opposite || "female",
+                                opposite,
 
                             name:
-                                "عضو جديد",
+                                opposite ===
+                                "female"
+
+                                    ? `عضوة جديدة ${index + 1}`
+
+                                    : `عضو جديد ${index + 1}`,
 
                             age:
                                 "—",
@@ -1159,13 +1364,18 @@ document.addEventListener("DOMContentLoaded", () => {
                                 false,
 
                             avatar:
-                                "👤",
+                                opposite ===
+                                "female"
+
+                                    ? "👩"
+
+                                    : "👨",
 
                             about:
-                                "لم تتم إضافة نبذة بعد.",
+                                "ملف تجريبي.",
 
                             seeking:
-                                "لم تتم إضافة معلومات بعد.",
+                                "تعارف جاد.",
 
                             photos:
                                 []
@@ -1187,8 +1397,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
         /*
-         * تكرار الصور العشر
-         * للحركة المستمرة.
+         * تكرار المجموعة
+         * للحصول على شريط لا نهائي.
          */
 
         const movingMembers = [
@@ -1201,7 +1411,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
         movingMembers.forEach(
-            (member, index) => {
+            (member) => {
 
                 const element =
                     document.createElement(
@@ -1263,8 +1473,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
                 /*
-                 * عند لمس الصورة أو مرور
-                 * الماوس فوقها تتوقف الحركة.
+                 * إيقاف الشريط عند الماوس
                  */
 
                 element.addEventListener(
@@ -1278,6 +1487,10 @@ document.addEventListener("DOMContentLoaded", () => {
                 );
 
 
+                /*
+                 * إيقاف الشريط عند اللمس
+                 */
+
                 element.addEventListener(
                     "pointerdown",
                     () => {
@@ -1288,6 +1501,10 @@ document.addEventListener("DOMContentLoaded", () => {
                     }
                 );
 
+
+                /*
+                 * إعادة الحركة بعد الابتعاد
+                 */
 
                 element.addEventListener(
                     "pointerleave",
@@ -1301,8 +1518,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
                 /*
-                 * الضغط على الصورة:
-                 * فتح ملف العضو مباشرة.
+                 * فتح الملف بالضغط
                  */
 
                 element.addEventListener(
@@ -1333,14 +1549,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
                         window.location.href =
-                            "member-profile.html";
+                            "pages/member-profile.html";
 
                     }
                 );
 
 
                 /*
-                 * دعم لوحة المفاتيح.
+                 * دعم لوحة المفاتيح
                  */
 
                 element.addEventListener(
@@ -1350,12 +1566,12 @@ document.addEventListener("DOMContentLoaded", () => {
                         if (
                             event.key ===
                                 "Enter" ||
+
                             event.key ===
                                 " "
                         ) {
 
                             event.preventDefault();
-
 
                             element.click();
 
@@ -1429,7 +1645,7 @@ document.addEventListener("DOMContentLoaded", () => {
                         ) {
 
                             window.location.href =
-                                "messages.html";
+                                "pages/messages.html";
 
                             return;
 
@@ -1442,7 +1658,7 @@ document.addEventListener("DOMContentLoaded", () => {
                         ) {
 
                             window.location.href =
-                                "visitors.html";
+                                "pages/visitors.html";
 
                             return;
 
@@ -1455,7 +1671,7 @@ document.addEventListener("DOMContentLoaded", () => {
                         ) {
 
                             window.location.href =
-                                "favorites.html";
+                                "pages/favorites.html";
 
                             return;
 
@@ -1606,7 +1822,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     /*
-     * الإعلان الداخلي المميز للعضو
+     * الإعلان الداخلي للعضو €0.99
      */
 
     document
@@ -1635,7 +1851,7 @@ document.addEventListener("DOMContentLoaded", () => {
             () => {
 
                 window.location.href =
-                    "profile-data.html";
+                    "pages/profile-data.html";
 
             }
         );
@@ -1683,7 +1899,7 @@ document.addEventListener("DOMContentLoaded", () => {
                         ) {
 
                             window.location.href =
-                                "profile-data.html";
+                                "pages/profile-data.html";
 
                             return;
 
@@ -1693,12 +1909,13 @@ document.addEventListener("DOMContentLoaded", () => {
                         if (
                             type ===
                                 "photos" ||
+
                             type ===
                                 "myPhotos"
                         ) {
 
                             window.location.href =
-                                "photos.html";
+                                "pages/photos.html";
 
                             return;
 
@@ -1711,7 +1928,7 @@ document.addEventListener("DOMContentLoaded", () => {
                         ) {
 
                             window.location.href =
-                                "member-search.html";
+                                "pages/member-search.html";
 
                             return;
 
