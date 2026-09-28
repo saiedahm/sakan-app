@@ -394,18 +394,11 @@ button {
 
 .strip-track {
   display: flex;
-
   width: max-content;
-
   gap: 18px;
-
   direction: ltr;
-
-  animation:
-    movingMembers 25s linear infinite;
-
-  will-change:
-    transform;
+  animation: movingMembers 24s linear infinite;
+  will-change: transform;
 }
 
 
@@ -481,17 +474,12 @@ button {
 /* حركة الصور */
 
 @keyframes movingMembers {
-
   from {
-    transform:
-      translateX(0);
+    transform: translate3d(0, 0, 0);
   }
-
   to {
-    transform:
-      translateX(50%);
+    transform: translate3d(-50%, 0, 0);
   }
-
 }
 
 
