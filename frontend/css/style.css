@@ -1243,12 +1243,13 @@ button {
 
     overflow: hidden;
 
+    /* Keep the seated man/woman background watermark. */
     background:
         linear-gradient(
             rgba(5, 14, 30, 0.90),
             rgba(5, 14, 30, 0.90)
         ),
-       url("../assets/members.png")
+        url("../assets/members.png")
         center center /
         cover
         no-repeat;
