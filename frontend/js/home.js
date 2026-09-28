@@ -996,7 +996,7 @@
 
 
         window.location.href =
-            "pages/member-profile.html";
+            "member-profile.html";
 
     }
 
@@ -1599,7 +1599,7 @@
 
 
                         window.location.href =
-                            "pages/member-profile.html";
+                            "member-profile.html";
 
                     }
                 );
@@ -1695,7 +1695,7 @@
                         ) {
 
                             window.location.href =
-                                "pages/messages.html";
+                                "messages.html";
 
                             return;
 
@@ -1708,7 +1708,7 @@
                         ) {
 
                             window.location.href =
-                                "pages/visitors.html";
+                                "visitors.html";
 
                             return;
 
@@ -1721,7 +1721,7 @@
                         ) {
 
                             window.location.href =
-                                "pages/favorites.html";
+                                "favorites.html";
 
                             return;
 
@@ -1901,7 +1901,7 @@
             () => {
 
                 window.location.href =
-                    "pages/profile-data.html";
+                    "profile-data.html";
 
             }
         );
@@ -1949,7 +1949,7 @@
                         ) {
 
                             window.location.href =
-                                "pages/profile-data.html";
+                                "profile-data.html";
 
                             return;
 
@@ -1965,7 +1965,7 @@
                         ) {
 
                             window.location.href =
-                                "pages/photos.html";
+                                "photos.html";
 
                             return;
 
@@ -1978,7 +1978,7 @@
                         ) {
 
                             window.location.href =
-                                "pages/member-search.html";
+                                "member-search.html";
 
                             return;
 
