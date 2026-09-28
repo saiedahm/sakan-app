@@ -404,9 +404,21 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
 
-    mainPhoto.textContent =
-        member.avatar ||
-        "👤";
+    mainPhoto.textContent = "";
+
+    if (member.portraitUrl) {
+        const portrait = document.createElement("img");
+        portrait.src = member.portraitUrl;
+        portrait.alt = member.name || "عضو تجريبي";
+        portrait.loading = "eager";
+        portrait.style.width = "100%";
+        portrait.style.height = "100%";
+        portrait.style.objectFit = "cover";
+        portrait.style.borderRadius = "50%";
+        mainPhoto.appendChild(portrait);
+    } else {
+        mainPhoto.textContent = member.avatar || "👤";
+    }
 
 
     aboutText.textContent =
