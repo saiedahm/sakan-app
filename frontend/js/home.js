@@ -158,7 +158,7 @@
 
     /* =====================================================
        GENERATE ADDITIONAL MEMBERS
-       50 عضوة + 40 عضو
+       50 عضوة + 70 عضو
     ===================================================== */
 
     function generateAdditionalMembers(
@@ -231,8 +231,7 @@
                 24 + (index % 17);
 
 
-            const online =
-                index % 3 !== 1;
+            const online = true;
 
 
             const verified =
@@ -288,7 +287,10 @@
                         : "جامعي",
 
                 profession:
-                    "—",
+                    [
+                        "مهندس", "مبرمج", "طبيب", "محاسب",
+                        "مدرس", "مصمم", "موظف إداري", "رجل أعمال"
+                    ][index % 8],
 
                 online,
 
@@ -324,7 +326,7 @@
     /* =====================================================
        DEMO MEMBERS
        50 FEMALE
-       40 MALE
+       70 MALE
     ===================================================== */
 
     const demoMembers = {
@@ -596,13 +598,57 @@
 
             ...generateAdditionalMembers(
                 "male",
-                34,
+                64,
                 207
             )
 
         ]
 
     };
+
+
+    /* =====================================================
+       15-DAY DEMO CAMPAIGN DATA
+       50 women + 70 men, all online with a demo portrait.
+    ===================================================== */
+
+    const DEMO_CAMPAIGN_START_DATE = "2026-09-28T00:00:00+02:00";
+    const DEMO_CAMPAIGN_DURATION_DAYS = 15;
+
+    function demoCampaignIsActive() {
+        const start = new Date(DEMO_CAMPAIGN_START_DATE).getTime();
+        const end = start + DEMO_CAMPAIGN_DURATION_DAYS * 24 * 60 * 60 * 1000;
+        return Date.now() < end;
+    }
+
+    function prepareDemoMembers() {
+        ["female", "male"].forEach((gender) => {
+            demoMembers[gender].forEach((member, index) => {
+                const portraitUrl =
+                    "https://randomuser.me/api/portraits/" +
+                    (gender === "female" ? "women" : "men") +
+                    "/" + ((index + 1) % 100) + ".jpg";
+
+                member.online = true;
+                member.demo = true;
+                member.portraitUrl = member.portraitUrl || portraitUrl;
+                member.photos = [{ preview: member.portraitUrl }];
+                member.profession =
+                    member.profession && member.profession !== "—"
+                        ? member.profession
+                        : ["مهندس", "مبرمج", "طبيب", "محاسب", "مدرس", "مصمم", "موظف إداري", "رجل أعمال"][index % 8];
+                member.about = member.about || "ملف تجريبي داخل منصة سكن للتعريف بطريقة عرض الملف الشخصي.";
+                member.seeking = member.seeking || "أبحث عن تعارف جاد قائم على الاحترام والتفاهم.";
+            });
+        });
+    }
+
+    prepareDemoMembers();
+
+    if (!demoCampaignIsActive()) {
+        demoMembers.female = [];
+        demoMembers.male = [];
+    }
 
 
     /* =====================================================
@@ -833,7 +879,11 @@
 
                 <div class="placeholder-avatar">
 
-                    ${member.avatar}
+                    <img
+                        src="${member.portraitUrl || ""}"
+                        alt="${member.name}"
+                        loading="lazy"
+                        style="width:100%;height:100%;object-fit:cover;border-radius:50%;display:block;">
 
                 </div>
 
