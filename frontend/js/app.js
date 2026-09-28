@@ -11,7 +11,7 @@
 const SAKAN_API_BASE = (
     window.SAKAN_API_BASE ||
     localStorage.getItem("sakanApiBase") ||
-    "https://sakan-ijnkevzme-dnexora26-4685.vercel.app/api"
+    "/api"
 ).replace(/\/$/, "");
 
 
