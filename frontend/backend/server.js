@@ -66,11 +66,26 @@ app.use(
 
 app.use(
     cors({
-        origin: [
-            FRONTEND_ORIGIN,
-            "http://localhost:3000",
-            "http://localhost:5000"
-        ],
+        origin: function (origin, callback) {
+            if (!origin) {
+                return callback(null, true);
+            }
+
+            const allowed = [
+                FRONTEND_ORIGIN,
+                "http://localhost:3000",
+                "http://localhost:5000",
+                process.env.VERCEL_URL
+                    ? "https://" + process.env.VERCEL_URL
+                    : null
+            ].filter(Boolean);
+
+            if (allowed.includes(origin)) {
+                return callback(null, true);
+            }
+
+            return callback(new Error("CORS origin not allowed"));
+        },
         methods: [
             "GET",
             "POST",
@@ -401,6 +416,25 @@ async function connectDatabase() {
 }
 
 
+/* =====================================================
+   HEALTH CHECK
+===================================================== */
+
+app.get(
+    "/api/health",
+    (req, res) => {
+
+        res.json({
+            success: true,
+            service: "Sakan API",
+            status: "online",
+            time: new Date().toISOString()
+        });
+
+    }
+);
+
+
 app.use(
     "/api/",
     async function (
@@ -432,32 +466,6 @@ app.use(
             });
 
         }
-
-    }
-);
-
-
-/* =====================================================
-   HEALTH CHECK
-===================================================== */
-
-app.get(
-    "/api/health",
-    (req, res) => {
-
-        res.json({
-            success:
-                true,
-
-            service:
-                "Sakan API",
-
-            status:
-                "online",
-
-            time:
-                new Date().toISOString()
-        });
 
     }
 );
