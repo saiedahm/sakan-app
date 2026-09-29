@@ -1,6 +1,6 @@
- /* =====================================================
-   SAKAN - SHARED WATERFRONT BACKGROUND
-   خلفية مشتركة للمنصة بدون تغيير تصميم الواجهة
+/* =====================================================
+   SAKAN - SHARED PLATFORM BACKGROUND
+   الخلفية الموحدة للمنصة — بدون تكرار شعار سكن داخل الخلفية
 ===================================================== */
 
 html,
@@ -10,33 +10,15 @@ body {
 
 body {
     margin: 0;
-
     background-color: #06101d;
-
     background-image:
-        linear-gradient(
-            rgba(4, 12, 24, 0.70),
-            rgba(4, 12, 24, 0.70)
-        ),
-        url("../assets/sakan-water-bg.jpg");
-
-    background-position:
-        center center;
-
-    background-size:
-        cover;
-
-    background-repeat:
-        no-repeat;
-
-    background-attachment:
-        fixed;
+        radial-gradient(circle at 50% 0%, rgba(23, 66, 105, 0.34), transparent 42%),
+        linear-gradient(180deg, #06101d 0%, #081727 48%, #06101d 100%);
+    background-position: center center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
 }
-
-/*
-   إبقاء الخلفية هادئة خلف البطاقات
-   بدون تغيير مكونات المنصة
-*/
 
 main,
 .container {
@@ -44,22 +26,9 @@ main,
     z-index: 1;
 }
 
-/*
-   الهاتف
-*/
-
 @media (max-width: 700px) {
-
     body {
-
-        background-attachment:
-            scroll;
-
-        background-position:
-            center center;
-
-        background-size:
-            auto 100%;
+        background-attachment: scroll;
+        background-position: center center;
     }
-
 }
