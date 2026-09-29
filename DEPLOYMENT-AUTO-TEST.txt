@@ -1,4 +1,0 @@
-SAKAN automatic deployment verification
-
-This file is a harmless production deployment test.
-If this commit appears in Vercel automatically, GitHub main -> Vercel Production is working as expected.
