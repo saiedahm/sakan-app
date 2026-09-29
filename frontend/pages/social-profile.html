@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>استكمال ملف سكن</title>
+<style>
+body{margin:0;font-family:Arial,sans-serif;background:#f6f8fb;color:#172033}.card{max-width:760px;margin:40px auto;padding:28px;background:#fff;border-radius:18px;box-shadow:0 10px 35px #0001}h1{margin-top:0}form{display:grid;gap:12px}label{font-weight:700}input,select,textarea{width:100%;box-sizing:border-box;padding:12px;border:1px solid #ccd4df;border-radius:10px;font-size:15px}textarea{min-height:100px;resize:vertical}button{padding:14px;border:0;border-radius:10px;background:#1769aa;color:#fff;font-size:16px;font-weight:700;cursor:pointer}.msg{padding:10px;border-radius:8px;background:#fff3cd;color:#664d03;display:none}.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}@media(max-width:650px){.grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<main class="card">
+<h1>أكمل ملفك في سكن</h1>
+<p>تم تسجيل الدخول بنجاح. أكمل بياناتك مرة واحدة لإنشاء ملفك في المنصة.</p>
+<div id="msg" class="msg"></div>
+<form id="form">
+<div class="grid">
+<div><label>الاسم الحقيقي</label><input name="realName" required></div>
+<div><label>الاسم الظاهر</label><input name="displayName" required></div>
+<div><label>الجنس</label><select name="gender" required><option value="">اختر</option><option value="male">رجل</option><option value="female">امرأة</option></select></div>
+<div><label>تاريخ الميلاد</label><input type="date" name="birthDate" required></div>
+<div><label>الدولة</label><input name="country" required></div>
+<div><label>المدينة</label><input name="city" required></div>
+<div><label>الحالة الاجتماعية</label><input name="maritalStatus" required></div>
+<div><label>اللغة</label><input name="language" required></div>
+<div><label>التعليم</label><input name="education" required></div>
+<div><label>المهنة</label><input name="profession" required></div>
+</div>
+<div><label>نبذة عني</label><textarea name="aboutMe" required></textarea></div>
+<div><label>ما الذي أبحث عنه؟</label><textarea name="lookingFor" required></textarea></div>
+<label><input type="checkbox" name="showRealName"> إظهار الاسم الحقيقي</label>
+<label>اللغة المفضلة <input name="preferredLanguage" value="ar"></label>
+<button type="submit">إنشاء ملفي في سكن</button>
+</form>
+</main>
+<script>
+const API_BASE=(window.SAKAN_API_BASE||localStorage.getItem('sakanApiBase')||'/api').replace(/\/$/,'');
+const token=new URLSearchParams(location.search).get('token');
+const msg=document.getElementById('msg');
+if(!token){msg.style.display='block';msg.textContent='جلسة التسجيل غير صالحة. ابدأ تسجيل الدخول من جديد.';document.getElementById('form').style.display='none';}
+document.getElementById('form').addEventListener('submit',async e=>{e.preventDefault();msg.style.display='none';const f=new FormData(e.currentTarget);const profile=Object.fromEntries(f.entries());profile.showRealName=f.get('showRealName')==='on';try{const r=await fetch(API_BASE+'/auth/social-complete',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({token,profile})});const data=await r.json();if(!r.ok)throw new Error(data.error||'تعذر إنشاء الحساب');localStorage.setItem('sakanAuthToken',data.token);location.href='/';}catch(err){msg.style.display='block';msg.textContent=err.message;}});
+</script>
+</body>
+</html>
