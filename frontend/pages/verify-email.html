@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>SAKAN — E-Mail bestätigen</title>
+  <style>
+    body{margin:0;min-height:100vh;display:grid;place-items:center;background:#061522;color:#fff;font-family:Arial,sans-serif}
+    .box{width:min(560px,90%);padding:40px;border:1px solid #c99a3b;border-radius:20px;background:#0b1b2c;text-align:center;box-shadow:0 0 40px rgba(201,154,59,.18)}
+    h1{color:#e4c56d}p{line-height:1.7;color:#cbd6df}.btn{display:inline-block;margin-top:20px;padding:12px 24px;border-radius:10px;background:#c99a3b;color:#fff;text-decoration:none;font-weight:700}
+  </style>
+</head>
+<body>
+  <main class="box">
+    <h1 id="title">E-Mail wird geprüft …</h1>
+    <p id="message">Bitte warten.</p>
+    <a class="btn" href="../index.html">Zu SAKAN</a>
+  </main>
+  <script>
+    const p=new URLSearchParams(location.search);
+    const ok=p.get('verified')==='1';
+    document.getElementById('title').textContent=ok?'E-Mail bestätigt':'Bestätigung fehlgeschlagen';
+    document.getElementById('message').textContent=ok?'Ihre E-Mail-Adresse ist bestätigt. Sie können sich jetzt bei SAKAN anmelden.':'Der Bestätigungslink ist ungültig oder abgelaufen. Bitte registrieren Sie sich erneut.';
+    const token=p.get('auth_token');
+    if(token){localStorage.setItem('sakanAuthToken',token);}
+  </script>
+</body>
+</html>
