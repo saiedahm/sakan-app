@@ -1,8 +1,10 @@
 const app = require("../frontend/backend/server");
 const registerOAuth = require("./oauth");
+const registerEmailVerification = require("./emailVerification");
 const featuredAdsRoutes = require("../frontend/backend/featuredAdsRoutes");
 
 registerOAuth(app);
+registerEmailVerification(app);
 
 const beforeFeatured = Array.isArray(app._router?.stack) ? app._router.stack.length : 0;
 app.use(featuredAdsRoutes);
