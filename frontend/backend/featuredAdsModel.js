@@ -12,9 +12,11 @@ const featuredAdSchema = new mongoose.Schema({
   paidAt: { type: Date, default: null, index: true },
   startedAt: { type: Date, default: null, index: true },
   expiresAt: { type: Date, default: null, index: true },
+  lastServedAt: { type: Date, default: null, index: true },
+  turnsRemaining: { type: Number, default: 5, min: 0 },
   aiNotifiedAt: { type: Date, default: null }
 }, { timestamps: true });
 
-featuredAdSchema.index({ paymentStatus: 1, status: 1, paidAt: 1 });
+featuredAdSchema.index({ paymentStatus: 1, status: 1, lastServedAt: 1, paidAt: 1 });
 
 module.exports = mongoose.models.FeaturedAd || mongoose.model('FeaturedAd', featuredAdSchema);
