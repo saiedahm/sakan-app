@@ -2,7 +2,8 @@ const FeaturedAd = require('./featuredAdsModel');
 const { User } = require('./models');
 const { notifyFeaturedAdPaid } = require('./aiManagers');
 
-const SLOT_MS = 5 * 60 * 1000;
+// Each paid image gets exactly one 60-second display turn. The queue stays active continuously.
+const SLOT_MS = 60 * 1000;
 
 async function activateNextFeaturedAd() {
   const now = new Date();
