@@ -693,59 +693,14 @@ document.addEventListener("DOMContentLoaded", () => {
             }
 
 
-            let conversations = [];
-
-
-            try {
-
-                conversations =
-                    JSON.parse(
-                        localStorage.getItem(
-                            "sakanMessages"
-                        ) || "[]"
-                    );
-
-            } catch {
-
-                conversations =
-                    [];
-
+            if (!member.id) {
+                return;
             }
 
-
-            const exists =
-                conversations.some(
-                    item =>
-                        Number(
-                            item.memberId
-                        ) ===
-                        Number(
-                            member.id
-                        )
-                );
-
-
-            if (!exists) {
-
-                conversations.push({
-
-                    memberId:
-                        member.id,
-
-                    messages: []
-
-                });
-
-
-                localStorage.setItem(
-                    "sakanMessages",
-                    JSON.stringify(
-                        conversations
-                    )
-                );
-
-            }
-
+            localStorage.setItem(
+                "sakanSelectedMember",
+                JSON.stringify(member)
+            );
 
             window.location.href =
                 "messages.html";
