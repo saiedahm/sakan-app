@@ -1,33 +1,39 @@
-// backend/paymentService.js - خدمة Stripe للدفع
-const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY || 'sk_test_mock');
+// SAKAN - Central Payment Core client
+async function createCheckoutSession(userId, planType, customerEmail) {
+  const allowed = ["GOLD", "VIP", "AD_99_CENTS"];
+  if (!allowed.includes(planType)) {
+    return { success: false, error: "Invalid payment plan." };
+  }
 
-const PRICING_PLANS = {
-  GOLD: { amount: 1900, name: 'العضوية الذهبية ($19)' },
-  VIP: { amount: 3900, name: 'عضوية VIP ($39)' },
-  AD_99_CENTS: { amount: 99, name: 'إعلان البانر العلوي لمدة 5 دقائق ($0.99)' }
-};
+  const coreUrl = String(process.env.PAYMENT_CORE_URL || "https://www.nexoraonline.de").replace(/\/$/, "");
+  const coreSecret = process.env.PAYMENT_CORE_SECRET;
+  if (!coreSecret) {
+    return { success: false, error: "Central payment service is not configured." };
+  }
 
-async function createCheckoutSession(userId, planType) {
   try {
-    const plan = PRICING_PLANS[planType];
-    const session = await stripe.checkout.sessions.create({
-      payment_method_types: ['card'],
-      line_items: [{
-        price_data: {
-          currency: 'usd',
-          product_data: { name: plan.name },
-          unit_amount: plan.amount,
-        },
-        quantity: 1,
-      }],
-      mode: 'payment',
-      metadata: { userId: userId.toString(), planType },
-      success_url: 'https://www.sakanapp.net/success',
-      cancel_url: 'https://www.sakanapp.net/cancel',
+    const response = await fetch(coreUrl + "/api/payments/core/checkout", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer " + coreSecret
+      },
+      body: JSON.stringify({
+        platform: "sakan",
+        product: planType,
+        externalUserId: String(userId),
+        customerEmail: customerEmail || ""
+      })
     });
-    return { success: true, url: session.url };
+
+    const data = await response.json().catch(() => ({}));
+    if (!response.ok || !data.url) {
+      return { success: false, error: data.error || "Unable to create checkout session." };
+    }
+
+    return { success: true, url: data.url, sessionId: data.sessionId };
   } catch (error) {
-    return { success: false, error: error.message };
+    return { success: false, error: error instanceof Error ? error.message : "Payment service unavailable." };
   }
 }
 
