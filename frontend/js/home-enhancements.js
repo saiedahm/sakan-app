@@ -13,7 +13,7 @@
       .sakan-lang-wrap>#languageBtn{border-radius:999px!important;box-shadow:0 5px 18px rgba(0,0,0,.22)}
       .sakan-header-promo{flex:1;display:flex;justify-content:center;align-items:center;min-width:180px;padding:8px 16px;border-radius:12px;background:rgba(216,179,93,.07);border:1px solid rgba(216,179,93,.14);color:#d8bd72;font-size:12px;text-align:center}
       .sakan-strip-window{overflow:hidden!important;width:100%!important;position:relative!important}
-      .sakan-strip-marquee{display:flex!important;width:max-content!important;animation:sakanMarquee 34s linear infinite!important;will-change:transform;direction:ltr!important}
+      .sakan-strip-marquee{display:flex!important;width:max-content!important;animation:sakanMarquee 180s linear infinite!important;will-change:transform;direction:ltr!important}
       .sakan-strip-group{display:flex!important;gap:18px;padding-inline:9px;flex-shrink:0!important}
       .sakan-strip-marquee .mini-member{flex-shrink:0!important}
       .sakan-strip-marquee .mini-avatar{width:80px;height:80px}
