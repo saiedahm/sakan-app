@@ -42,7 +42,7 @@ const MONGODB_URI =
 
 const FRONTEND_ORIGIN =
     process.env.FRONTEND_ORIGIN ||
-    "https://saiedahm.github.io";
+    "https://sakanapp.net";
 
 
 if (!MONGODB_URI) {
@@ -73,6 +73,8 @@ app.use(
 
             const allowed = [
                 FRONTEND_ORIGIN,
+                "https://sakanapp.net",
+                "https://www.sakanapp.net",
                 "http://localhost:3000",
                 "http://localhost:5000",
                 process.env.VERCEL_URL
