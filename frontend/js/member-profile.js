@@ -214,6 +214,48 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
 
+    /* Load the real member profile from MongoDB when possible. */
+    async function loadRealMemberProfile() {
+        const token = localStorage.getItem("sakanAuthToken");
+        if (!token || !member?.id || !/^[a-fA-F0-9]{24}$/.test(String(member.id))) {
+            return;
+        }
+
+        try {
+            const apiBase =
+                (window.SAKAN_API_BASE ||
+                    localStorage.getItem("sakanApiBase") ||
+                    "/api").replace(/\/$/, "");
+
+            const response = await fetch(
+                apiBase + "/users/" + encodeURIComponent(member.id),
+                {
+                    headers: {
+                        Authorization: "Bearer " + token
+                    }
+                }
+            );
+
+            if (!response.ok) return;
+
+            const data = await response.json();
+            if (data?.member) {
+                member = {
+                    ...member,
+                    ...data.member,
+                    name: data.member.displayName || data.member.name || member.name,
+                    online: data.member.isOnline ?? member.online,
+                    verified: data.member.isVerified ?? member.verified,
+                    about: data.member.aboutMe ?? member.about,
+                    seeking: data.member.lookingFor ?? member.seeking
+                };
+                localStorage.setItem("sakanSelectedMember", JSON.stringify(member));
+            }
+        } catch (error) {
+            console.warn("تعذر تحميل الملف الحقيقي:", error);
+        }
+    }
+
     if (!member) {
 
         member = {
