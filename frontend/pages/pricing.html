@@ -451,6 +451,7 @@
         <div style="display:flex;gap:12px;flex-wrap:wrap;justify-content:center;">
             <button type="button" class="main-gold-btn" data-sakan-plan="GOLD">العضوية الذهبية — $19</button>
             <button type="button" class="main-gold-btn" data-sakan-plan="VIP">عضوية VIP — $39</button>
+            <button type="button" class="main-gold-btn" data-sakan-plan="AD_99_CENTS">ترويج ملف العضو — €0.99</button>
         </div>
         <p id="paymentMessage" style="margin-top:16px;"></p>
     </section>
@@ -481,9 +482,12 @@
 
     async function startPayment(planType) {
         var token = localStorage.getItem("sakanAuthToken");
+        var loggedIn = localStorage.getItem("sakanLoggedIn") === "true";
         var message = document.getElementById("paymentMessage");
         if (!token) {
-            if (message) message.textContent = "يرجى تسجيل الدخول أولاً ثم العودة إلى صفحة الأسعار.";
+            if (message) message.textContent = loggedIn
+                ? "جلسة الدخول الحالية غير متاحة للدفع. سجّل الخروج ثم ادخل إلى حسابك من جديد، وبعدها جرّب مرة أخرى."
+                : "يرجى تسجيل الدخول أولاً ثم العودة إلى صفحة الأسعار.";
             return;
         }
         try {
