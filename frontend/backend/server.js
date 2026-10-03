@@ -472,6 +472,223 @@ app.use(
 
 
 /* =====================================================
+   REAL MESSAGING
+===================================================== */
+
+app.get(
+    "/api/messages/conversations",
+    authenticateToken,
+    async (req, res) => {
+        try {
+            const user = await User.findOne({
+                _id: req.user.userId,
+                isDeactivated: false
+            }).lean();
+
+            if (!user) {
+                return res.status(404).json({ error: "العضو غير موجود." });
+            }
+
+            const messages = await Message.find({
+                $or: [
+                    { senderId: user._id, deletedBySender: false },
+                    { recipientId: user._id, deletedByRecipient: false }
+                ],
+                moderationStatus: { $ne: "rejected" }
+            })
+            .sort({ createdAt: -1 })
+            .limit(500)
+            .populate("senderId", "memberId displayName gender mainPhotoUrl isOnline lastSeenAt")
+            .populate("recipientId", "memberId displayName gender mainPhotoUrl isOnline lastSeenAt")
+            .lean();
+
+            const map = new Map();
+
+            messages.forEach((message) => {
+                const other =
+                    String(message.senderId._id) === String(user._id)
+                        ? message.recipientId
+                        : message.senderId;
+
+                if (!other || map.has(String(other._id))) return;
+
+                map.set(String(other._id), {
+                    member: {
+                        id: other._id,
+                        memberId: other.memberId,
+                        displayName: other.displayName,
+                        gender: other.gender,
+                        mainPhotoUrl: other.mainPhotoUrl || "",
+                        isOnline: other.isOnline,
+                        lastSeenAt: other.lastSeenAt
+                    },
+                    lastMessage: {
+                        id: message._id,
+                        text: String(message.senderId._id) === String(user._id)
+                            ? message.originalText
+                            : (message.translatedText || message.originalText),
+                        createdAt: message.createdAt,
+                        mine: String(message.senderId._id) === String(user._id),
+                        isRead: message.isRead
+                    }
+                });
+            });
+
+            res.json({ success: true, conversations: Array.from(map.values()) });
+        } catch (error) {
+            console.error("GET CONVERSATIONS ERROR:", error);
+            res.status(500).json({ error: "تعذر تحميل المحادثات." });
+        }
+    }
+);
+
+
+app.get(
+    "/api/messages/:userId",
+    authenticateToken,
+    async (req, res) => {
+        try {
+            if (!isValidObjectId(req.params.userId)) {
+                return res.status(400).json({ error: "معرف العضو غير صحيح." });
+            }
+
+            const currentUserId = req.user.userId;
+            const targetUserId = req.params.userId;
+
+            const blocked = await Block.findOne({
+                $or: [
+                    { blockerId: currentUserId, blockedUserId: targetUserId },
+                    { blockerId: targetUserId, blockedUserId: currentUserId }
+                ]
+            }).lean();
+
+            if (blocked) {
+                return res.status(403).json({ error: "لا يمكن مراسلة هذا العضو." });
+            }
+
+            const target = await User.findOne({
+                _id: targetUserId,
+                isDeactivated: false
+            }).lean();
+
+            if (!target) {
+                return res.status(404).json({ error: "العضو غير موجود." });
+            }
+
+            await Message.updateMany(
+                {
+                    senderId: targetUserId,
+                    recipientId: currentUserId,
+                    isRead: false
+                },
+                { $set: { isRead: true } }
+            );
+
+            const messages = await Message.find({
+                $or: [
+                    { senderId: currentUserId, recipientId: targetUserId, deletedBySender: false },
+                    { senderId: targetUserId, recipientId: currentUserId, deletedByRecipient: false }
+                ],
+                moderationStatus: { $ne: "rejected" }
+            }).sort({ createdAt: 1 }).lean();
+
+            res.json({
+                success: true,
+                member: publicUser(target),
+                messages: messages.map((message) => ({
+                    id: message._id,
+                    text: String(message.senderId) === String(currentUserId)
+                        ? message.originalText
+                        : (message.translatedText || message.originalText),
+                    originalText: message.originalText,
+                    translatedText: message.translatedText,
+                    senderLanguage: message.senderLanguage,
+                    recipientLanguage: message.recipientLanguage,
+                    mine: String(message.senderId) === String(currentUserId),
+                    isRead: message.isRead,
+                    createdAt: message.createdAt
+                }))
+            });
+        } catch (error) {
+            console.error("GET MESSAGES ERROR:", error);
+            res.status(500).json({ error: "تعذر تحميل المحادثة." });
+        }
+    }
+);
+
+
+app.post(
+    "/api/messages/:userId",
+    authenticateToken,
+    async (req, res) => {
+        try {
+            const targetUserId = req.params.userId;
+            const text = String(req.body?.text || "").trim();
+
+            if (!isValidObjectId(targetUserId)) {
+                return res.status(400).json({ error: "معرف العضو غير صحيح." });
+            }
+
+            if (!text || text.length > 5000) {
+                return res.status(400).json({ error: "الرسالة مطلوبة وبحد أقصى 5000 حرف." });
+            }
+
+            if (String(targetUserId) === String(req.user.userId)) {
+                return res.status(400).json({ error: "لا يمكنك مراسلة نفسك." });
+            }
+
+            const [sender, recipient] = await Promise.all([
+                User.findOne({ _id: req.user.userId, isDeactivated: false }).lean(),
+                User.findOne({ _id: targetUserId, isDeactivated: false }).lean()
+            ]);
+
+            if (!sender || !recipient) {
+                return res.status(404).json({ error: "العضو غير موجود." });
+            }
+
+            const blocked = await Block.findOne({
+                $or: [
+                    { blockerId: sender._id, blockedUserId: recipient._id },
+                    { blockerId: recipient._id, blockedUserId: sender._id }
+                ]
+            }).lean();
+
+            if (blocked) {
+                return res.status(403).json({ error: "لا يمكن إرسال رسالة إلى هذا العضو." });
+            }
+
+            const message = await Message.create({
+                senderId: sender._id,
+                recipientId: recipient._id,
+                originalText: text,
+                translatedText: "",
+                senderLanguage: sender.preferredLanguage || sender.language || "ar",
+                recipientLanguage: recipient.preferredLanguage || recipient.language || "ar",
+                moderationStatus: "approved",
+                isRead: false
+            });
+
+            res.status(201).json({
+                success: true,
+                message: {
+                    id: message._id,
+                    text: message.originalText,
+                    originalText: message.originalText,
+                    translatedText: "",
+                    mine: true,
+                    isRead: false,
+                    createdAt: message.createdAt
+                }
+            });
+        } catch (error) {
+            console.error("SEND MESSAGE ERROR:", error);
+            res.status(500).json({ error: "تعذر إرسال الرسالة." });
+        }
+    }
+);
+
+
+/* =====================================================
    REGISTER
 ===================================================== */
 
