@@ -2525,6 +2525,107 @@ app.post(
 
 
 /* =====================================================
+   CENTRAL PAYMENT CORE
+===================================================== */
+
+app.post(
+    "/api/payments/checkout",
+    authenticateToken,
+    async (req, res) => {
+        try {
+            const { planType } = req.body || {};
+            const allowed = ["GOLD", "VIP", "AD_99_CENTS"];
+            if (!allowed.includes(planType)) {
+                return res.status(400).json({ error: "خطة الدفع غير صحيحة." });
+            }
+
+            const coreUrl = String(process.env.PAYMENT_CORE_URL || "https://www.nexoraonline.de").replace(/\/$/, "");
+            const coreSecret = process.env.PAYMENT_CORE_SECRET;
+            if (!coreSecret) {
+                return res.status(503).json({ error: "خدمة الدفع المركزية غير مهيأة." });
+            }
+
+            const user = await User.findById(req.user.userId);
+            if (!user) return res.status(404).json({ error: "العضو غير موجود." });
+
+            const response = await fetch(coreUrl + "/api/payments/core/checkout", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": "Bearer " + coreSecret
+                },
+                body: JSON.stringify({
+                    platform: "sakan",
+                    product: planType,
+                    externalUserId: String(user._id),
+                    customerEmail: user.email || ""
+                })
+            });
+
+            const data = await response.json().catch(() => ({}));
+            if (!response.ok || !data.url) {
+                console.error("Sakan central checkout error:", data.error || response.status);
+                return res.status(response.status >= 500 ? 503 : response.status).json({
+                    error: data.error || "تعذر إنشاء جلسة الدفع."
+                });
+            }
+
+            return res.json({ success: true, url: data.url });
+        } catch (error) {
+            console.error("SAKAN PAYMENT CHECKOUT ERROR:", error);
+            return res.status(503).json({ error: "تعذر الاتصال بخدمة الدفع المركزية." });
+        }
+    }
+);
+
+app.post(
+    "/api/payments/confirm",
+    authenticateToken,
+    async (req, res) => {
+        try {
+            const sessionId = String(req.body?.sessionId || "");
+            if (!sessionId) return res.status(400).json({ error: "sessionId مطلوب." });
+
+            const coreUrl = String(process.env.PAYMENT_CORE_URL || "https://www.nexoraonline.de").replace(/\/$/, "");
+            const coreSecret = process.env.PAYMENT_CORE_SECRET;
+            if (!coreSecret) return res.status(503).json({ error: "خدمة الدفع المركزية غير مهيأة." });
+
+            const response = await fetch(coreUrl + "/api/payments/core/status", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": "Bearer " + coreSecret
+                },
+                body: JSON.stringify({ sessionId })
+            });
+            const data = await response.json().catch(() => ({}));
+
+            if (!response.ok || data?.metadata?.platform !== "sakan" || data?.paid !== true) {
+                return res.status(402).json({ success: false, paid: false });
+            }
+
+            if (String(data.metadata.externalUserId || "") !== String(req.user.userId)) {
+                return res.status(403).json({ error: "جلسة الدفع لا تخص هذا الحساب." });
+            }
+
+            const planType = String(data.metadata.product || "");
+            if (planType === "GOLD") await User.findByIdAndUpdate(req.user.userId, { subscriptionTier: "gold" });
+            if (planType === "VIP") await User.findByIdAndUpdate(req.user.userId, { subscriptionTier: "vip" });
+
+            return res.json({
+                success: true,
+                paid: true,
+                planType
+            });
+        } catch (error) {
+            console.error("SAKAN PAYMENT CONFIRM ERROR:", error);
+            return res.status(503).json({ error: "تعذر التحقق من عملية الدفع." });
+        }
+    }
+);
+
+
+/* =====================================================
    404 API
 ===================================================== */
 
