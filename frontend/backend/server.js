@@ -472,6 +472,37 @@ app.use(
 
 
 /* =====================================================
+   PUBLIC MEMBER PROFILE
+===================================================== */
+
+app.get(
+    "/api/users/:userId",
+    authenticateToken,
+    async (req, res) => {
+        try {
+            if (!isValidObjectId(req.params.userId)) {
+                return res.status(400).json({ error: "معرف العضو غير صحيح." });
+            }
+
+            const user = await User.findOne({
+                _id: req.params.userId,
+                isDeactivated: false
+            }).lean();
+
+            if (!user) {
+                return res.status(404).json({ error: "العضو غير موجود." });
+            }
+
+            res.json({ success: true, member: publicUser(user) });
+        } catch (error) {
+            console.error("GET PUBLIC PROFILE ERROR:", error);
+            res.status(500).json({ error: "تعذر تحميل ملف العضو." });
+        }
+    }
+);
+
+
+/* =====================================================
    REAL MESSAGING
 ===================================================== */
 
