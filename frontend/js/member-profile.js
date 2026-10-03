@@ -283,6 +283,12 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
 
+    loadRealMemberProfile().then(() => {
+        if (typeof renderProfile === "function") {
+            renderProfile();
+        }
+    });
+
     /* =====================================================
        RECORD VISIT
     ===================================================== */
