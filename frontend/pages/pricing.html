@@ -444,6 +444,17 @@
     </section>
 
 
+
+    <section id="paymentSection">
+        <h2>العضويات المدفوعة</h2>
+        <p>يتم تنفيذ الدفع بأمان عبر بوابة الدفع المركزية الموحدة.</p>
+        <div style="display:flex;gap:12px;flex-wrap:wrap;justify-content:center;">
+            <button type="button" class="main-gold-btn" data-sakan-plan="GOLD">العضوية الذهبية — $19</button>
+            <button type="button" class="main-gold-btn" data-sakan-plan="VIP">عضوية VIP — $39</button>
+        </div>
+        <p id="paymentMessage" style="margin-top:16px;"></p>
+    </section>
+
 </main>
 
 
@@ -460,5 +471,82 @@
 </footer>
 
 
+
+<script>
+(function () {
+    "use strict";
+    function apiBase() {
+        return (window.SAKAN_API_BASE || localStorage.getItem("sakanApiBase") || "/api").replace(/\/$/, "");
+    }
+
+    async function startPayment(planType) {
+        var token = localStorage.getItem("sakanAuthToken");
+        var message = document.getElementById("paymentMessage");
+        if (!token) {
+            if (message) message.textContent = "يرجى تسجيل الدخول أولاً ثم العودة إلى صفحة الأسعار.";
+            return;
+        }
+        try {
+            if (message) message.textContent = "جارٍ تجهيز الدفع الآمن...";
+            var response = await fetch(apiBase() + "/payments/checkout", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": "Bearer " + token
+                },
+                body: JSON.stringify({ planType: planType })
+            });
+            var data = await response.json().catch(function () { return {}; });
+            if (!response.ok || !data.url) {
+                if (message) message.textContent = data.error || "تعذر بدء الدفع.";
+                return;
+            }
+            window.location.href = data.url;
+        } catch (error) {
+            if (message) message.textContent = "تعذر الاتصال بخدمة الدفع.";
+        }
+    }
+
+    async function confirmPayment() {
+        var params = new URLSearchParams(window.location.search);
+        var sessionId = params.get("session_id");
+        if (params.get("payment") !== "success" || !sessionId) return;
+        var token = localStorage.getItem("sakanAuthToken");
+        var message = document.getElementById("paymentMessage");
+        if (!token) {
+            if (message) message.textContent = "تم الدفع، لكن يجب تسجيل الدخول لتأكيد العضوية.";
+            return;
+        }
+        try {
+            if (message) message.textContent = "تم الدفع. جارٍ تفعيل العضوية...";
+            var response = await fetch(apiBase() + "/payments/confirm", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": "Bearer " + token
+                },
+                body: JSON.stringify({ sessionId: sessionId })
+            });
+            var data = await response.json().catch(function () { return {}; });
+            if (response.ok && data.paid) {
+                if (message) message.textContent = "تم تأكيد الدفع وتفعيل العضوية بنجاح.";
+            } else if (message) {
+                message.textContent = data.error || "تعذر تأكيد الدفع.";
+            }
+        } catch (error) {
+            if (message) message.textContent = "تعذر تأكيد الدفع حاليًا.";
+        }
+    }
+
+    document.addEventListener("DOMContentLoaded", function () {
+        document.querySelectorAll("[data-sakan-plan]").forEach(function (button) {
+            button.addEventListener("click", function () {
+                startPayment(button.getAttribute("data-sakan-plan"));
+            });
+        });
+        confirmPayment();
+    });
+})();
+</script>
 </body>
 </html>
