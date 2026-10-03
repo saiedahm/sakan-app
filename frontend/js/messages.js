@@ -110,12 +110,49 @@
                 : null;
 
 
-    const availableMembers =
+    let selectedMember = null;
+    try {
+        selectedMember = JSON.parse(
+            localStorage.getItem("sakanSelectedMember") || "null"
+        );
+    } catch (_) {
+        selectedMember = null;
+    }
+
+    const selectedMemberEntry =
+        selectedMember &&
+        (!oppositeGender ||
+            normalizeGender(selectedMember.gender) === oppositeGender)
+            ? {
+                id: selectedMember.id,
+                gender: normalizeGender(selectedMember.gender) || oppositeGender,
+                name: selectedMember.name || "عضو",
+                avatar: selectedMember.avatar || "👤",
+                portraitUrl: selectedMember.portraitUrl || "",
+                age: selectedMember.age,
+                country: selectedMember.country,
+                city: selectedMember.city,
+                online: selectedMember.online,
+                verified: selectedMember.verified
+            }
+            : null;
+
+    const baseMembers =
         demoMembers.filter(
             (member) =>
-                member.gender ===
-                oppositeGender
+                member.gender === oppositeGender
         );
+
+    const availableMembers =
+        selectedMemberEntry
+            ? [
+                selectedMemberEntry,
+                ...baseMembers.filter(
+                    (member) =>
+                        Number(member.id) !== Number(selectedMemberEntry.id)
+                )
+              ]
+            : baseMembers;
 
 
     const conversationList =
@@ -492,6 +529,11 @@
             }
         );
 
+
+    if (selectedMemberEntry) {
+        openChat(selectedMemberEntry.id);
+        localStorage.removeItem("sakanSelectedMember");
+    }
 
     renderConversationList();
 
