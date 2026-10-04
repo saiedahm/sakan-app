@@ -66,21 +66,31 @@
       select.value = lang;
       select.dispatchEvent(new Event("change"));
     }
+
+    var button = document.getElementById("languageBtn");
+    if (button) {
+      var label = LANGUAGES.find(function (item) { return item[0] === lang; });
+      button.textContent = "🌐 " + (label ? label[1] : lang);
+    }
+
+    var ownSelect = document.getElementById("sakanLanguageSelect");
+    if (ownSelect) ownSelect.value = lang;
   }
+
+  window.sakanSetLanguage = apply;
 
   function buildUI() {
     if (document.getElementById("sakanLanguageSwitcher")) return;
 
+    var headerButton = document.getElementById("languageBtn");
     var wrap = document.createElement("div");
     wrap.id = "sakanLanguageSwitcher";
     wrap.className = "notranslate";
     wrap.setAttribute("translate", "no");
-    wrap.innerHTML =
-      '<label for="sakanLanguageSelect" class="sakan-language-label">🌐</label>' +
-      '<select id="sakanLanguageSelect" aria-label="Language"></select>' +
-      '<div id="google_translate_element" aria-hidden="true"></div>';
 
-    var select = wrap.querySelector("#sakanLanguageSelect");
+    var select = document.createElement("select");
+    select.id = "sakanLanguageSelect";
+    select.setAttribute("aria-label", "Language");
     LANGUAGES.forEach(function (item) {
       var option = document.createElement("option");
       option.value = item[0];
@@ -88,12 +98,26 @@
       select.appendChild(option);
     });
 
+    var googleHost = document.createElement("div");
+    googleHost.id = "google_translate_element";
+    googleHost.setAttribute("aria-hidden", "true");
+    wrap.appendChild(document.createTextNode("🌐"));
+    wrap.appendChild(select);
+    wrap.appendChild(googleHost);
+
+    if (headerButton && headerButton.parentElement) {
+      wrap.classList.add("in-header");
+      headerButton.parentElement.insertBefore(wrap, headerButton);
+      headerButton.style.display = "none";
+    } else {
+      wrap.classList.add("floating");
+      document.body.appendChild(wrap);
+    }
+
     select.value = memberLanguage();
     select.addEventListener("change", function () {
       apply(select.value);
     });
-
-    document.body.appendChild(wrap);
   }
 
   function loadGoogle() {
@@ -129,16 +153,17 @@
     var style = document.createElement("style");
     style.id = "sakanLanguageStyle";
     style.textContent =
-      "#sakanLanguageSwitcher{position:fixed;top:14px;left:14px;z-index:2147483647;display:flex;align-items:center;gap:6px;padding:6px 9px;border:1px solid rgba(212,175,55,.45);border-radius:12px;background:rgba(7,13,21,.94);box-shadow:0 8px 25px rgba(0,0,0,.28);direction:ltr}" +
-      "#sakanLanguageSwitcher select{border:0;outline:0;background:#111a25;color:#fff;border-radius:8px;padding:7px 28px 7px 8px;font-size:12px;cursor:pointer}" +
-      "#sakanLanguageSwitcher .sakan-language-label{color:#d4af37;font-size:16px;line-height:1}" +
+      "#sakanLanguageSwitcher{display:flex;align-items:center;gap:6px;direction:ltr;font-family:Arial,sans-serif}" +
+      "#sakanLanguageSwitcher.floating{position:fixed;top:14px;right:14px;z-index:2147483647;padding:7px 9px;border:1px solid rgba(212,175,55,.45);border-radius:12px;background:rgba(7,13,21,.94);box-shadow:0 8px 25px rgba(0,0,0,.28)}" +
+      "#sakanLanguageSwitcher.in-header{position:relative;z-index:10;padding:0;margin:0}" +
+      "#sakanLanguageSwitcher select{border:1px solid rgba(216,179,93,.45);outline:0;background:#111a25;color:#fff;border-radius:9px;padding:8px 28px 8px 10px;font-size:12px;cursor:pointer;min-width:125px}" +
+      "#sakanLanguageSwitcher.in-header select{background:transparent;border-color:rgba(216,179,93,.35);min-width:118px}" +
       ".goog-te-banner-frame,.skiptranslate iframe{display:none!important}" +
       "body{top:0!important}" +
-      ".goog-logo-link,.goog-te-gadget{display:none!important}" +
-      ".goog-te-gadget-icon,.goog-te-balloon-frame,.goog-te-menu-frame{display:none!important;visibility:hidden!important}" +
+      ".goog-logo-link,.goog-te-gadget,.goog-te-gadget-icon,.goog-te-balloon-frame,.goog-te-menu-frame{display:none!important;visibility:hidden!important}" +
       "body>.skiptranslate:not(#sakanLanguageSwitcher){display:none!important;visibility:hidden!important}" +
       "iframe[src*='translate.google'],iframe[src*='translate.googleusercontent']{display:none!important;visibility:hidden!important}" +
-      "@media(max-width:600px){#sakanLanguageSwitcher{top:8px;left:8px;padding:5px 7px}#sakanLanguageSwitcher select{max-width:135px;font-size:11px}}";
+      "@media(max-width:700px){#sakanLanguageSwitcher.in-header select{min-width:105px;font-size:11px;padding:7px 22px 7px 7px}#sakanLanguageSwitcher.floating{top:8px;right:8px}}";
     document.head.appendChild(style);
   }
 
