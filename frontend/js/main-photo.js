@@ -176,13 +176,17 @@ document.addEventListener("DOMContentLoaded", () => {
 
   continueBtn.addEventListener("click", () => {
     if (photos.length === 0) {
-      showMessage("يرجى اختيار صورة واحدة على الأقل أولًا.");
+      localStorage.removeItem("sakanMainPhotoIndex");
+      localStorage.removeItem("sakanMainPhoto");
+      localStorage.setItem("sakanProfileSetupCompleted", "true");
+      localStorage.setItem("sakanOnboardingStep", "completed");
+      window.location.href = "home.html";
       return;
     }
 
     if (selectedIndex === null) {
-      showMessage("يرجى اختيار صورة رئيسية قبل المتابعة.");
-      return;
+      selectedIndex = 0;
+      localStorage.setItem("sakanMainPhotoIndex", "0");
     }
 
     localStorage.setItem(
