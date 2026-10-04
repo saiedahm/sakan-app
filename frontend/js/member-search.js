@@ -523,8 +523,7 @@ document.addEventListener("DOMContentLoaded", () => {
                         );
 
 
-                        window.location.href =
-                            "member-profile.html";
+                        window.location.href = "member-profile.html?memberId=" + encodeURIComponent(memberId);
 
                     }
                 );
