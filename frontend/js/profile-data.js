@@ -1029,53 +1029,49 @@ document.addEventListener(
 
                     /* =================================================
                        BACKEND REGISTRATION
-                       لا نسمح للزر أن يتوقف بصمت:
-                       - يوجد دائمًا مسار واضح للعضو الجديد أو المسجل.
-                       - نحتفظ برسالة الخطأ خارج catch.
-                       - نمنع الضغط المكرر أثناء الطلب.
                     ================================================= */
-
-                    const submitButton =
-                        form.querySelector(
-                            'button[type="submit"], button:not([type])'
-                        );
-
-                    const originalButtonText =
-                        submitButton
-                            ? submitButton.innerHTML
-                            : "";
-
-                    let backendErrorMessage = "";
-
-                    if (submitButton) {
-                        submitButton.disabled = true;
-                        submitButton.dataset.originalText = originalButtonText;
-                        submitButton.innerHTML = "جارٍ الحفظ...";
-                    }
 
                     try {
 
                         let result;
 
+
                         /*
-                           عضو مسجل بالفعل → تحديث الملف.
+                           الحالة 1:
+                           عضو مسجل بالفعل
+                           → تحديث الملف.
                         */
-                        if (authToken) {
+
+                        if (
+                            authToken
+                        ) {
 
                             result =
                                 await apiRequest(
                                     "/me",
                                     {
-                                        method: "PUT",
-                                        body: JSON.stringify(profileData)
+
+                                        method:
+                                            "PUT",
+
+                                        body:
+                                            JSON.stringify(
+                                                profileData
+                                            )
+
                                     }
                                 );
 
                         }
 
+
                         /*
-                           عضو جديد → إنشاء الحساب.
+                           الحالة 2:
+                           عضو جديد
+                           → ننشئ الحساب بعد اكتمال
+                             البيانات الشخصية.
                         */
+
                         else if (
                             pendingRegistration &&
                             pendingRegistration.email &&
@@ -1086,46 +1082,101 @@ document.addEventListener(
                                 await apiRequest(
                                     "/auth/register",
                                     {
-                                        method: "POST",
-                                        body: JSON.stringify({
-                                            email: pendingRegistration.email,
-                                            password: pendingRegistration.password,
-                                            realName: profileData.realName,
-                                            displayName: profileData.displayName,
-                                            gender: profileData.gender,
-                                            birthDate: profileData.birthDate,
-                                            country: profileData.country,
-                                            city: profileData.city,
-                                            maritalStatus: profileData.maritalStatus,
-                                            language: profileData.language,
-                                            education: profileData.education,
-                                            profession: profileData.profession,
-                                            aboutMe: profileData.aboutMe,
-                                            lookingFor: profileData.lookingFor,
-                                            showRealName: profileData.showRealName,
-                                            preferredLanguage: profileData.preferredLanguage
-                                        })
+
+                                        method:
+                                            "POST",
+
+                                        body:
+                                            JSON.stringify({
+
+                                                email:
+                                                    pendingRegistration.email,
+
+                                                password:
+                                                    pendingRegistration.password,
+
+                                                realName:
+                                                    profileData.realName,
+
+                                                displayName:
+                                                    profileData.displayName,
+
+                                                gender:
+                                                    profileData.gender,
+
+                                                birthDate:
+                                                    profileData.birthDate,
+
+                                                country:
+                                                    profileData.country,
+
+                                                city:
+                                                    profileData.city,
+
+                                                maritalStatus:
+                                                    profileData.maritalStatus,
+
+                                                language:
+                                                    profileData.language,
+
+                                                education:
+                                                    profileData.education,
+
+                                                profession:
+                                                    profileData.profession,
+
+                                                aboutMe:
+                                                    profileData.aboutMe,
+
+                                                lookingFor:
+                                                    profileData.lookingFor,
+
+                                                showRealName:
+                                                    profileData.showRealName,
+
+                                                preferredLanguage:
+                                                    profileData.preferredLanguage
+
+                                            })
+
                                     }
                                 );
 
-                            if (result && result.token) {
+
+                            /*
+                               حفظ Token بعد إنشاء الحساب.
+                            */
+
+                            if (
+                                result &&
+                                result.token
+                            ) {
+
                                 localStorage.setItem(
                                     "sakanAuthToken",
                                     result.token
                                 );
+
                             }
 
-                            if (result && result.user) {
+
+                            if (
+                                result &&
+                                result.user
+                            ) {
+
                                 localStorage.setItem(
                                     "sakanCurrentUser",
-                                    JSON.stringify(result.user)
+                                    JSON.stringify(
+                                        result.user
+                                    )
                                 );
+
                             }
 
-                            localStorage.setItem(
-                                "sakanLoggedIn",
-                                "true"
-                            );
+
+                            localStorage.setItem("sakanLoggedIn","true");
+
 
                             sessionStorage.removeItem(
                                 "sakanPendingRegistration"
@@ -1133,66 +1184,49 @@ document.addEventListener(
 
                         }
 
-                        else {
 
-                            throw new Error(
-                                "جلسة التسجيل غير موجودة. ارجع إلى التسجيل وأنشئ الحساب من جديد."
-                            );
-
-                        }
-
-                        if (!result) {
-                            throw new Error(
-                                "لم يصل رد صحيح من الخادم."
-                            );
-                        }
+                        /*
+                           نجاح Backend
+                        */
 
                         showMessage(
                             "تم حفظ بياناتك بنجاح. سيتم الانتقال إلى صفحة الصور.",
                             "success"
                         );
 
+
                         setTimeout(
                             function () {
-                                window.location.href = "photos.html";
+
+                                window.location.href =
+                                    "photos.html";
+
                             },
-                            700
+                            900
                         );
+
 
                         return;
 
                     }
 
-                    catch (backendError) {
+                    catch (
+                        backendError
+                    ) {
 
-                        backendErrorMessage =
-                            backendError &&
+                        console.warn(
+                            "Backend unavailable:",
                             backendError.message
-                                ? backendError.message
-                                : "تعذر حفظ بياناتك على الخادم.";
-
-                        console.error(
-                            "Sakan profile save failed:",
-                            backendError
-                        );
-
-                        showMessage(
-                            backendErrorMessage,
-                            "error"
                         );
 
                     }
 
-                    finally {
 
-                        if (submitButton) {
-                            submitButton.disabled = false;
-                            submitButton.innerHTML =
-                                submitButton.dataset.originalText ||
-                                originalButtonText;
-                        }
-
-                    }
+                    showMessage(
+                        "تعذر حفظ التسجيل على الخادم. لم يتم إنشاء حساب تجريبي. تحقق من الاتصال وحاول مرة أخرى.",
+                        "error"
+                    );
+                    return;
 
                 }
             );
