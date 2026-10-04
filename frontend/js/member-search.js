@@ -537,7 +537,7 @@ document.addEventListener("DOMContentLoaded", () => {
        SEARCH
     ===================================================== */
 
-    function performSearch() {
+    async function performSearch() {
 
         const oppositeGender =
             getOppositeGender();
@@ -598,12 +598,43 @@ document.addEventListener("DOMContentLoaded", () => {
          * نختار الجنس المقابل أولًا.
          */
 
-        let results =
-            demoMembers.filter(
-                (member) =>
-                    member.gender ===
-                    oppositeGender
-            );
+        let results = demoMembers.filter(
+            (member) => member.gender === oppositeGender
+        );
+
+        const mode = new URLSearchParams(window.location.search).get("mode") || "";
+        try {
+            const token = localStorage.getItem("sakanAuthToken");
+            const apiBase = (window.SAKAN_API_BASE || localStorage.getItem("sakanApiBase") || "/api").replace(/\/$/, "");
+            const params = new URLSearchParams({
+                minAge: String(min),
+                maxAge: String(max)
+            });
+            if (name) params.set("name", name);
+            if (country) params.set("country", country);
+            if (marital) params.set("maritalStatus", marital);
+            if (mode === "photos") params.set("hasPhoto", "true");
+
+            const response = await fetch(apiBase + "/members/search?" + params.toString(), {
+                headers: { Authorization: "Bearer " + token }
+            });
+            if (response.ok) {
+                const data = await response.json();
+                if (Array.isArray(data.members)) {
+                    results = data.members.map((member) => ({
+                        ...member,
+                        id: member.id,
+                        name: member.displayName || "عضو سكن",
+                        online: !!member.isOnline,
+                        verified: !!member.isVerified,
+                        avatar: member.mainPhotoUrl ? "" : (member.gender === "female" ? "👩" : "👨"),
+                        portraitUrl: member.mainPhotoUrl || ""
+                    }));
+                }
+            }
+        } catch (error) {
+            console.warn("Backend member search unavailable; using local fallback.", error);
+        }
 
 
         if (name) {
