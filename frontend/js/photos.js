@@ -15,7 +15,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const backBtn = document.getElementById("backBtn");
   const messageBox = document.getElementById("messageBox");
 
-  const API = (window.SAKAN_API_BASE || localStorage.getItem("sakanApiBase") || "http://localhost:5000/api").replace(/\/$/, "");
+  const API = (window.SAKAN_API_BASE || localStorage.getItem("sakanApiBase") || "/api").replace(/\/$/, "");
   const token = () => localStorage.getItem("sakanAuthToken") || "";
   let photos = [];
   let cameraStream = null;
