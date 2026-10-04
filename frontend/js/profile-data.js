@@ -80,7 +80,7 @@ document.addEventListener(
             localStorage.getItem(
                 "sakanApiBase"
             ) ||
-            "http://localhost:5000/api"
+            "/api"
         ).replace(
             /\/$/,
             ""
