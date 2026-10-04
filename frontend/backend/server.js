@@ -300,6 +300,12 @@ function publicUser(
         mainPhotoUrl:
             user.mainPhotoUrl,
 
+        photos:
+            (user.photos || []).map(photo => ({
+                url: photo.url,
+                createdAt: photo.createdAt
+            })),
+
         preferredLanguage:
             user.preferredLanguage,
 
@@ -348,7 +354,13 @@ function publicListUser(
             user.isVerified,
 
         mainPhotoUrl:
-            user.mainPhotoUrl
+            user.mainPhotoUrl,
+
+        photos:
+            (user.photos || []).map(photo => ({
+                url: photo.url,
+                createdAt: photo.createdAt
+            }))
     };
 }
 
