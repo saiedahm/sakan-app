@@ -735,14 +735,9 @@ document.addEventListener("DOMContentLoaded", function () {
             "click",
             function () {
 
-                if (
-                    photos.length === 0
-                ) {
-
-                    showMessage(
-                        "يرجى إضافة صورة واحدة على الأقل للمتابعة."
-                    );
-
+                if (photos.length === 0) {
+                    localStorage.removeItem("sakanPhotosPreview");
+                    window.location.href = "main-photo.html";
                     return;
                 }
 
