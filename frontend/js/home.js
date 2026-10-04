@@ -957,47 +957,13 @@
        OPEN MEMBER PROFILE
     ===================================================== */
 
-    function openMemberProfile(
-        member
-    ) {
-
-        const opposite =
-            getOppositeGender();
-
-
-        if (
-            !member ||
-            member.gender !==
-            opposite
-        ) {
-
-            openModal(
-                "غير متاح",
-                "هذا الملف ليس ضمن قائمة الأعضاء المسموح بعرضها."
-            );
-
-            return;
-
-        }
-
-
-        localStorage.setItem(
-            "sakanSelectedMember",
-            JSON.stringify({
-
-                ...member,
-
-                photos:
-                    member.photos ||
-                    []
-
-            })
-        );
-
-
-        window.location.href =
-            "member-profile.html";
-
+    function openMemberProfile(member) {
+        if (!member || !member.id) return;
+        localStorage.setItem("sakanSelectedMember", JSON.stringify({
+            ...member,
+            photos: member.photos || []
+        }));
+        window.location.href = "member-profile.html?memberId=" + encodeURIComponent(member.id);
     }
 
 
@@ -1245,10 +1211,7 @@
         }
 
 
-        const members =
-            demoMembers[
-                opposite
-            ] || [];
+        const members = demoMembers[opposite] || [];
 
 
         if (
@@ -1526,83 +1489,22 @@
                  * إيقاف الشريط عند الماوس
                  */
 
-                element.addEventListener(
-                    "pointerenter",
-                    () => {
-
-                        stripTrack.style.animationPlayState =
-                            "paused";
-
-                    }
-                );
-
-
-                /*
-                 * إيقاف الشريط عند اللمس
-                 */
-
-                element.addEventListener(
-                    "pointerdown",
-                    () => {
-
-                        stripTrack.style.animationPlayState =
-                            "paused";
-
-                    }
-                );
-
-
-                /*
-                 * إعادة الحركة بعد الابتعاد
-                 */
-
-                element.addEventListener(
-                    "pointerleave",
-                    () => {
-
-                        stripTrack.style.animationPlayState =
-                            "running";
-
-                    }
-                );
+                element.addEventListener("pointerenter", () => {
+                    stripTrack.style.animationPlayState = "paused";
+                });
+                element.addEventListener("pointerdown", () => {
+                    stripTrack.style.animationPlayState = "paused";
+                });
 
 
                 /*
                  * فتح الملف بالضغط
                  */
 
-                element.addEventListener(
-                    "click",
-                    () => {
-
-                        if (!member.id) {
-                            return;
-                        }
-
-
-                        stripTrack.style.animationPlayState =
-                            "paused";
-
-
-                        localStorage.setItem(
-                            "sakanSelectedMember",
-                            JSON.stringify({
-
-                                ...member,
-
-                                photos:
-                                    member.photos ||
-                                    []
-
-                            })
-                        );
-
-
-                        window.location.href =
-                            "member-profile.html";
-
-                    }
-                );
+                element.addEventListener("click", () => {
+                    stripTrack.style.animationPlayState = "paused";
+                    openMemberProfile(member);
+                });
 
 
                 /*
@@ -1956,19 +1858,13 @@
                         }
 
 
-                        if (
-                            type ===
-                                "photos" ||
-
-                            type ===
-                                "myPhotos"
-                        ) {
-
-                            window.location.href =
-                                "photos.html";
-
+                        if (type === "photos") {
+                            window.location.href = "member-search.html?mode=photos";
                             return;
-
+                        }
+                        if (type === "myPhotos") {
+                            window.location.href = "photos.html";
+                            return;
                         }
 
 
@@ -1985,16 +1881,8 @@
                         }
 
 
-                        if (
-                            type ===
-                            "settings"
-                        ) {
-
-                            openModal(
-                                "الإعدادات",
-                                "سيتم هنا إدارة إعدادات الخصوصية والإشعارات وكلمة المرور."
-                            );
-
+                        if (type === "settings") {
+                            window.location.href = "settings.html";
                         }
 
                     }
