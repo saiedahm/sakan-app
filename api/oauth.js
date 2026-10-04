@@ -8,13 +8,35 @@ function secret() {
   if (!process.env.JWT_SECRET) throw new Error("JWT_SECRET is missing");
   return process.env.JWT_SECRET;
 }
-function appUrl(req) { return process.env.PUBLIC_APP_URL || `${req.protocol}://${req.get("host")}`; }
-function callbackUrl(req, provider) { return `${appUrl(req)}/api/auth/oauth/${provider}/callback`; }
+function appUrl(req) {
+  return String(
+    process.env.FRONTEND_ORIGIN ||
+    process.env.PUBLIC_APP_URL ||
+    req.protocol + "://" + req.get("host")
+  ).replace(/\/$/, "");
+}
+function callbackBaseUrl(req) {
+  return String(
+    process.env.BACKEND_PUBLIC_URL ||
+    process.env.PUBLIC_APP_URL ||
+    req.protocol + "://" + req.get("host")
+  ).replace(/\/$/, "");
+}
+function callbackUrl(req, provider) {
+  const explicit = provider === "google"
+    ? process.env.GOOGLE_CALLBACK_URL
+    : process.env.FACEBOOK_CALLBACK_URL;
+  return explicit || callbackBaseUrl(req) + "/api/auth/oauth/" + provider + "/callback";
+}
+function googleClientId() { return process.env.GOOGLE_CLIENT_ID || process.env.GOOGLE_ID || ""; }
+function googleClientSecret() { return process.env.GOOGLE_CLIENT_SECRET || process.env.GOOGLE_SECRET || ""; }
+function facebookClientId() { return process.env.FACEBOOK_APP_ID || facebookClientId() || ""; }
+function facebookClientSecret() { return process.env.FACEBOOK_APP_SECRET || facebookClientSecret() || ""; }
 function makeState(provider) { return jwt.sign({ provider, nonce: crypto.randomBytes(16).toString("hex") }, secret(), { expiresIn: "10m" }); }
 function redirectWithError(res, req, message) { const url = new URL("/", appUrl(req)); url.searchParams.set("oauth_error", "1"); url.searchParams.set("message", message); return res.redirect(url.toString()); }
 
 async function googleProfile(code, redirectUri) {
-  const body = new URLSearchParams({ code, client_id: process.env.GOOGLE_CLIENT_ID, client_secret: process.env.GOOGLE_CLIENT_SECRET, redirect_uri: redirectUri, grant_type: "authorization_code" });
+  const body = new URLSearchParams({ code, client_id: googleClientId(), client_secret: googleClientSecret(), redirect_uri: redirectUri, grant_type: "authorization_code" });
   const tokenRes = await fetch("https://oauth2.googleapis.com/token", { method: "POST", headers: { "Content-Type": "application/x-www-form-urlencoded" }, body });
   const tokens = await tokenRes.json();
   if (!tokenRes.ok || !tokens.access_token) throw new Error("Google token exchange failed");
@@ -26,7 +48,7 @@ async function googleProfile(code, redirectUri) {
 
 async function facebookProfile(code, redirectUri) {
   const tokenUrl = new URL("https://graph.facebook.com/v23.0/oauth/access_token");
-  tokenUrl.searchParams.set("client_id", process.env.FACEBOOK_CLIENT_ID); tokenUrl.searchParams.set("client_secret", process.env.FACEBOOK_CLIENT_SECRET); tokenUrl.searchParams.set("redirect_uri", redirectUri); tokenUrl.searchParams.set("code", code);
+  tokenUrl.searchParams.set("client_id", facebookClientId()); tokenUrl.searchParams.set("client_secret", facebookClientSecret()); tokenUrl.searchParams.set("redirect_uri", redirectUri); tokenUrl.searchParams.set("code", code);
   const tokenRes = await fetch(tokenUrl); const tokens = await tokenRes.json();
   if (!tokenRes.ok || !tokens.access_token) throw new Error("Facebook token exchange failed");
   const profileUrl = new URL("https://graph.facebook.com/me"); profileUrl.searchParams.set("fields", "id,name,email,picture.type(large)"); profileUrl.searchParams.set("access_token", tokens.access_token);
@@ -40,11 +62,11 @@ function register(app) {
     const provider = req.params.provider;
     if (!["google", "facebook"].includes(provider)) return res.status(404).send("Unknown provider");
     if (provider === "google") {
-      if (!process.env.GOOGLE_CLIENT_ID || !process.env.GOOGLE_CLIENT_SECRET) return res.status(500).send("Google OAuth is not configured");
-      const url = new URL("https://accounts.google.com/o/oauth2/v2/auth"); url.searchParams.set("client_id", process.env.GOOGLE_CLIENT_ID); url.searchParams.set("redirect_uri", callbackUrl(req, "google")); url.searchParams.set("response_type", "code"); url.searchParams.set("scope", "openid email profile"); url.searchParams.set("state", makeState("google")); url.searchParams.set("prompt", "select_account"); return res.redirect(url.toString());
+      if (!googleClientId() || !googleClientSecret()) return res.status(500).send("Google OAuth is not configured");
+      const url = new URL("https://accounts.google.com/o/oauth2/v2/auth"); url.searchParams.set("client_id", googleClientId()); url.searchParams.set("redirect_uri", callbackUrl(req, "google")); url.searchParams.set("response_type", "code"); url.searchParams.set("scope", "openid email profile"); url.searchParams.set("state", makeState("google")); url.searchParams.set("prompt", "select_account"); return res.redirect(url.toString());
     }
-    if (!process.env.FACEBOOK_CLIENT_ID || !process.env.FACEBOOK_CLIENT_SECRET) return res.status(500).send("Facebook OAuth is not configured");
-    const url = new URL("https://www.facebook.com/v23.0/dialog/oauth"); url.searchParams.set("client_id", process.env.FACEBOOK_CLIENT_ID); url.searchParams.set("redirect_uri", callbackUrl(req, "facebook")); url.searchParams.set("state", makeState("facebook")); url.searchParams.set("scope", "email,public_profile"); return res.redirect(url.toString());
+    if (!facebookClientId() || !facebookClientSecret()) return res.status(500).send("Facebook OAuth is not configured");
+    const url = new URL("https://www.facebook.com/v23.0/dialog/oauth"); url.searchParams.set("client_id", facebookClientId()); url.searchParams.set("redirect_uri", callbackUrl(req, "facebook")); url.searchParams.set("state", makeState("facebook")); url.searchParams.set("scope", "email,public_profile"); return res.redirect(url.toString());
   });
 
   app.get("/api/auth/oauth/:provider/callback", async (req, res) => {
