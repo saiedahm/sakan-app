@@ -1061,15 +1061,44 @@ app.post(
 
         } catch (error) {
 
-            console.error(
-                "REGISTER ERROR:",
-                error
-            );
+            console.error("REGISTER ERROR:", {
+                name: error && error.name,
+                code: error && error.code,
+                message: error && error.message,
+                errors: error && error.errors
+                    ? Object.keys(error.errors).reduce((out, key) => {
+                        out[key] = error.errors[key] && error.errors[key].message;
+                        return out;
+                    }, {})
+                    : undefined
+            });
 
+            if (error && error.code === 11000) {
+                const duplicateFields = Object.keys(error.keyPattern || {});
+                return res.status(409).json({
+                    error: duplicateFields.includes("email")
+                        ? "هذا البريد الإلكتروني مسجل مسبقًا."
+                        : "بيانات الحساب موجودة مسبقًا. حاول باستخدام بيانات مختلفة."
+                });
+            }
+
+            if (error && error.name === "ValidationError") {
+                const first = Object.values(error.errors || {})[0];
+                return res.status(400).json({
+                    error: first && first.message
+                        ? first.message
+                        : "بيانات التسجيل غير مكتملة أو غير صحيحة."
+                });
+            }
+
+            if (error && error.name === "MongoServerSelectionError") {
+                return res.status(503).json({
+                    error: "قاعدة البيانات غير متاحة حاليًا. تحقق من اتصال MongoDB واسمح لـ Vercel بالاتصال بها."
+                });
+            }
 
             res.status(500).json({
-                error:
-                    "حدث خطأ أثناء إنشاء الحساب."
+                error: "تعذر إنشاء الحساب على الخادم. أعد المحاولة، وإذا استمر الخطأ فسيظهر السبب الحقيقي في سجل الخادم بدل رسالة عامة."
             });
 
         }
