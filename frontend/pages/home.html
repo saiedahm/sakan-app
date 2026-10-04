@@ -7,15 +7,9 @@
 <meta name="description" content="منصة سكن للتعارف والزواج">
 <link rel="stylesheet" href="../css/home.css">
 <style>
-/* SAKAN FINAL UI OVERRIDES */
-.strip-track{animation-duration:600s !important;animation-timing-function:linear !important;animation-iteration-count:infinite !important;}
-.strip-track:hover{animation-play-state:running !important;}
-.mini-avatar{border-radius:0 !important;}
-.placeholder-avatar{width:100% !important;height:100% !important;border-radius:0 !important;}
-.placeholder-avatar img{border-radius:0 !important;}
-.member-photo{height:auto !important;aspect-ratio:1/1 !important;}
-#languageBtn{display:none !important;}
-.featured-live-card img{width:86px !important;height:86px !important;border-radius:0 !important;object-fit:cover !important;}
+.strip-track{animation-duration:600s!important;animation-timing-function:linear!important;animation-iteration-count:infinite!important;}
+.member-photo{height:auto!important;aspect-ratio:1/1!important;}
+.featured-live-card img{width:86px!important;height:86px!important;border-radius:0!important;object-fit:cover!important;}
 </style>
 <script src="../js/translation.js"></script>
 </head>
@@ -33,17 +27,5 @@
 <div class="modal hidden" id="simpleModal"><div class="modal-box"><button type="button" class="close-modal" id="closeModal">×</button><div class="modal-icon">✨</div><h2 id="modalTitle">سكن</h2><p id="modalText">هذه الخاصية سيتم تفعيلها في المرحلة القادمة.</p><button type="button" class="modal-ok" id="modalOk">حسنًا</button></div></div>
 <footer><div><strong>سكن</strong> — خطوة واحدة بينك وبين شريك العمر ❤️</div><div class="footer-links"><a href="privacy.html">الخصوصية</a><a href="terms.html">الشروط</a><a href="impressum.html">بيانات المنصة</a></div></footer>
 <script src="../js/home.js"></script><script src="../js/featured-ads.js"></script><script src="../js/commercial-ad-assistant.js"></script><script src="../js/commercial-ads-live.js"></script>
-<script>
-(function(){
-  const track=document.getElementById('stripTrack');
-  const language=document.getElementById('languageBtn');
-  if(language) language.remove();
-  if(track){
-    const keepRunning=()=>{track.style.animationPlayState='running';};
-    ['mouseenter','pointerenter','pointerdown','touchstart'].forEach(e=>track.addEventListener(e,keepRunning,{passive:true}));
-    setInterval(keepRunning,1000);
-  }
-})();
-</script>
 </body>
 </html>
