@@ -1175,10 +1175,12 @@ document.addEventListener(
                             }
 
 
-                            localStorage.setItem(
-                                "sakanLoggedIn",
-                                "true"
-                            );
+                            if (result && result.verificationRequired) {
+                                localStorage.removeItem("sakanLoggedIn");
+                                localStorage.removeItem("sakanAuthToken");
+                            } else {
+                                localStorage.setItem("sakanLoggedIn", "true");
+                            }
 
 
                             sessionStorage.removeItem(
@@ -1263,10 +1265,12 @@ document.addEventListener(
                     }
 
 
-                    localStorage.setItem(
-                        "sakanLoggedIn",
-                        "true"
-                    );
+                    if (result && result.verificationRequired) {
+                                localStorage.removeItem("sakanLoggedIn");
+                                localStorage.removeItem("sakanAuthToken");
+                            } else {
+                                localStorage.setItem("sakanLoggedIn", "true");
+                            }
 
 
                     showMessage(
