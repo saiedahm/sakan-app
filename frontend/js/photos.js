@@ -286,7 +286,7 @@ document.addEventListener("DOMContentLoaded", function () {
        ADD FILE
     ================================================= */
 
-    function addFile(file) {
+    async function addFile(file) {
 
         if (
             photos.length >=
