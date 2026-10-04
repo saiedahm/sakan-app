@@ -49,10 +49,8 @@ const FRONTEND_ORIGIN =
 if (!MONGODB_URI) {
 
     console.error(
-        "❌ MONGODB_URI غير موجود في متغيرات البيئة."
+        "❌ MONGODB_URI غير موجود في متغيرات البيئة. سيتم إبقاء API قيد التشغيل وإرجاع 503 للطلبات التي تحتاج قاعدة البيانات."
     );
-
-    process.exit(1);
 }
 
 
