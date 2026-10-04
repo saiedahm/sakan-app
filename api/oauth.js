@@ -30,8 +30,8 @@ function callbackUrl(req, provider) {
 }
 function googleClientId() { return process.env.GOOGLE_CLIENT_ID || process.env.GOOGLE_ID || ""; }
 function googleClientSecret() { return process.env.GOOGLE_CLIENT_SECRET || process.env.GOOGLE_SECRET || ""; }
-function facebookClientId() { return process.env.FACEBOOK_APP_ID || facebookClientId() || ""; }
-function facebookClientSecret() { return process.env.FACEBOOK_APP_SECRET || facebookClientSecret() || ""; }
+function facebookClientId() { return process.env.FACEBOOK_APP_ID || process.env.FACEBOOK_CLIENT_ID || ""; }
+function facebookClientSecret() { return process.env.FACEBOOK_APP_SECRET || process.env.FACEBOOK_CLIENT_SECRET || ""; }
 function makeState(provider) { return jwt.sign({ provider, nonce: crypto.randomBytes(16).toString("hex") }, secret(), { expiresIn: "10m" }); }
 function redirectWithError(res, req, message) { const url = new URL("/", appUrl(req)); url.searchParams.set("oauth_error", "1"); url.searchParams.set("message", message); return res.redirect(url.toString()); }
 
