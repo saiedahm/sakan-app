@@ -871,3 +871,13 @@ body {
     }
 
 }
+
+
+/* SAKAN UX REFINEMENT — original onboarding layer */
+:root{--sx-bg:#07111f;--sx-panel:rgba(12,27,44,.92);--sx-line:rgba(255,255,255,.09);--sx-gold:#d9b85f}
+body{background:radial-gradient(circle at 50% -10%,rgba(217,184,95,.1),transparent 30%),linear-gradient(145deg,#07111f,#0b1829 50%,#050a12)}
+.top-bar{position:sticky;top:0;z-index:40;background:rgba(5,10,17,.86);backdrop-filter:blur(16px)}
+.profile-card{box-shadow:0 28px 80px rgba(0,0,0,.42),inset 0 1px 0 rgba(255,255,255,.025)}
+.field input,.field select,.field textarea{transition:border-color .2s,box-shadow .2s,transform .2s}.field input:hover,.field select:hover,.field textarea:hover{border-color:rgba(212,175,55,.42)}
+.gold-action-btn,.secondary-btn{transition:transform .2s,filter .2s,box-shadow .2s}.gold-action-btn:hover,.secondary-btn:hover{filter:brightness(1.04);box-shadow:0 12px 28px rgba(0,0,0,.18)}
+@media(max-width:750px){.top-bar{position:relative}.profile-page{padding-top:16px}.profile-card{box-shadow:0 18px 50px rgba(0,0,0,.34)}}
