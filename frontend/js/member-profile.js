@@ -249,6 +249,37 @@ document.addEventListener("DOMContentLoaded", () => {
                     seeking: data.member.lookingFor ?? member.seeking
                 };
                 localStorage.setItem("sakanSelectedMember", JSON.stringify(member));
+
+                // Refresh the visible profile immediately after the real API response.
+                memberName.textContent = member.name || "عضو جديد";
+                memberBasicInfo.textContent = member.age + " سنة • " + (member.country || "—");
+                memberState.textContent = member.online ? "متصل الآن" : "غير متصل";
+                onlineStatus.classList.toggle("hidden", !member.online);
+                verifiedBadge.classList.toggle("hidden", !member.verified);
+                aboutText.textContent = member.about || "لم تتم إضافة نبذة بعد.";
+                seekingText.textContent = member.seeking || "لم تتم إضافة معلومات بعد.";
+                ageValue.textContent = member.age || "—";
+                countryValue.textContent = member.country || "—";
+                cityValue.textContent = member.city || "—";
+                maritalValue.textContent = member.maritalStatus || "—";
+                languageValue.textContent = member.language || "—";
+                educationValue.textContent = member.education || "—";
+                professionValue.textContent = member.profession || "—";
+                if (mainPhoto) {
+                    mainPhoto.textContent = "";
+                    if (member.portraitUrl) {
+                        const image = document.createElement("img");
+                        image.src = member.portraitUrl;
+                        image.alt = member.name || "عضو";
+                        image.style.width = "100%";
+                        image.style.height = "100%";
+                        image.style.objectFit = "cover";
+                        image.style.borderRadius = "50%";
+                        mainPhoto.appendChild(image);
+                    } else {
+                        mainPhoto.textContent = member.avatar || "👤";
+                    }
+                }
             }
         } catch (error) {
             console.warn("تعذر تحميل الملف الحقيقي:", error);
