@@ -1223,7 +1223,9 @@ document.addEventListener(
 
 
                     showMessage(
-                        "تعذر حفظ التسجيل على الخادم. لم يتم إنشاء حساب تجريبي. تحقق من الاتصال وحاول مرة أخرى.",
+                        backendError && backendError.message
+                            ? backendError.message
+                            : "تعذر حفظ التسجيل على الخادم. حاول مرة أخرى.",
                         "error"
                     );
                     return;
