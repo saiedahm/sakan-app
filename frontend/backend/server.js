@@ -10,6 +10,7 @@ const cors = require("cors");
 const helmet = require("helmet");
 const rateLimit = require("express-rate-limit");
 const bcrypt = require("bcryptjs");
+const crypto = require("crypto");
 
 const {
     User,
@@ -747,8 +748,8 @@ app.get("/api/auth/oauth/:provider/start", (req, res) => {
         : process.env.FACEBOOK_APP_ID;
 
     const redirectUri = provider === "google"
-        ? process.env.GOOGLE_CALLBACK_URL
-        : process.env.FACEBOOK_CALLBACK_URL;
+        ? (process.env.GOOGLE_CALLBACK_URL || ((process.env.BACKEND_PUBLIC_URL || (req.protocol + "://" + req.get("host"))) + "/api/auth/oauth/google/callback"))
+        : (process.env.FACEBOOK_CALLBACK_URL || ((process.env.BACKEND_PUBLIC_URL || (req.protocol + "://" + req.get("host"))) + "/api/auth/oauth/facebook/callback"));
 
     if (!clientId || !redirectUri) {
         return res.status(503).send(
@@ -778,6 +779,111 @@ app.get("/api/auth/oauth/:provider/start", (req, res) => {
     });
     return res.redirect("https://www.facebook.com/v23.0/dialog/oauth?" + params.toString());
 });
+
+async function finishOAuthLogin(provider, profile, res) {
+    const email = String(profile.email || "").trim().toLowerCase();
+    const displayName = String(profile.name || profile.email?.split("@")[0] || "عضو سكن").trim();
+    if (!email) {
+        return res.status(400).send("لم يتم الحصول على بريد إلكتروني من مزود الدخول.");
+    }
+
+    let user = await User.findOne({ email });
+    if (!user) {
+        let memberId = null;
+        for (let attempt = 0; attempt < 10 && !memberId; attempt++) {
+            const candidate = Math.floor(10000000 + Math.random() * 89999999);
+            if (!(await User.exists({ memberId: candidate }))) memberId = candidate;
+        }
+        if (!memberId) return res.status(500).send("تعذر إنشاء رقم العضوية.");
+
+        const randomPassword = await bcrypt.hash(crypto.randomBytes(32).toString("hex"), 12);
+        user = await User.create({
+            memberId,
+            email,
+            passwordHash: randomPassword,
+            emailVerified: true,
+            realName: displayName,
+            displayName,
+            gender: "male",
+            birthDate: new Date("1990-01-01"),
+            age: 36,
+            country: "DE",
+            city: "",
+            maritalStatus: "single",
+            language: "ar",
+            education: "other",
+            profession: "other",
+            aboutMe: "",
+            lookingFor: "",
+            preferredLanguage: "ar",
+            mainPhotoUrl: String(profile.picture || ""),
+            photos: profile.picture ? [{ url: String(profile.picture) }] : []
+        });
+    } else {
+        user.emailVerified = true;
+        if (profile.picture && !user.mainPhotoUrl) user.mainPhotoUrl = String(profile.picture);
+        user.isOnline = true;
+        user.lastSeenAt = new Date();
+        await user.save();
+    }
+
+    const token = generateToken(user);
+    const frontend = String(process.env.FRONTEND_ORIGIN || "https://sakanapp.net").replace(/\/$/, "");
+    const safeToken = encodeURIComponent(token);
+    return res.send("<!doctype html><html lang='ar' dir='rtl'><meta charset='utf-8'><title>سكن</title><body style='font-family:Arial;text-align:center;padding:60px'><p>جارٍ الدخول إلى منصة سكن...</p><script>localStorage.setItem('sakanAuthToken',decodeURIComponent(" + JSON.stringify(safeToken) + "));localStorage.setItem('sakanLoggedIn','true');window.location.replace(" + JSON.stringify(frontend + "/pages/home.html") + ");</script></body></html>");
+}
+
+async function oauthCallback(req, res) {
+    const provider = String(req.params.provider || "").toLowerCase();
+    const code = String(req.query.code || "");
+    if (!code || !["google", "facebook"].includes(provider)) return res.status(400).send("طلب تسجيل الدخول غير مكتمل.");
+
+    try {
+        const base = process.env.BACKEND_PUBLIC_URL || (req.protocol + "://" + req.get("host"));
+        const redirectUri = provider === "google"
+            ? (process.env.GOOGLE_CALLBACK_URL || base + "/api/auth/oauth/google/callback")
+            : (process.env.FACEBOOK_CALLBACK_URL || base + "/api/auth/oauth/facebook/callback");
+
+        let profile;
+        if (provider === "google") {
+            const tokenResponse = await fetch("https://oauth2.googleapis.com/token", {
+                method: "POST",
+                headers: { "Content-Type": "application/x-www-form-urlencoded" },
+                body: new URLSearchParams({
+                    code,
+                    client_id: process.env.GOOGLE_CLIENT_ID || "",
+                    client_secret: process.env.GOOGLE_CLIENT_SECRET || "",
+                    redirect_uri: redirectUri,
+                    grant_type: "authorization_code"
+                })
+            });
+            const tokenData = await tokenResponse.json();
+            if (!tokenResponse.ok || !tokenData.access_token) return res.status(502).send("تعذر إكمال تسجيل الدخول بواسطة Google.");
+            const userResponse = await fetch("https://www.googleapis.com/oauth2/v3/userinfo", {
+                headers: { Authorization: "Bearer " + tokenData.access_token }
+            });
+            profile = await userResponse.json();
+        } else {
+            const tokenResponse = await fetch("https://graph.facebook.com/v23.0/oauth/access_token?" + new URLSearchParams({
+                client_id: process.env.FACEBOOK_APP_ID || "",
+                client_secret: process.env.FACEBOOK_APP_SECRET || "",
+                redirect_uri: redirectUri,
+                code
+            }));
+            const tokenData = await tokenResponse.json();
+            if (!tokenResponse.ok || !tokenData.access_token) return res.status(502).send("تعذر إكمال تسجيل الدخول بواسطة Facebook.");
+            const userResponse = await fetch("https://graph.facebook.com/me?fields=id,name,email,picture.type(large)&access_token=" + encodeURIComponent(tokenData.access_token));
+            const fb = await userResponse.json();
+            profile = { email: fb.email, name: fb.name, picture: fb.picture?.data?.url || "" };
+        }
+        return finishOAuthLogin(provider, profile, res);
+    } catch (error) {
+        console.error("OAUTH CALLBACK ERROR:", error);
+        return res.status(502).send("تعذر إكمال تسجيل الدخول. حاول مرة أخرى أو استخدم الإيميل.");
+    }
+}
+
+app.get("/api/auth/oauth/:provider/callback", oauthCallback);
 
 /* =====================================================
    REGISTER
