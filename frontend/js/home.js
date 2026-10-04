@@ -1170,7 +1170,7 @@
        HOME MEMBERS
     ===================================================== */
 
-    function loadHomeMembers() {
+    async function loadHomeMembers() {
 
         const opposite =
             getOppositeGender();
