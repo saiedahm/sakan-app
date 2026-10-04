@@ -79,12 +79,11 @@ document.addEventListener("DOMContentLoaded", () => {
     ===================================================== */
 
     if (
-        localStorage.getItem("sakanLoggedIn") !==
-        "true"
+        !localStorage.getItem("sakanAuthToken")
     ) {
 
         window.location.href =
-            "../index.html";
+            "../index.html?returnTo=member-profile";
 
         return;
 
