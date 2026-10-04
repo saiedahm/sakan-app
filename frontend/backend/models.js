@@ -28,6 +28,13 @@ const userSchema = new mongoose.Schema({
   verificationStatus: { type: String, enum: ["not_requested", "pending", "approved", "rejected"], default: "not_requested" },
   verifiedAt: { type: Date, default: null },
   mainPhotoUrl: { type: String, default: "" },
+  photos: {
+    type: [{
+      url: { type: String, required: true },
+      createdAt: { type: Date, default: Date.now }
+    }],
+    default: []
+  },
   preferredLanguage: { type: String, default: "ar" },
   lastSeenAt: { type: Date, default: null }
 }, { timestamps: true });
