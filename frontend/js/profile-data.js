@@ -1222,23 +1222,11 @@ document.addEventListener(
                     }
 
 
-                    /* No demo account fallback: onboarding must use a real backend account. */
-
                     showMessage(
-                        "تم حفظ البيانات في وضع المعاينة. سيتم الانتقال إلى صفحة الصور.",
-                        "success"
+                        "تعذر حفظ التسجيل على الخادم. لم يتم إنشاء حساب تجريبي. تحقق من الاتصال وحاول مرة أخرى.",
+                        "error"
                     );
-
-
-                    setTimeout(
-                        function () {
-
-                            window.location.href =
-                                "photos.html";
-
-                        },
-                        900
-                    );
+                    return;
 
                 }
             );
