@@ -1175,12 +1175,7 @@ document.addEventListener(
                             }
 
 
-                            if (result && result.verificationRequired) {
-                                localStorage.removeItem("sakanLoggedIn");
-                                localStorage.removeItem("sakanAuthToken");
-                            } else {
-                                localStorage.setItem("sakanLoggedIn", "true");
-                            }
+                            localStorage.setItem("sakanLoggedIn","true");
 
 
                             sessionStorage.removeItem(
@@ -1227,51 +1222,7 @@ document.addEventListener(
                     }
 
 
-                    /* =================================================
-                       DEMO FALLBACK
-                    ================================================= */
-
-                    if (
-                        pendingRegistration &&
-                        pendingRegistration.email
-                    ) {
-
-                        localStorage.setItem(
-                            "sakanDemoAccount",
-                            JSON.stringify({
-
-                                email:
-                                    pendingRegistration.email,
-
-                                createdAt:
-                                    new Date()
-                                        .toISOString(),
-
-                                provider:
-                                    pendingRegistration.provider ||
-                                    "email",
-
-                                registrationCompleted:
-                                    true
-
-                            })
-                        );
-
-
-                        sessionStorage.removeItem(
-                            "sakanPendingRegistration"
-                        );
-
-                    }
-
-
-                    if (result && result.verificationRequired) {
-                                localStorage.removeItem("sakanLoggedIn");
-                                localStorage.removeItem("sakanAuthToken");
-                            } else {
-                                localStorage.setItem("sakanLoggedIn", "true");
-                            }
-
+                    /* No demo account fallback: onboarding must use a real backend account. */
 
                     showMessage(
                         "تم حفظ البيانات في وضع المعاينة. سيتم الانتقال إلى صفحة الصور.",
