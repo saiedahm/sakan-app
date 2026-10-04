@@ -296,3 +296,17 @@ input {
     }
 
 }
+
+
+/* SAKAN UX REFINEMENT — original responsive layer */
+:root{--sx-bg:#06101d;--sx-panel:rgba(11,25,42,.9);--sx-line:rgba(255,255,255,.08);--sx-gold:#d9b85f;--sx-muted:#8f9cad}
+body{background:radial-gradient(circle at 50% -12%,rgba(217,184,95,.08),transparent 30%),linear-gradient(145deg,#06101d,#09182a 55%,#040a12)}
+.messages-header{position:sticky;top:0;z-index:40;background:rgba(5,14,25,.88);backdrop-filter:blur(16px);box-shadow:0 12px 35px rgba(0,0,0,.18)}
+.messages-layout{box-shadow:0 22px 65px rgba(0,0,0,.24),inset 0 1px 0 rgba(255,255,255,.025)}
+.conversation-item{transition:background .2s,transform .2s}
+.conversation-item:hover{transform:translateX(-2px)}
+.chat-header{background:rgba(8,19,32,.72);backdrop-filter:blur(10px)}
+.message{box-shadow:0 7px 18px rgba(0,0,0,.14)}
+.message-form input:focus{border-color:rgba(216,179,93,.55);box-shadow:0 0 0 3px rgba(216,179,93,.07)}
+.message-form button{transition:transform .2s,filter .2s}.message-form button:hover{transform:translateY(-2px);filter:brightness(1.05)}
+@media(max-width:800px){.messages-header{position:relative}.messages-container{width:min(96%,680px);margin-top:18px}.messages-layout{border-radius:15px}.conversation-list{max-height:230px;overflow:auto}.messages-box{height:52vh;min-height:320px}}
