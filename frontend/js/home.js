@@ -40,12 +40,11 @@
     ===================================================== */
 
     if (
-        localStorage.getItem("sakanLoggedIn") !==
-        "true"
+        !localStorage.getItem("sakanAuthToken")
     ) {
 
         window.location.href =
-            "../index.html";
+            "../index.html?returnTo=home";
 
         return;
     }
