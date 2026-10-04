@@ -12,6 +12,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const takePhotoBtn = document.getElementById("takePhotoBtn");
   const closeCameraBtn = document.getElementById("closeCameraBtn");
   const continueBtn = document.getElementById("continueBtn");
+  const skipBtn = document.getElementById("skipBtn");
   const backBtn = document.getElementById("backBtn");
   const messageBox = document.getElementById("messageBox");
 
@@ -192,6 +193,12 @@ document.addEventListener("DOMContentLoaded", () => {
   if (backBtn) backBtn.addEventListener("click", () => {
     closeCamera();
     window.location.href = "profile-data.html";
+  });
+
+  if (skipBtn) skipBtn.addEventListener("click", () => {
+    closeCamera();
+    localStorage.removeItem("sakanPhotosPreview");
+    window.location.href = "home.html";
   });
 
   if (continueBtn) continueBtn.addEventListener("click", () => {
