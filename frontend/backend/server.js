@@ -743,13 +743,15 @@ app.get("/api/auth/oauth/:provider/start", (req, res) => {
         return res.status(404).json({ error: "مزود الدخول غير مدعوم." });
     }
 
+    // Vercel/hosting-compatible aliases: accept both the original Sakan
+    // names and the names already present in the hosting project.
     const clientId = provider === "google"
-        ? process.env.GOOGLE_CLIENT_ID
-        : process.env.FACEBOOK_APP_ID;
+        ? (process.env.GOOGLE_CLIENT_ID || process.env.GOOGLE_ID)
+        : (process.env.FACEBOOK_APP_ID || process.env.FACEBOOK_CLIENT_ID);
 
     const redirectUri = provider === "google"
-        ? (process.env.GOOGLE_CALLBACK_URL || ((process.env.BACKEND_PUBLIC_URL || (req.protocol + "://" + req.get("host"))) + "/api/auth/oauth/google/callback"))
-        : (process.env.FACEBOOK_CALLBACK_URL || ((process.env.BACKEND_PUBLIC_URL || (req.protocol + "://" + req.get("host"))) + "/api/auth/oauth/facebook/callback"));
+        ? (process.env.GOOGLE_CALLBACK_URL || ((process.env.BACKEND_PUBLIC_URL || process.env.PUBLIC_APP_URL || (req.protocol + "://" + req.get("host"))).replace(/\/$/, "") + "/api/auth/oauth/google/callback"))
+        : (process.env.FACEBOOK_CALLBACK_URL || ((process.env.BACKEND_PUBLIC_URL || process.env.PUBLIC_APP_URL || (req.protocol + "://" + req.get("host"))).replace(/\/$/, "") + "/api/auth/oauth/facebook/callback"));
 
     if (!clientId || !redirectUri) {
         return res.status(503).send(
@@ -828,7 +830,11 @@ async function finishOAuthLogin(provider, profile, res) {
     }
 
     const token = generateToken(user);
-    const frontend = String(process.env.FRONTEND_ORIGIN || "https://sakanapp.net").replace(/\/$/, "");
+    const frontend = String(
+        process.env.FRONTEND_ORIGIN ||
+        process.env.PUBLIC_APP_URL ||
+        ((res.req?.protocol || "https") + "://" + (res.req?.get?.("host") || ""))
+    ).replace(/\/$/, "");
     const safeToken = encodeURIComponent(token);
     return res.send("<!doctype html><html lang='ar' dir='rtl'><meta charset='utf-8'><title>سكن</title><body style='font-family:Arial;text-align:center;padding:60px'><p>جارٍ الدخول إلى منصة سكن...</p><script>localStorage.setItem('sakanAuthToken',decodeURIComponent(" + JSON.stringify(safeToken) + "));localStorage.setItem('sakanLoggedIn','true');window.location.replace(" + JSON.stringify(frontend + "/pages/home.html") + ");</script></body></html>");
 }
@@ -839,7 +845,7 @@ async function oauthCallback(req, res) {
     if (!code || !["google", "facebook"].includes(provider)) return res.status(400).send("طلب تسجيل الدخول غير مكتمل.");
 
     try {
-        const base = process.env.BACKEND_PUBLIC_URL || (req.protocol + "://" + req.get("host"));
+        const base = (process.env.BACKEND_PUBLIC_URL || process.env.PUBLIC_APP_URL || (req.protocol + "://" + req.get("host"))).replace(/\/$/, "");
         const redirectUri = provider === "google"
             ? (process.env.GOOGLE_CALLBACK_URL || base + "/api/auth/oauth/google/callback")
             : (process.env.FACEBOOK_CALLBACK_URL || base + "/api/auth/oauth/facebook/callback");
@@ -851,8 +857,8 @@ async function oauthCallback(req, res) {
                 headers: { "Content-Type": "application/x-www-form-urlencoded" },
                 body: new URLSearchParams({
                     code,
-                    client_id: process.env.GOOGLE_CLIENT_ID || "",
-                    client_secret: process.env.GOOGLE_CLIENT_SECRET || "",
+                    client_id: process.env.GOOGLE_CLIENT_ID || process.env.GOOGLE_ID || "",
+                    client_secret: process.env.GOOGLE_CLIENT_SECRET || process.env.GOOGLE_SECRET || "",
                     redirect_uri: redirectUri,
                     grant_type: "authorization_code"
                 })
@@ -865,8 +871,8 @@ async function oauthCallback(req, res) {
             profile = await userResponse.json();
         } else {
             const tokenResponse = await fetch("https://graph.facebook.com/v23.0/oauth/access_token?" + new URLSearchParams({
-                client_id: process.env.FACEBOOK_APP_ID || "",
-                client_secret: process.env.FACEBOOK_APP_SECRET || "",
+                client_id: process.env.FACEBOOK_APP_ID || process.env.FACEBOOK_CLIENT_ID || "",
+                client_secret: process.env.FACEBOOK_APP_SECRET || process.env.FACEBOOK_CLIENT_SECRET || "",
                 redirect_uri: redirectUri,
                 code
             }));
