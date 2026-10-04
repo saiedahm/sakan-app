@@ -1241,3 +1241,22 @@ body {
     }
 
 }
+
+
+/* MAIN PHOTO ACTION */
+.main-photo-button {
+    position: relative;
+    z-index: 5;
+    margin: 10px 8px 0;
+    min-height: 38px;
+    padding: 0 12px;
+    border: 1px solid rgba(212,175,55,.65);
+    border-radius: 9px;
+    background: rgba(212,175,55,.08);
+    color: #f0d476;
+    cursor: pointer;
+    font-family: inherit;
+    font-weight: 700;
+}
+.main-photo-button:hover { background: rgba(212,175,55,.18); }
+.main-photo-button.active { background: #d4af37; color: #111; }
