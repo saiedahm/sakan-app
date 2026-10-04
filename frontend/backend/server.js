@@ -734,6 +734,52 @@ app.post(
 
 
 /* =====================================================
+   OAUTH ENTRY
+===================================================== */
+app.get("/api/auth/oauth/:provider/start", (req, res) => {
+    const provider = String(req.params.provider || "").toLowerCase();
+    if (!["google", "facebook"].includes(provider)) {
+        return res.status(404).json({ error: "مزود الدخول غير مدعوم." });
+    }
+
+    const clientId = provider === "google"
+        ? process.env.GOOGLE_CLIENT_ID
+        : process.env.FACEBOOK_APP_ID;
+
+    const redirectUri = provider === "google"
+        ? process.env.GOOGLE_CALLBACK_URL
+        : process.env.FACEBOOK_CALLBACK_URL;
+
+    if (!clientId || !redirectUri) {
+        return res.status(503).send(
+            "<!doctype html><html lang='ar' dir='rtl'><meta charset='utf-8'><title>تسجيل الدخول</title><body style='font-family:Arial;text-align:center;padding:60px'><h2>تسجيل الدخول بواسطة " +
+            (provider === "google" ? "Google" : "Facebook") +
+            " غير مهيأ بعد.</h2><p>يرجى استخدام تسجيل الدخول بالإيميل حاليًا.</p><a href='/'>العودة إلى سكن</a></body></html>"
+        );
+    }
+
+    if (provider === "google") {
+        const params = new URLSearchParams({
+            client_id: clientId,
+            redirect_uri: redirectUri,
+            response_type: "code",
+            scope: "openid email profile",
+            access_type: "offline",
+            prompt: "select_account"
+        });
+        return res.redirect("https://accounts.google.com/o/oauth2/v2/auth?" + params.toString());
+    }
+
+    const params = new URLSearchParams({
+        client_id: clientId,
+        redirect_uri: redirectUri,
+        response_type: "code",
+        scope: "email,public_profile"
+    });
+    return res.redirect("https://www.facebook.com/v23.0/dialog/oauth?" + params.toString());
+});
+
+/* =====================================================
    REGISTER
 ===================================================== */
 
