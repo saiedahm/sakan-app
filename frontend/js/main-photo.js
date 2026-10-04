@@ -8,6 +8,9 @@ document.addEventListener("DOMContentLoaded", () => {
   const backBtn = document.getElementById("backBtn");
   const backToPhotosBtn = document.getElementById("backToPhotosBtn");
   const message = document.getElementById("message");
+  const skipBtn = document.getElementById("skipBtn");
+  const API = (window.SAKAN_API_BASE || localStorage.getItem("sakanApiBase") || "/api").replace(/\/$/, "");
+  const token = () => localStorage.getItem("sakanAuthToken") || "";
 
   let photos = [];
   let selectedIndex = null;
@@ -174,7 +177,17 @@ document.addEventListener("DOMContentLoaded", () => {
     showMessage("تم اختيار الصورة الرئيسية بنجاح.");
   }
 
-  continueBtn.addEventListener("click", () => {
+  async function finishWithoutPhoto() {
+    localStorage.removeItem("sakanMainPhotoIndex");
+    localStorage.removeItem("sakanMainPhoto");
+    localStorage.setItem("sakanProfileSetupCompleted", "true");
+    localStorage.setItem("sakanOnboardingStep", "completed");
+    window.location.href = "home.html";
+  }
+
+  if (skipBtn) skipBtn.addEventListener("click", finishWithoutPhoto);
+
+  continueBtn.addEventListener("click", async () => {
     if (photos.length === 0) {
       localStorage.removeItem("sakanMainPhotoIndex");
       localStorage.removeItem("sakanMainPhoto");
@@ -187,6 +200,34 @@ document.addEventListener("DOMContentLoaded", () => {
     if (selectedIndex === null) {
       selectedIndex = 0;
       localStorage.setItem("sakanMainPhotoIndex", "0");
+    }
+
+    const selectedPhoto = photos[selectedIndex];
+    const selectedUrl = selectedPhoto?.url || selectedPhoto?.dataUrl || selectedPhoto?.preview || selectedPhoto?.src || "";
+
+    if (token() && selectedUrl) {
+      try {
+        const response = await fetch(API + "/me/photos/main", {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + token()
+          },
+          body: JSON.stringify({ url: selectedUrl })
+        });
+        const data = await response.json().catch(() => ({}));
+        if (!response.ok) throw new Error(data.error || "تعذر حفظ الصورة الرئيسية.");
+
+        localStorage.setItem("sakanMainPhotoUrl", data.mainPhotoUrl || selectedUrl);
+        const user = JSON.parse(localStorage.getItem("sakanCurrentUser") || "null");
+        if (user) {
+          user.mainPhotoUrl = data.mainPhotoUrl || selectedUrl;
+          localStorage.setItem("sakanCurrentUser", JSON.stringify(user));
+        }
+      } catch (error) {
+        showMessage(error.message);
+        return;
+      }
     }
 
     localStorage.setItem(
