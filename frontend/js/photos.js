@@ -105,7 +105,20 @@ document.addEventListener("DOMContentLoaded", () => {
   function fileToDataUrl(file) {
     return new Promise((resolve, reject) => {
       const reader = new FileReader();
-      reader.onload = () => resolve(String(reader.result));
+      reader.onload = () => {
+        const image = new Image();
+        image.onload = () => {
+          const maxSide = 1600;
+          const scale = Math.min(1, maxSide / Math.max(image.width, image.height));
+          const canvas = document.createElement("canvas");
+          canvas.width = Math.max(1, Math.round(image.width * scale));
+          canvas.height = Math.max(1, Math.round(image.height * scale));
+          canvas.getContext("2d").drawImage(image, 0, 0, canvas.width, canvas.height);
+          resolve(canvas.toDataURL("image/jpeg", 0.82));
+        };
+        image.onerror = reject;
+        image.src = String(reader.result);
+      };
       reader.onerror = reject;
       reader.readAsDataURL(file);
     });
