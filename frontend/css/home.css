@@ -1267,3 +1267,23 @@ footer {
   }
 
 }
+
+
+/* =====================================================
+   SAKAN HOME — polished research-informed layer
+===================================================== */
+:root{--home-bg:#06101d;--home-panel:rgba(11,25,42,.84);--home-line:rgba(255,255,255,.08);--home-gold:#d9b85f;--home-muted:#8f9cad}
+body{background:radial-gradient(circle at 50% -10%,rgba(217,184,95,.08),transparent 30%),linear-gradient(145deg,#06101d,#09182a 55%,#040a12);}
+.header{position:sticky;top:0;z-index:40;box-shadow:0 12px 35px rgba(0,0,0,.18)}
+.container{margin-top:28px}
+.commercial-ad,.members-strip-section,.member-card,.featured-ad,.tool-card,.modal-box{box-shadow:0 16px 42px rgba(0,0,0,.16),inset 0 1px 0 rgba(255,255,255,.025)}
+.commercial-ad,.member-card,.tool-card{transition:transform .25s ease,border-color .25s ease,box-shadow .25s ease}
+.commercial-ad:hover,.tool-card:hover{transform:translateY(-3px);box-shadow:0 20px 48px rgba(0,0,0,.22)}
+.member-card:hover{transform:translateY(-5px);box-shadow:0 22px 50px rgba(0,0,0,.24)}
+.member-photo{height:250px}
+.view-profile-btn,.gold-outline-btn,.refresh-btn,.featured-btn,.modal-ok{transition:transform .2s ease,filter .2s ease,box-shadow .2s ease}
+.view-profile-btn:hover,.gold-outline-btn:hover,.refresh-btn:hover,.featured-btn:hover,.modal-ok:hover{transform:translateY(-2px);filter:brightness(1.05);box-shadow:0 10px 24px rgba(0,0,0,.2)}
+.strip-track{animation-duration:34s}
+.strip-track:active{animation-play-state:paused}
+@media(max-width:1000px){.header{flex-wrap:wrap}.members-grid{gap:14px}.member-photo{height:220px}}
+@media(max-width:700px){.header{position:relative;padding:12px 4%}.header-actions{width:100%;overflow:auto;flex-wrap:nowrap;justify-content:flex-start;padding-bottom:2px}.header-actions button{white-space:nowrap}.main-nav{position:sticky;top:0;z-index:25;box-shadow:0 10px 25px rgba(0,0,0,.18)}.container{width:min(94%,680px);margin-top:18px}.members-strip-section{padding:15px}.strip-track{gap:14px}.member-photo{height:240px}.member-card{border-radius:15px}.featured-ad{padding:20px}.tools-grid{gap:10px}}
