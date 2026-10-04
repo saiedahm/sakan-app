@@ -1,9 +1,11 @@
 /* SAKAN — REAL MEMBER MESSAGING */
 document.addEventListener("DOMContentLoaded", async () => {
-    if (localStorage.getItem("sakanLoggedIn") !== "true") {
-        window.location.href = "../index.html";
+    const sessionToken = localStorage.getItem("sakanAuthToken");
+    if (!sessionToken) {
+        window.location.href = "../index.html?returnTo=messages";
         return;
     }
+    localStorage.setItem("sakanLoggedIn", "true");
 
     const API_BASE = (window.SAKAN_API_BASE || localStorage.getItem("sakanApiBase") || "/api").replace(/\/$/, "");
     const token = localStorage.getItem("sakanAuthToken");
