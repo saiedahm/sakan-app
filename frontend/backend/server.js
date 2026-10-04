@@ -106,7 +106,7 @@ app.use(
 
 app.use(
     express.json({
-        limit: "1mb"
+        limit: "12mb"
     })
 );
 
@@ -1512,6 +1512,77 @@ app.put(
 
     }
 );
+
+
+/* =====================================================
+   MEMBER PHOTO MANAGEMENT
+===================================================== */
+
+app.get("/api/me/photos", authenticateToken, async (req, res) => {
+    try {
+        const user = await User.findById(req.user.userId).select("photos mainPhotoUrl").lean();
+        if (!user) return res.status(404).json({ error: "الحساب غير موجود." });
+        res.json({ success: true, photos: user.photos || [], mainPhotoUrl: user.mainPhotoUrl || "" });
+    } catch (error) {
+        console.error("GET MY PHOTOS ERROR:", error);
+        res.status(500).json({ error: "تعذر تحميل صورك." });
+    }
+});
+
+app.post("/api/me/photos", authenticateToken, async (req, res) => {
+    try {
+        const url = String(req.body?.url || "").trim();
+        if (!url || !/^data:image\\/(jpeg|jpg|png|webp);base64,/i.test(url)) {
+            return res.status(400).json({ error: "الصورة غير صحيحة." });
+        }
+        if (url.length > 8 * 1024 * 1024 * 1.4) {
+            return res.status(413).json({ error: "حجم الصورة كبير جدًا." });
+        }
+        const user = await User.findById(req.user.userId);
+        if (!user) return res.status(404).json({ error: "الحساب غير موجود." });
+        if ((user.photos || []).length >= 6) return res.status(400).json({ error: "يمكنك إضافة 6 صور كحد أقصى." });
+        const duplicate = (user.photos || []).some(photo => photo.url === url);
+        if (duplicate) return res.status(409).json({ error: "هذه الصورة مضافة بالفعل." });
+        user.photos.push({ url });
+        if (!user.mainPhotoUrl) user.mainPhotoUrl = url;
+        await user.save();
+        res.status(201).json({ success: true, photos: user.photos, mainPhotoUrl: user.mainPhotoUrl });
+    } catch (error) {
+        console.error("ADD PHOTO ERROR:", error);
+        res.status(500).json({ error: "تعذر حفظ الصورة." });
+    }
+});
+
+app.put("/api/me/photos/main", authenticateToken, async (req, res) => {
+    try {
+        const url = String(req.body?.url || "").trim();
+        const user = await User.findById(req.user.userId);
+        if (!user) return res.status(404).json({ error: "الحساب غير موجود." });
+        const owned = (user.photos || []).some(photo => photo.url === url);
+        if (!owned) return res.status(400).json({ error: "يمكنك اختيار صورة من صورك فقط." });
+        user.mainPhotoUrl = url;
+        await user.save();
+        res.json({ success: true, mainPhotoUrl: user.mainPhotoUrl, user: publicUser(user) });
+    } catch (error) {
+        console.error("SET MAIN PHOTO ERROR:", error);
+        res.status(500).json({ error: "تعذر تعيين الصورة الرئيسية." });
+    }
+});
+
+app.delete("/api/me/photos", authenticateToken, async (req, res) => {
+    try {
+        const url = String(req.body?.url || "").trim();
+        const user = await User.findById(req.user.userId);
+        if (!user) return res.status(404).json({ error: "الحساب غير موجود." });
+        user.photos = (user.photos || []).filter(photo => photo.url !== url);
+        if (user.mainPhotoUrl === url) user.mainPhotoUrl = user.photos[0]?.url || "";
+        await user.save();
+        res.json({ success: true, photos: user.photos, mainPhotoUrl: user.mainPhotoUrl });
+    } catch (error) {
+        console.error("DELETE PHOTO ERROR:", error);
+        res.status(500).json({ error: "تعذر حذف الصورة." });
+    }
+});
 
 
 /* =====================================================
