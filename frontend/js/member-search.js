@@ -394,13 +394,10 @@ document.addEventListener("DOMContentLoaded", () => {
             card.innerHTML = `
 
                 <div class="member-photo">
-
-                    <div class="placeholder-avatar">
-                        ${member.avatar}
-                    </div>
-
+                    ${member.portraitUrl
+                        ? '<img src="' + String(member.portraitUrl).replace(/"/g, "&quot;") + '" alt="صورة العضو" class="member-photo-image">'
+                        : '<div class="placeholder-avatar">' + (member.avatar || (member.gender === "female" ? "👩" : "👨")) + '</div>'}
                     ${online}
-
                 </div>
 
 
