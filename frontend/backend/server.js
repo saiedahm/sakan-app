@@ -933,6 +933,10 @@ app.post(
 
                         normalizedEmail,
 
+                    emailVerified:
+
+                        true,
+
                     passwordHash:
 
                         passwordHash,
