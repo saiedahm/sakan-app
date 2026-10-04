@@ -1,15 +1,12 @@
 document.addEventListener("DOMContentLoaded", () => {
 
-    const loggedIn =
-        localStorage.getItem("sakanLoggedIn");
-
-    if (loggedIn !== "true") {
-        window.location.href = "../index.html";
+    const authToken = localStorage.getItem("sakanAuthToken");
+    if (!authToken) {
+        window.location.href = "../index.html?returnTo=member-search";
         return;
     }
 
-
-    const resultsGrid =
+const resultsGrid =
         document.getElementById("resultsGrid");
 
     const noResults =
@@ -209,120 +206,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     /* =====================================================
-       DEMO MEMBERS
-       هذه القائمة مؤقتة للواجهة فقط.
-    ===================================================== */
-
-    const demoMembers = [
-
-        {
-            id: 101,
-            gender: "female",
-            name: "عضوة جديدة",
-            age: 29,
-            country: "ألمانيا",
-            city: "هامبورغ",
-            maritalStatus: "عزباء",
-            online: true,
-            verified: true,
-            avatar: "👩"
-        },
-
-        {
-            id: 102,
-            gender: "female",
-            name: "عضوة جديدة",
-            age: 34,
-            country: "ألمانيا",
-            city: "كولن",
-            maritalStatus: "عزباء",
-            online: true,
-            verified: false,
-            avatar: "👩🏻"
-        },
-
-        {
-            id: 103,
-            gender: "female",
-            name: "عضوة جديدة",
-            age: 31,
-            country: "فرنسا",
-            city: "باريس",
-            maritalStatus: "مطلقة",
-            online: false,
-            verified: true,
-            avatar: "👩‍🦰"
-        },
-
-        {
-            id: 104,
-            gender: "female",
-            name: "عضوة جديدة",
-            age: 27,
-            country: "إسبانيا",
-            city: "مدريد",
-            maritalStatus: "عزباء",
-            online: true,
-            verified: false,
-            avatar: "👩🏼"
-        },
-
-        {
-            id: 201,
-            gender: "male",
-            name: "عضو جديد",
-            age: 32,
-            country: "ألمانيا",
-            city: "برلين",
-            maritalStatus: "أعزب",
-            online: true,
-            verified: true,
-            avatar: "👨"
-        },
-
-        {
-            id: 202,
-            gender: "male",
-            name: "عضو جديد",
-            age: 38,
-            country: "ألمانيا",
-            city: "هامبورغ",
-            maritalStatus: "أعزب",
-            online: false,
-            verified: false,
-            avatar: "👨🏻"
-        },
-
-        {
-            id: 203,
-            gender: "male",
-            name: "عضو جديد",
-            age: 29,
-            country: "فرنسا",
-            city: "ليون",
-            maritalStatus: "أعزب",
-            online: true,
-            verified: true,
-            avatar: "👨‍🦰"
-        },
-
-        {
-            id: 204,
-            gender: "male",
-            name: "عضو جديد",
-            age: 41,
-            country: "إسبانيا",
-            city: "مدريد",
-            maritalStatus: "مطلق",
-            online: true,
-            verified: false,
-            avatar: "👨🏼"
-        }
-
-    ];
-
-
-    /* =====================================================
        OPPOSITE GENDER ONLY
     ===================================================== */
 
@@ -474,20 +357,10 @@ document.addEventListener("DOMContentLoaded", () => {
                             );
 
 
-                        const member =
-                            demoMembers.find(
-                                (item) =>
-                                    item.id === memberId
-                            );
-
+                        const member = results.find((item) => String(item.id) === String(memberId));
 
                         if (!member) {
-
-                            openModal(
-                                "تعذر فتح الملف",
-                                "لم يتم العثور على بيانات هذا العضو."
-                            );
-
+                            openModal("تعذر فتح الملف", "لم يتم العثور على بيانات هذا العضو.");
                             return;
                         }
 
@@ -520,7 +393,7 @@ document.addEventListener("DOMContentLoaded", () => {
                         );
 
 
-                        window.location.href = "member-profile.html?memberId=" + encodeURIComponent(memberId);
+                        window.location.href = "member-profile.html?memberId=" + encodeURIComponent(member.memberId || memberId);
 
                     }
                 );
@@ -595,9 +468,7 @@ document.addEventListener("DOMContentLoaded", () => {
          * نختار الجنس المقابل أولًا.
          */
 
-        let results = demoMembers.filter(
-            (member) => member.gender === oppositeGender
-        );
+        let results = [];
 
         const mode = new URLSearchParams(window.location.search).get("mode") || "";
         try {
@@ -615,22 +486,28 @@ document.addEventListener("DOMContentLoaded", () => {
             const response = await fetch(apiBase + "/members/search?" + params.toString(), {
                 headers: { Authorization: "Bearer " + token }
             });
-            if (response.ok) {
-                const data = await response.json();
-                if (Array.isArray(data.members)) {
-                    results = data.members.map((member) => ({
-                        ...member,
-                        id: member.id,
-                        name: member.displayName || "عضو سكن",
-                        online: !!member.isOnline,
-                        verified: !!member.isVerified,
-                        avatar: member.mainPhotoUrl ? "" : (member.gender === "female" ? "👩" : "👨"),
-                        portraitUrl: member.mainPhotoUrl || ""
-                    }));
-                }
+            if (!response.ok) {
+                const data = await response.json().catch(() => ({}));
+                throw new Error(data.error || "تعذر تحميل الأعضاء.");
+            }
+            const data = await response.json();
+            if (Array.isArray(data.members)) {
+                results = data.members.map((member) => ({
+                    ...member,
+                    id: member.id,
+                    name: member.displayName || "عضو سكن",
+                    online: !!member.isOnline,
+                    verified: !!member.isVerified,
+                    avatar: member.mainPhotoUrl ? "" : (member.gender === "female" ? "👩" : "👨"),
+                    portraitUrl: member.mainPhotoUrl || "",
+                    photos: Array.isArray(member.photos) ? member.photos : []
+                }));
             }
         } catch (error) {
-            console.warn("Backend member search unavailable; using local fallback.", error);
+            console.error("Sakan member search failed:", error);
+            openModal("تعذر تحميل الأعضاء", error.message || "حاول مرة أخرى.");
+            renderMembers([]);
+            return;
         }
 
 
