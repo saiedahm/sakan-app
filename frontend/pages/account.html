@@ -1,0 +1,962 @@
+ <!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>منصة سكن | للتعارف والزواج</title>
+
+    <meta name="description"
+          content="منصة سكن للتعارف والزواج">
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <link rel="stylesheet"
+          href="/css/style.css">
+
+<script src="/js/translation.js"></script>
+</head>
+
+
+<body>
+
+
+<!-- =====================================================
+     PRIVACY SCREEN
+===================================================== -->
+
+<section id="privacyScreen" class="screen active">
+
+    <div class="privacy-card">
+
+
+        <!-- BRAND -->
+
+        <div class="brand">
+
+            <div class="brand-icon">
+
+                <img
+                    src="/assets/sakan-logo.png"
+                    alt="شعار منصة سكن">
+
+            </div>
+
+            <div>
+
+                <h1>
+                    سكن
+                </h1>
+
+                <span>
+                    للتعارف والزواج
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <div class="privacy-icon">
+
+            <i class="fa-solid fa-shield-heart"></i>
+
+        </div>
+
+
+        <h2>
+            الخصوصية والأمان
+        </h2>
+
+
+        <p class="intro">
+
+            قبل الدخول إلى منصة سكن، يرجى قراءة قواعد الخصوصية
+            والأمان والموافقة عليها.
+
+        </p>
+
+
+        <div class="privacy-points">
+
+
+            <div class="privacy-point">
+
+                <i class="fa-solid fa-lock"></i>
+
+                <span>
+
+                    نحافظ على بيانات حسابك ولا نعرض بياناتك الخاصة للأعضاء.
+
+                </span>
+
+            </div>
+
+
+            <div class="privacy-point">
+
+                <i class="fa-solid fa-user-shield"></i>
+
+                <span>
+
+                    اسمك الحقيقي وبيانات الدخول معلومات خاصة بالحساب.
+
+                </span>
+
+            </div>
+
+
+            <div class="privacy-point">
+
+                <i class="fa-solid fa-ban"></i>
+
+                <span>
+
+                    يمنع الاحتيال وطلب الأموال والإساءة والتحرش والمحتوى غير اللائق.
+
+                </span>
+
+            </div>
+
+
+            <div class="privacy-point">
+
+                <i class="fa-solid fa-flag"></i>
+
+                <span>
+
+                    يمكنك حظر أي عضو والإبلاغ عنه عند وجود مشكلة.
+
+                </span>
+
+            </div>
+
+
+        </div>
+
+
+        <div class="privacy-warning">
+
+            <i class="fa-solid fa-circle-exclamation"></i>
+
+            <span>
+
+                لا ترسل أو تستقبل أموالًا من أي عضو، حتى لو كنت تثق به.
+
+            </span>
+
+        </div>
+
+
+        <div class="privacy-actions">
+
+
+            <button
+                type="button"
+                id="rejectPrivacyBtn"
+                class="dark-btn">
+
+                <i class="fa-solid fa-xmark"></i>
+
+                رفض
+
+            </button>
+
+
+            <button
+                type="button"
+                id="acceptPrivacyBtn"
+                class="gold-btn">
+
+                موافق ومتابعة
+
+                <i class="fa-solid fa-arrow-left"></i>
+
+            </button>
+
+
+        </div>
+
+
+        <div
+            id="privacyMessage"
+            class="small-message">
+        </div>
+
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     WELCOME SCREEN
+===================================================== -->
+
+<section id="welcomeScreen" class="screen">
+
+    <div class="welcome-container">
+
+        <div class="welcome-overlay"></div>
+
+
+        <div class="welcome-content">
+
+
+            <!-- BRAND -->
+
+            <div class="brand welcome-brand">
+
+
+                <div class="brand-icon">
+
+                    <img
+                        src="assets/sakan-logo.png"
+                        alt="شعار منصة سكن">
+
+                </div>
+
+
+                <div>
+
+                    <h1>
+                        سكن
+                    </h1>
+
+                    <span>
+                        للتعارف والزواج
+                    </span>
+
+                </div>
+
+
+            </div>
+
+
+            <div class="heart-symbol">
+                ❤️
+            </div>
+
+
+            <h1>
+                مرحبًا بكم في منصة سكن
+            </h1>
+
+
+            <h2>
+                للتعارف والزواج
+            </h2>
+
+
+            <p>
+                خطوة واحدة بينك وبين شريك العمر
+            </p>
+
+
+            <div class="entry-language-bar" aria-label="اختيار اللغة">
+                <button type="button" data-sakan-language="ar">عربي</button>
+                <button type="button" data-sakan-language="fr">Français</button>
+                <button type="button" data-sakan-language="es">Español</button>
+                <button type="button" data-sakan-language="de">Deutsch</button>
+                <button type="button" data-sakan-language="it">Italiano</button>
+                <button type="button" data-sakan-language="sv">Svenska</button>
+                <button type="button" data-sakan-language="nl">Nederlands</button>
+            </div>
+
+            <div class="entry-auth-panel">
+                <div class="entry-auth-title">ابدأ الآن في منصة سكن</div>
+
+                <button type="button" id="entryGoogleBtn" class="entry-social entry-google">
+                    <i class="fa-brands fa-google"></i>
+                    التسجيل / الدخول بواسطة Google
+                </button>
+
+                <button type="button" id="entryFacebookBtn" class="entry-social entry-facebook">
+                    <i class="fa-brands fa-facebook"></i>
+                    التسجيل / الدخول بواسطة Facebook
+                </button>
+
+                <div class="entry-divider"><span>أو</span></div>
+
+                <button type="button" id="entryEmailLoginBtn" class="entry-email">
+                    <i class="fa-solid fa-envelope"></i>
+                    تسجيل الدخول بالإيميل
+                </button>
+
+                <button type="button" id="entryRegisterBtn" class="entry-register">
+                    عضو جديد؟ إنشاء حساب الآن
+                </button>
+            </div>
+
+            <button
+                type="button"
+                id="startBtn"
+                class="main-gold-btn entry-hidden-start">
+                استمر
+                <i class="fa-solid fa-arrow-left"></i>
+            </button>
+
+
+            <div class="trial-note">
+
+                <i class="fa-solid fa-circle-info"></i>
+
+                أهلًا بكم في منصة سكن — المنصة تعمل حاليًا
+                خلال فترة تشغيل تجريبية لمدة 15 يومًا.
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     ACCOUNT SCREEN
+===================================================== -->
+
+<section id="accountScreen" class="screen">
+
+    <div class="account-card">
+
+
+        <!-- BRAND -->
+
+        <div class="brand">
+
+
+            <div class="brand-icon">
+
+                <img
+                    src="assets/sakan-logo.png"
+                    alt="شعار منصة سكن">
+
+            </div>
+
+
+            <div>
+
+                <h1>
+                    سكن
+                </h1>
+
+                <span>
+                    للتعارف والزواج
+                </span>
+
+            </div>
+
+
+        </div>
+
+
+        <h2>
+            كيف تريد الدخول؟
+        </h2>
+
+
+        <p class="account-description">
+
+            اختر الطريقة المناسبة لك للبدء.
+
+        </p>
+
+
+        <div class="account-options">
+
+
+            <button
+                type="button"
+                id="newMemberBtn"
+                class="account-option">
+
+
+                <span class="option-icon">
+
+                    <i class="fa-solid fa-user-plus"></i>
+
+                </span>
+
+
+                <span class="option-text">
+
+                    <strong>
+                        عضو جديد
+                    </strong>
+
+                    <small>
+                        إنشاء حساب جديد في منصة سكن
+                    </small>
+
+                </span>
+
+
+                <i class="fa-solid fa-chevron-left arrow"></i>
+
+
+            </button>
+
+
+            <button
+                type="button"
+                id="existingMemberBtn"
+                class="account-option">
+
+
+                <span class="option-icon">
+
+                    <i class="fa-solid fa-right-to-bracket"></i>
+
+                </span>
+
+
+                <span class="option-text">
+
+                    <strong>
+                        عضو موجود
+                    </strong>
+
+                    <small>
+                        تسجيل الدخول إلى حسابك
+                    </small>
+
+                </span>
+
+
+                <i class="fa-solid fa-chevron-left arrow"></i>
+
+
+            </button>
+
+
+        </div>
+
+
+        <button
+            type="button"
+            id="backToWelcomeBtn"
+            class="back-link">
+
+            <i class="fa-solid fa-arrow-right"></i>
+
+            رجوع
+
+        </button>
+
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     NEW MEMBER SCREEN
+===================================================== -->
+
+<section id="newMemberScreen" class="screen">
+
+    <div class="register-card">
+
+
+        <div class="register-header">
+
+
+            <!-- BRAND -->
+
+            <div class="brand">
+
+
+                <div class="brand-icon">
+
+                    <img
+                        src="assets/sakan-logo.png"
+                        alt="شعار منصة سكن">
+
+                </div>
+
+
+                <div>
+
+                    <h1>
+                        سكن
+                    </h1>
+
+                    <span>
+                        عضو جديد
+                    </span>
+
+                </div>
+
+
+            </div>
+
+
+        </div>
+
+
+        <div class="step-title">
+
+
+            <span class="step-number">
+                1
+            </span>
+
+
+            <div>
+
+                <h2>
+                    إنشاء حساب جديد
+                </h2>
+
+                <p>
+                    اختر طريقة التسجيل التي تناسبك.
+                </p>
+
+            </div>
+
+
+        </div>
+
+
+        <div class="social-register">
+
+
+            <button
+                type="button"
+                id="googleBtn"
+                class="social-btn">
+
+                <i class="fa-brands fa-google"></i>
+
+                التسجيل بواسطة Google
+
+            </button>
+
+
+            <button
+                type="button"
+                id="facebookBtn"
+                class="social-btn">
+
+                <i class="fa-brands fa-facebook"></i>
+
+                التسجيل بواسطة Facebook
+
+            </button>
+
+
+        </div>
+
+
+        <div class="divider">
+
+            <span>
+                أو التسجيل بواسطة البريد الإلكتروني
+            </span>
+
+        </div>
+
+
+        <form
+            id="registerForm"
+            novalidate>
+
+
+            <div class="form-grid">
+
+
+                <div class="field">
+
+
+                    <label for="registerEmail">
+
+                        البريد الإلكتروني
+
+                    </label>
+
+
+                    <div class="input-wrapper">
+
+
+                        <i class="fa-solid fa-envelope"></i>
+
+
+                        <input
+                            type="email"
+                            id="registerEmail"
+                            placeholder="example@email.com"
+                            autocomplete="email">
+
+
+                    </div>
+
+
+                    <small
+                        id="emailError"
+                        class="field-error">
+                    </small>
+
+
+                </div>
+
+
+                <div class="field">
+
+
+                    <label for="registerPassword">
+
+                        كلمة المرور
+
+                    </label>
+
+
+                    <div class="input-wrapper">
+
+
+                        <i class="fa-solid fa-lock"></i>
+
+
+                        <input
+                            type="password"
+                            id="registerPassword"
+                            placeholder="6 أحرف على الأقل"
+                            autocomplete="new-password">
+
+
+                        <button
+                            type="button"
+                            id="togglePassword"
+                            class="eye-btn">
+
+
+                            <i class="fa-solid fa-eye"></i>
+
+
+                        </button>
+
+
+                    </div>
+
+
+                    <small
+                        id="passwordError"
+                        class="field-error">
+                    </small>
+
+
+                </div>
+
+
+                <div class="field">
+
+
+                    <label for="registerPasswordConfirm">
+
+                        تأكيد كلمة المرور
+
+                    </label>
+
+
+                    <div class="input-wrapper">
+
+
+                        <i class="fa-solid fa-lock"></i>
+
+
+                        <input
+                            type="password"
+                            id="registerPasswordConfirm"
+                            placeholder="أعد كتابة كلمة المرور"
+                            autocomplete="new-password">
+
+
+                    </div>
+
+
+                    <small
+                        id="confirmError"
+                        class="field-error">
+                    </small>
+
+
+                </div>
+
+
+            </div>
+
+
+            <label class="terms-check">
+
+
+                <input
+                    type="checkbox"
+                    id="registerAgreement">
+
+
+                <span>
+                    أوافق على شروط الاستخدام والخصوصية
+                </span>
+
+
+            </label>
+
+
+            <small
+                id="agreementError"
+                class="field-error agreement-error">
+            </small>
+
+
+            <div
+                id="registerMessage"
+                class="form-message">
+            </div>
+
+
+            <button
+                type="submit"
+                class="main-gold-btn register-submit">
+
+                إنشاء الحساب والمتابعة
+
+                <i class="fa-solid fa-arrow-left"></i>
+
+            </button>
+
+
+        </form>
+
+
+        <button
+            type="button"
+            id="backToAccountBtn"
+            class="back-link">
+
+            <i class="fa-solid fa-arrow-right"></i>
+
+            رجوع
+
+        </button>
+
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     EXISTING MEMBER SCREEN
+===================================================== -->
+
+<section id="existingMemberScreen" class="screen">
+
+    <div class="login-card">
+
+
+        <!-- BRAND -->
+
+        <div class="brand">
+
+
+            <div class="brand-icon">
+
+                <img
+                    src="assets/sakan-logo.png"
+                    alt="شعار منصة سكن">
+
+            </div>
+
+
+            <div>
+
+                <h1>
+                    سكن
+                </h1>
+
+                <span>
+                    تسجيل الدخول
+                </span>
+
+            </div>
+
+
+        </div>
+
+
+        <h2>
+            أهلًا بعودتك
+        </h2>
+
+
+        <p class="account-description">
+
+            سجل الدخول إلى حسابك في منصة سكن.
+
+        </p>
+
+
+        <form
+            id="loginForm"
+            novalidate>
+
+
+            <div class="field">
+
+
+                <label for="loginEmail">
+
+                    البريد الإلكتروني
+
+                </label>
+
+
+                <div class="input-wrapper">
+
+
+                    <i class="fa-solid fa-envelope"></i>
+
+
+                    <input
+                        type="email"
+                        id="loginEmail"
+                        placeholder="example@email.com">
+
+
+                </div>
+
+
+            </div>
+
+
+            <div class="field">
+
+
+                <label for="loginPassword">
+
+                    كلمة المرور
+
+                </label>
+
+
+                <div class="input-wrapper">
+
+
+                    <i class="fa-solid fa-lock"></i>
+
+
+                    <input
+                        type="password"
+                        id="loginPassword"
+                        placeholder="كلمة المرور">
+
+
+                </div>
+
+
+            </div>
+
+
+            <button
+                type="submit"
+                class="main-gold-btn">
+
+                تسجيل الدخول
+
+                <i class="fa-solid fa-arrow-left"></i>
+
+            </button>
+
+
+            <button
+                type="button"
+                id="forgotPasswordBtn"
+                class="forgot-btn">
+
+                نسيت كلمة المرور؟
+
+            </button>
+
+
+            <div
+                id="loginMessage"
+                class="form-message">
+            </div>
+
+
+        </form>
+
+
+        <button
+            type="button"
+            id="backFromLoginBtn"
+            class="back-link">
+
+            <i class="fa-solid fa-arrow-right"></i>
+
+            رجوع
+
+        </button>
+
+
+    </div>
+
+</section>
+
+
+<script src="/js/app.js"></script>
+
+
+<script>
+
+if ("serviceWorker" in navigator) {
+
+    window.addEventListener("load", () => {
+
+        navigator.serviceWorker.register("/sw.js")
+
+            .then(() => {
+
+                console.log(
+                    "Sakan service worker registered"
+                );
+
+            })
+
+            .catch(error => {
+
+                console.error(
+                    "Sakan service worker error:",
+                    error
+                );
+
+            });
+
+    });
+
+}
+
+</script>
+
+
+
+<footer class="digitalfuture-global-footer" aria-label="digital future contact">
+  <a href="https://www.digital-future.ai" target="_blank" rel="noopener noreferrer">https://www.digital-future.ai</a>
+  <a href="mailto:server@digital-future.ai">server@digital-future.ai</a>
+  <a href="/pages/impressum.html">Impressum</a>
+</footer>
+<style>
+.digitalfuture-global-footer{display:flex;flex-wrap:wrap;justify-content:center;gap:10px 20px;padding:20px 16px;margin:18px auto 0;text-align:center;border-top:1px solid rgba(212,175,55,.45);font-size:13px}
+.digitalfuture-global-footer a{color:#d4af37;text-decoration:none}
+.digitalfuture-global-footer a:hover{text-decoration:underline}
+</style>
+
+</body>
+</html>
